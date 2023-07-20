@@ -1,0 +1,17 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": ["plugin:shopify/esnext"],
+  "rules": {
+    "babel/object-curly-spacing": "off",
+    "no-undef": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": "."
+      }
+    }
+  }
+}
