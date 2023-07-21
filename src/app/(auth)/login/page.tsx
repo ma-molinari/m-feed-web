@@ -14,11 +14,13 @@ const Login = () => {
         <p className="text-stone-600">
           Enter your credentials to access your account.
         </p>
-
-        <form className="flex flex-col w-full mt-8 space-y-6">
+        <form
+          className="flex flex-col w-full mt-8 space-y-6"
+          onSubmit={() => false}
+        >
           <TextField placeholder="E-mail" />
           <TextField placeholder="Password" type="password" />
-          <Button label="Continue" onClick={() => false} />
+          <Button label="Log in" onClick={() => false} />
         </form>
         <p className="mt-8 text-stone-600">
           Don't have an account?{" "}
