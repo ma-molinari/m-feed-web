@@ -5,6 +5,7 @@
   "extends": ["plugin:shopify/esnext"],
   "rules": {
     "babel/object-curly-spacing": "off",
+    "shopify/strict-component-boundaries": "off",
     "no-undef": "off"
   },
   "settings": {

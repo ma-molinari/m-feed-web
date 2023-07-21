@@ -15,7 +15,6 @@ module.exports = {
       colors: {
         primary: "#000",
         secondary: "#fff",
-        paragraph: "#fff",
       },
     },
   },
