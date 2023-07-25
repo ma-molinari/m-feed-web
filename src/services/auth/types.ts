@@ -1,3 +1,5 @@
+import { User } from "@entities/user";
+
 interface LoginProps {
   email: string;
   password: string;
@@ -5,7 +7,7 @@ interface LoginProps {
 
 interface LoginResponse {
   token: string;
-  user: any;
+  user: Pick<User, "id" | "email" | "username" | "fullName">;
 }
 
 interface RegisterProps {

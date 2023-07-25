@@ -5,6 +5,8 @@ import {
   InternalAxiosRequestConfig,
 } from "axios";
 
+import useAuth from "@global-stores/useAuth";
+
 const onRequest = (
   value: InternalAxiosRequestConfig
 ): InternalAxiosRequestConfig => {
@@ -13,10 +15,11 @@ const onRequest = (
   headers[`X-Mfeed`] = `Website`;
 
   if (typeof document !== `undefined`) {
-    // const token = readCookie(CookieKey.JwtAuthToken, document.cookie);
-    // if (token) {
-    //   headers.Authorization = `Bearer ${token}`;
-    // }
+    const token = useAuth.getState().token ?? ``;
+
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
   }
 
   return { ...value, headers };
@@ -27,8 +30,7 @@ const onRequestError = (error: AxiosError): Promise<AxiosError> =>
 const onResponse = (response: AxiosResponse): AxiosResponse => response;
 const onResponseError = (error: AxiosError): Promise<AxiosError> => {
   if ([401].includes(error.response?.status ?? 0)) {
-    // removeCookie(CookieKey.JwtAuthToken);
-    // removeCookie(CookieKey.UserId);
+    useAuth.getState().clearAuth();
     window.location.href = `/login`;
   }
 

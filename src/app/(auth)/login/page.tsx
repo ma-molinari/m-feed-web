@@ -4,10 +4,12 @@ import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 
 import Button from "@global-components/Button";
 import TextField from "@global-components/TextField";
 import { useLogin } from "@services/auth";
+import useAuth, { selectSetAuth } from "@global-stores/useAuth";
 
 const LoginSchema = z.object({
   email: z.string().min(1, { message: "Email or Username is required" }),
@@ -26,7 +28,15 @@ const Login = () => {
     resolver: zodResolver(LoginSchema),
   });
 
-  const { mutate } = useLogin();
+  const { push } = useRouter();
+  const setAuth = useAuth(selectSetAuth);
+
+  const { mutate } = useLogin({
+    onSuccess: (data) => {
+      setAuth(data);
+      push("/");
+    },
+  });
 
   const onSubmit: SubmitHandler<ILoginSchema> = (data) => {
     mutate(data);

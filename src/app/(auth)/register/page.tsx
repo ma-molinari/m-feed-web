@@ -4,10 +4,12 @@ import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 import Button from "@global-components/Button";
 import TextField from "@global-components/TextField";
-import { useRegister } from "@services/auth";
+import { useLogin, useRegister } from "@services/auth";
+import useAuth, { selectSetAuth } from "@global-stores/useAuth";
 
 const RegisterSchema = z
   .object({
@@ -33,12 +35,30 @@ const Register = () => {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<IRegisterSchema>({
     resolver: zodResolver(RegisterSchema),
   });
 
-  const { mutate } = useRegister();
+  const { push } = useRouter();
+  const setAuth = useAuth(selectSetAuth);
+
+  const { mutate: mutateLogin } = useLogin({
+    onSuccess: (data) => {
+      setAuth(data);
+      push("/");
+    },
+  });
+
+  const { mutate } = useRegister({
+    onSuccess: () => {
+      mutateLogin({
+        email: getValues("email"),
+        password: getValues("password"),
+      });
+    },
+  });
 
   const onSubmit: SubmitHandler<IRegisterSchema> = (data) => {
     mutate(data);

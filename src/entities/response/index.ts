@@ -8,6 +8,6 @@ type ResponseDefault = {
   message: "ok";
 };
 
-export type APIError = AxiosError<{ message: string }>;
+type APIError = AxiosError<{ message: string }>;
 
-export type { RawResponse, ResponseDefault };
+export type { RawResponse, ResponseDefault, APIError };
