@@ -6,7 +6,9 @@
   "rules": {
     "babel/object-curly-spacing": "off",
     "shopify/strict-component-boundaries": "off",
-    "no-undef": "off"
+    "no-undef": "off",
+    "comma-dangle": "off",
+    "no-process-env": "off"
   },
   "settings": {
     "import/resolver": {

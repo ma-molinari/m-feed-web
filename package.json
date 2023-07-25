@@ -10,13 +10,16 @@
     "lint-and-fix": "eslint . --ext .ts --fix"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.1.1",
     "@tanstack/react-query": "^4.29.25",
     "@tanstack/react-query-devtools": "^4.29.25",
     "axios": "^1.4.0",
+    "cogo-toast": "^4.2.3",
     "next": "13.4.10",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.2",
+    "zod": "^3.21.4",
     "zustand": "^4.3.9"
   },
   "devDependencies": {

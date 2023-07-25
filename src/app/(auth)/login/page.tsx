@@ -1,11 +1,37 @@
 "use client";
 
 import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import Button from "@global-components/Button";
 import TextField from "@global-components/TextField";
+import { useLogin } from "@services/auth";
+
+const LoginSchema = z.object({
+  email: z.string().min(1, { message: "Email or Username is required" }),
+  password: z
+    .string()
+    .min(6, { message: "Password must be atleast 6 characters" }),
+});
+type ILoginSchema = z.infer<typeof LoginSchema>;
 
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ILoginSchema>({
+    resolver: zodResolver(LoginSchema),
+  });
+
+  const { mutate } = useLogin();
+
+  const onSubmit: SubmitHandler<ILoginSchema> = (data) => {
+    mutate(data);
+  };
+
   return (
     <main className="flex items-center justify-center w-full h-full p-4 text-black">
       <div className="w-[450px]">
@@ -16,11 +42,22 @@ const Login = () => {
         </p>
         <form
           className="flex flex-col w-full mt-8 space-y-6"
-          onSubmit={() => false}
+          onSubmit={handleSubmit(onSubmit)}
         >
-          <TextField placeholder="E-mail" />
-          <TextField placeholder="Password" type="password" />
-          <Button label="Log in" onClick={() => false} />
+          <TextField
+            name="email"
+            placeholder="E-mail or Username"
+            register={register}
+            message={errors.email?.message}
+          />
+          <TextField
+            name="password"
+            placeholder="Password"
+            type="password"
+            register={register}
+            message={errors.password?.message}
+          />
+          <Button label="Log in" type="submit" />
         </form>
         <p className="mt-8 text-stone-600">
           Don't have an account?{" "}
