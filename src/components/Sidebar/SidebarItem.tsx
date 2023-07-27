@@ -18,8 +18,8 @@ const SidebarItem = ({ href, icon }: Props) => {
       <Image
         src={`/assets/sidebar/${icon}-${iconType}.svg`}
         alt={`${icon} icon`}
-        width={28}
-        height={28}
+        width={24}
+        height={24}
       />
     </Link>
   );

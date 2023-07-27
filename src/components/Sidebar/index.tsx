@@ -4,7 +4,7 @@ import SidebarLogout from "./SidebarLogout";
 const Sidebar = () => {
   return (
     <aside className="w-full">
-      <div className="max-w-[80px] fixed h-screen border-r border-neutral-800 border-solid p-6 flex flex-col justify-between">
+      <div className="max-w-[80px] fixed h-screen border-r border-neutral-800 border-solid py-8 px-4 flex flex-col justify-between">
         <div />
 
         <nav className="flex flex-col items-center justify-center space-y-6">
