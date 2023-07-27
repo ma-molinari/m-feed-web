@@ -16,6 +16,9 @@ module.exports = {
         primary: "#000",
         secondary: "#fff",
       },
+      gridTemplateColumns: {
+        layout: "80px 1fr",
+      },
     },
   },
   plugins: [],
