@@ -3,20 +3,18 @@ import SidebarLogout from "./SidebarLogout";
 
 const Sidebar = () => {
   return (
-    <aside className="w-full">
-      <div className="max-w-[80px] fixed h-screen border-r border-neutral-800 border-solid py-8 px-4 flex flex-col justify-between">
-        <div />
+    <aside className="w-[70px] fixed flex flex-col justify-between items-center h-screen mx-8 py-8">
+      <div />
 
-        <nav className="flex flex-col items-center justify-center space-y-6">
-          <SidebarItem href="/" icon="home" />
-          <SidebarItem href="/explore" icon="explore" />
-          <SidebarItem href="/search" icon="search" />
-          <SidebarItem href="/create" icon="create" />
-          <SidebarItem href="/profile" icon="profile" />
-        </nav>
+      <nav className="flex flex-col items-center justify-center w-full px-2 py-4 space-y-6 rounded-full bg-secondary">
+        <SidebarItem href="/" icon="home" />
+        <SidebarItem href="/explore" icon="explore" />
+        <SidebarItem href="/search" icon="search" />
+        <SidebarItem href="/create" icon="create" />
+        <SidebarItem href="/profile" icon="profile" />
+      </nav>
 
-        <SidebarLogout />
-      </div>
+      <SidebarLogout />
     </aside>
   );
 };

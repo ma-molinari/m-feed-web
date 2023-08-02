@@ -4,11 +4,11 @@ import Sidebar from "@global-components/Sidebar";
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <section className="grid grid-cols-layout">
+    <section className="flex bg-primary">
       <Sidebar />
-      <Suspense fallback={<p>loading...</p>}>
-        <div className="min-h-[2000px]">{children}</div>
-      </Suspense>
+      <div className="w-full ml-[134px] min-h-[2000px]">
+        <Suspense fallback={<p>loading...</p>}>{children}</Suspense>
+      </div>
     </section>
   );
 };

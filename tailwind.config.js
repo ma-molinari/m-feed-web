@@ -13,11 +13,8 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        primary: "#000",
-        secondary: "#fff",
-      },
-      gridTemplateColumns: {
-        layout: "80px 1fr",
+        primary: "#110F14",
+        secondary: "#1A1D20",
       },
     },
   },

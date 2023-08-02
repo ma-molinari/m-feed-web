@@ -17,12 +17,16 @@ const SidebarLogout = () => {
   };
 
   return (
-    <button className="mx-auto" onClick={onLogout}>
+    <button
+      className=" hover:bg-secondary w-[50px] h-[50px] rounded-full transition-colors"
+      onClick={onLogout}
+    >
       <Image
         src={"/assets/sidebar/logout-outline.svg"}
         alt="Sign out Icon"
-        width={24}
-        height={24}
+        width={26}
+        height={26}
+        className="mx-auto"
       />
     </button>
   );

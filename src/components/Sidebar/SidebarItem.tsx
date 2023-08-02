@@ -11,15 +11,21 @@ interface Props {
 
 const SidebarItem = ({ href, icon }: Props) => {
   const pathname = usePathname();
-  const iconType = pathname === href ? "filled" : "outline";
+  const isActive = Boolean(pathname === href);
+
+  const iconType = isActive ? "active" : "outline";
+  const activeStyleContainer = isActive ? "bg-neutral-100" : "hover:bg-primary";
 
   return (
-    <Link href={href}>
+    <Link
+      href={href}
+      className={`w-full h-[54px] rounded-full flex items-center justify-center ${activeStyleContainer} transition-colors`}
+    >
       <Image
         src={`/assets/sidebar/${icon}-${iconType}.svg`}
         alt={`${icon} icon`}
-        width={24}
-        height={24}
+        width={26}
+        height={26}
       />
     </Link>
   );
