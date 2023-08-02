@@ -18,7 +18,7 @@ const SidebarLogout = () => {
 
   return (
     <button
-      className=" hover:bg-secondary w-[50px] h-[50px] rounded-full transition-colors"
+      className="hover:bg-neutral-900 w-[50px] h-[50px] rounded-full transition-colors"
       onClick={onLogout}
     >
       <Image

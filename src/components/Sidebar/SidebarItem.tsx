@@ -19,7 +19,7 @@ const SidebarItem = ({ href, icon }: Props) => {
   return (
     <Link
       href={href}
-      className={`w-full h-[54px] rounded-full flex items-center justify-center ${activeStyleContainer} transition-colors`}
+      className={`w-full h-[44px] rounded-full flex items-center justify-center ${activeStyleContainer} transition-colors`}
     >
       <Image
         src={`/assets/sidebar/${icon}-${iconType}.svg`}
