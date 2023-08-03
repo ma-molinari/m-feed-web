@@ -14,7 +14,9 @@ const SidebarItem = ({ href, icon }: Props) => {
   const isActive = Boolean(pathname === href);
 
   const iconType = isActive ? "active" : "outline";
-  const activeStyleContainer = isActive ? "bg-neutral-100" : "hover:bg-primary";
+  const activeStyleContainer = isActive
+    ? "bg-neutral-100"
+    : "hover:bg-neutral-950";
 
   return (
     <Link

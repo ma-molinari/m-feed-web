@@ -1,9 +1,5 @@
 const Explore = () => {
-  return (
-    <main>
-      <p>Explore</p>
-    </main>
-  );
+  return <main className="w-full my-6">Explore</main>;
 };
 
 export default Explore;
