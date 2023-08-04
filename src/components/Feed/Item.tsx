@@ -1,6 +1,9 @@
-import IconButton from "@global-components/IconButton";
 import Image from "next/image";
 import Link from "next/link";
+
+import IconButton from "@global-components/IconButton";
+import { IMAGE_URL } from "@configs/environment";
+
 import { ItemProps } from "./types";
 
 const Item = ({ data }: ItemProps) => {
@@ -11,7 +14,11 @@ const Item = ({ data }: ItemProps) => {
         <div className="flex items-center space-x-2">
           <Link href={`/user/${data?.user?.username}`}>
             <Image
-              src={`/assets/feed/mock.jpeg`}
+              src={
+                data?.user?.avatar
+                  ? `${IMAGE_URL}/${data?.user?.avatar}`
+                  : `/assets/shared/user.png`
+              }
               alt={`${data?.user?.username} user photo`}
               height={32}
               width={32}
