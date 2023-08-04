@@ -27,7 +27,7 @@ const Item = ({ data }: ItemProps) => {
           </Link>
           <Link
             href={`/user/${data?.user?.username}`}
-            className="text-sm font-semibold"
+            className="text-sm font-semibold line-clamp-1"
           >
             {data?.user?.username}
           </Link>
