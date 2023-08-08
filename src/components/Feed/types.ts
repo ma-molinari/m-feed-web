@@ -1,5 +1,6 @@
-import { Post } from "@entities/post";
 import { ReactNode } from "react";
+
+import { Post } from "@entities/post";
 
 interface ComponentProps {
   children: ReactNode;

@@ -8,7 +8,9 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
       <div className="w-[108px]">
         <Sidebar />
       </div>
-      <Suspense fallback={<p>loading...</p>}>{children}</Suspense>
+      <Suspense fallback={<p>loading...</p>}>
+        <div className="w-full overflow-y-hidden">{children}</div>
+      </Suspense>
     </section>
   );
 };

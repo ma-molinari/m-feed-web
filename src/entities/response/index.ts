@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 
 type RawResponse<T> = {
+  ct?: number;
   data: T;
 };
 
