@@ -7,6 +7,7 @@
     "babel/object-curly-spacing": "off",
     "babel/camelcase": "off",
     "shopify/strict-component-boundaries": "off",
+    "shopify/binary-assignment-parens": "off",
     "no-undef": "off",
     "comma-dangle": "off",
     "no-process-env": "off"

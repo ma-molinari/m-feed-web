@@ -24,11 +24,12 @@ export const usePostsFeed = (
     {
       ...options,
       getNextPageParam: (lastPage, allPages) => {
-        const limit = 7;
-        const totalItems = lastPage?.data?.length;
+        const flatPages = allPages.flatMap((context) => context.data);
+        const totalItems = flatPages.length || 0;
+        const totalCount = lastPage.ct || 0;
 
-        if (totalItems < limit) {
-          return false;
+        if (totalItems >= totalCount) {
+          return undefined;
         }
 
         return allPages.length;

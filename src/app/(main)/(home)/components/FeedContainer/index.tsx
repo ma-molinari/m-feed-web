@@ -1,7 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useRef } from "react";
-import { useVirtual } from "react-virtual";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 import Feed from "@global-components/Feed";
 import { usePostsFeed } from "@services/post";
@@ -24,7 +23,7 @@ const MOCK = {
 };
 
 const FeedContainer = () => {
-  const feedRef = useRef(null);
+  const feedRef = useRef<any>(null);
   const { data, fetchNextPage, isFetching, hasNextPage, isLoading } =
     usePostsFeed();
 
@@ -33,19 +32,6 @@ const FeedContainer = () => {
     [data]
   );
 
-  const feedVirtualizer = useVirtual({
-    parentRef: feedRef,
-    size: flatData.length,
-    overscan: 6,
-  });
-  const { virtualItems: virtualPosts, totalSize } = feedVirtualizer;
-  const paddingTop =
-    virtualPosts.length > 0 ? virtualPosts?.[0]?.start || 0 : 0;
-  const paddingBottom =
-    virtualPosts.length > 0
-      ? totalSize - (virtualPosts?.[flatData.length - 1]?.end || 0)
-      : 0;
-
   const fetchMoreOnBottomReached = useCallback(() => {
     const { scrollHeight, scrollTop, clientHeight } = feedRef.current;
     const bottom = scrollHeight - scrollTop === clientHeight;
@@ -53,41 +39,66 @@ const FeedContainer = () => {
     if (bottom && hasNextPage) {
       fetchNextPage();
     }
-  }, [fetchNextPage, isFetching, hasNextPage]);
+  }, [feedRef.current]);
+
+  function VirtualizedList({ items, itemHeight, containerHeight }) {
+    const [scrollTop, setScrollTop] = useState(0);
+
+    const startIndex = Math.floor(scrollTop / itemHeight);
+
+    const endIndex = Math.min(
+      startIndex + Math.ceil(containerHeight / itemHeight),
+      items.length
+    );
+
+    const visibleItems = items.slice(startIndex, endIndex);
+
+    const invisibleItemsHeight =
+      (startIndex + visibleItems.length - endIndex) * itemHeight;
+
+    const handleScroll = (event) => {
+      setScrollTop(event.target.scrollTop);
+    };
+
+    return (
+      <div
+        style={{ height: `${containerHeight}px`, overflowY: "scroll" }}
+        onScroll={handleScroll}
+      >
+        <div style={{ height: `${items.length * itemHeight}px` }}>
+          <div
+            style={{
+              position: "relative",
+              height: `${visibleItems.length * itemHeight}px`,
+              top: `${startIndex * itemHeight}px`,
+            }}
+          >
+            {visibleItems.map((item) => (
+              // <div key={item.id} style={{ height: `${itemHeight}px` }}>
+              //   {item.content}
+              // </div>
+              <Feed.Item key={item.id} data={MOCK} />
+            ))}
+          </div>
+          <div style={{ height: `${invisibleItemsHeight}px` }} />
+        </div>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return <>Loading...</>;
   }
 
   return (
-    <>
-      {paddingTop > 0 && (
-        <tr>
-          <td style={{ height: `${paddingTop}px` }} />
-        </tr>
-      )}
-      <div
-        ref={feedRef}
-        onScroll={(event) =>
-          fetchMoreOnBottomReached(event.target as HTMLDivElement)
-        }
-        className="grid w-3/4 h-screen grid-cols-3 gap-6 mx-auto overflow-auto"
-      >
-        {virtualPosts.map((virtualItem) => {
-          return <Feed.Item key={flatData[virtualItem.index].id} data={MOCK} />;
-        })}
-      </div>
-      {paddingBottom > 0 && (
-        <tr>
-          <td style={{ height: `${paddingBottom}px` }} />
-        </tr>
-      )}
-    </>
-    // <Feed.Container>
-    //   {flatData.map((item) => {
-    //     return <Feed.Item key={item.id} data={MOCK} />;
-    //   })}
-    // </Feed.Container>
+    <VirtualizedList items={flatData} itemHeight={404} containerHeight={1000} />
+    // <div ref={feedRef} onScroll={fetchMoreOnBottomReached}>
+    //   <Feed.Container>
+    //     {flatData.map((item) => {
+    //       return <Feed.Item key={item.id} data={MOCK} />;
+    //     })}
+    //   </Feed.Container>
+    // </div>
   );
 };
 
