@@ -1,13 +1,13 @@
-import { ReactNode } from "react";
-
 import { Post } from "@entities/post";
 
-interface ComponentProps {
-  children: ReactNode;
+interface FeedProps {
+  items: Post[];
+  hasMore: boolean;
+  loadMore: () => void;
 }
 
 interface ItemProps {
   data: Post;
 }
 
-export type { ComponentProps, ItemProps };
+export type { FeedProps, ItemProps };

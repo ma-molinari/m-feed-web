@@ -1,19 +1,23 @@
 import React from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-import Container from "./Container";
 import Item from "./Item";
-import { ItemProps, ComponentProps } from "./types";
+import { FeedProps } from "./types";
 
-const Feed = ({ children }: { children: React.ReactNode }) => {
-  return React.Children.map(<>{children}</>, (child) => {
-    return React.cloneElement(child);
-  });
+const Feed = ({ items, hasMore, loadMore }: FeedProps) => {
+  return (
+    <InfiniteScroll
+      className="grid w-3/4 grid-cols-3 gap-6 mx-auto"
+      dataLength={items.length}
+      next={loadMore}
+      hasMore={hasMore}
+      loader={<h4>Loading...</h4>}
+    >
+      {items.map((item) => (
+        <Item key={item.id} data={item} />
+      ))}
+    </InfiniteScroll>
+  );
 };
-
-Feed.Container = ({ children }: ComponentProps) => (
-  <Container>{children}</Container>
-);
-
-Feed.Item = ({ data }: ItemProps) => <Item data={data} />;
 
 export default Feed;

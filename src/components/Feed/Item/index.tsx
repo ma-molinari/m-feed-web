@@ -4,11 +4,12 @@ import Link from "next/link";
 import IconButton from "@global-components/IconButton";
 import { IMAGE_URL } from "@configs/environment";
 
-import { ItemProps } from "./types";
+import { ItemProps } from "../types";
+
 
 const Item = ({ data }: ItemProps) => {
   return (
-    <div className="rounded-md bg-neutral-900">
+    <div className="rounded-md bg-neutral-900 h-[fit-content]">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center space-x-2">

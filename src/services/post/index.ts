@@ -20,7 +20,7 @@ export const usePostsFeed = (
   return useInfiniteQuery(
     keyPostsFeed(),
     ({ pageParam = 0 }) =>
-      api.get(`/posts/feed?page=${pageParam}&limit=7`).then(parseResponseData),
+      api.get(`/posts/feed?page=${pageParam}&limit=9`).then(parseResponseData),
     {
       ...options,
       getNextPageParam: (lastPage, allPages) => {
