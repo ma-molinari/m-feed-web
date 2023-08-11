@@ -1,4 +1,3 @@
-import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import Item from "./Item";
@@ -7,7 +6,7 @@ import { FeedProps } from "./types";
 const Feed = ({ items, hasMore, loadMore }: FeedProps) => {
   return (
     <InfiniteScroll
-      className="grid w-3/4 grid-cols-3 gap-6 mx-auto"
+      className="grid w-3/4 max-w-5xl grid-cols-3 gap-6 mx-auto"
       dataLength={items.length}
       next={loadMore}
       hasMore={hasMore}
