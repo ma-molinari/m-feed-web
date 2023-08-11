@@ -5,9 +5,7 @@ import { Post } from "@entities/post";
 import { useCurrentUserPostLiked } from "@services/users";
 import { RawResponse } from "@entities/response";
 
-export default function useFeedContent(
-  data?: InfiniteData<RawResponse<Post[]>>
-) {
+const useFeedContent = (data?: InfiniteData<RawResponse<Post[]>>) => {
   const { data: postLiked } = useCurrentUserPostLiked();
 
   const flatData = useMemo(() => {
@@ -19,4 +17,6 @@ export default function useFeedContent(
   }, [data, postLiked]);
 
   return flatData;
-}
+};
+
+export default useFeedContent;
