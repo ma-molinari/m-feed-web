@@ -1,17 +1,12 @@
 "use client";
 
-import { useMemo } from "react";
-
 import { usePostsFeed } from "@services/post";
 import Feed from "@global-components/Feed";
+import useFeedContent from "@global-hooks/useFeedContent";
 
 const FeedContainer = () => {
   const { data, fetchNextPage, hasNextPage, isLoading } = usePostsFeed();
-
-  const flatData = useMemo(
-    () => data?.pages?.flatMap((page) => page.data) ?? [],
-    [data]
-  );
+  const posts = useFeedContent(data);
 
   if (isLoading) {
     return <>Loading...</>;
@@ -19,7 +14,7 @@ const FeedContainer = () => {
 
   return (
     <Feed
-      items={flatData}
+      items={posts}
       hasMore={Boolean(hasNextPage)}
       loadMore={fetchNextPage}
     />

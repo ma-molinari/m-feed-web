@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { memo } from "react";
 
 import { ItemProps } from "../types";
 
@@ -24,4 +25,4 @@ const Item = ({ data }: ItemProps) => {
   );
 };
 
-export default Item;
+export default memo(Item);

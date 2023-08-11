@@ -1,21 +1,26 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useMemo } from "react";
 
 import { IMAGE_URL } from "@configs/environment";
 import { ItemProps } from "@global-components/Feed/types";
 import IconButton from "@global-components/IconButton";
 
 const ItemHeader = ({ data }: ItemProps) => {
+  const avatarUrl = useMemo(() => {
+    if (!data?.user?.avatar) {
+      return `/assets/shared/user.png`;
+    }
+
+    return `${IMAGE_URL}/${data?.user?.avatar}`;
+  }, [data?.user?.avatar]);
+
   return (
     <div className="flex items-center justify-between px-4 py-3">
       <div className="flex items-center space-x-2">
         <Link href={`/user/${data?.user?.username}`}>
           <Image
-            src={
-              data?.user?.avatar
-                ? `${IMAGE_URL}/${data?.user?.avatar}`
-                : `/assets/shared/user.png`
-            }
+            src={avatarUrl}
             alt={`${data?.user?.username} user photo`}
             height={32}
             width={32}
