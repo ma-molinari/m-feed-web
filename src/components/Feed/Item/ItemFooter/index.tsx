@@ -1,7 +1,22 @@
+import { useCallback } from "react";
+
 import { ItemProps } from "@global-components/Feed/types";
 import IconButton from "@global-components/IconButton";
+import { useLike, useUnlike } from "@services/post";
 
 const ItemFooter = ({ data }: ItemProps) => {
+  const { mutate: like } = useLike();
+  const { mutate: unlike } = useUnlike();
+
+  const onHandleLike = useCallback(() => {
+    if (data.liked) {
+      unlike({ postId: data.id });
+      return;
+    }
+
+    like({ postId: data.id });
+  }, [data.liked]);
+
   return (
     <div className="flex items-center px-4 py-3 space-x-3">
       <IconButton
@@ -11,7 +26,7 @@ const ItemFooter = ({ data }: ItemProps) => {
             : `/assets/feed/like-outline.svg`
         }
         alt={`Like icon`}
-        onClick={() => false}
+        onClick={onHandleLike}
       />
       <IconButton
         src={`/assets/feed/comment-outline.svg`}

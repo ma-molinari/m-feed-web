@@ -1,14 +1,20 @@
 import {
   UseInfiniteQueryOptions,
+  UseMutationOptions,
   useInfiniteQuery,
+  useMutation,
 } from "@tanstack/react-query";
 
 import { api } from "@global-libs/axios";
-import { APIError, RawResponse } from "@entities/response";
+import { APIError, RawResponse, ResponseDefault } from "@entities/response";
 import { Post } from "@entities/post";
 import parseResponseData from "@global-libs/axios/parseResponseData";
+import { queryClient } from "@global-libs/react-query";
+import { keyCurrentUserPostLiked } from "@services/users/keys";
+import defaultErrorHandler from "@global-libs/axios/defaultErrorHandler";
 
 import { keyPostsFeed } from "./keys";
+import { LikeProps } from "./types";
 
 export const usePostsFeed = (
   options?: UseInfiniteQueryOptions<
@@ -36,6 +42,42 @@ export const usePostsFeed = (
       },
       keepPreviousData: true,
       refetchOnWindowFocus: false,
+    }
+  );
+};
+
+export const useLike = (
+  options?: UseMutationOptions<ResponseDefault, APIError, LikeProps>
+) => {
+  return useMutation<ResponseDefault, APIError, LikeProps>(
+    (data: LikeProps) =>
+      api
+        .post<RawResponse<ResponseDefault>>(`/posts/like`, data)
+        .then(parseResponseData),
+    {
+      ...options,
+      onSuccess: () => {
+        queryClient.invalidateQueries(keyCurrentUserPostLiked());
+      },
+      onError: defaultErrorHandler,
+    }
+  );
+};
+
+export const useUnlike = (
+  options?: UseMutationOptions<ResponseDefault, APIError, LikeProps>
+) => {
+  return useMutation<ResponseDefault, APIError, LikeProps>(
+    (data: LikeProps) =>
+      api
+        .post<RawResponse<ResponseDefault>>(`/posts/unlike`, data)
+        .then(parseResponseData),
+    {
+      ...options,
+      onSuccess: () => {
+        queryClient.invalidateQueries(keyCurrentUserPostLiked());
+      },
+      onError: defaultErrorHandler,
     }
   );
 };

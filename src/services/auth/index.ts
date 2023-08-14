@@ -1,19 +1,11 @@
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
-import toaster from "cogo-toast";
 
 import { apiPublic } from "@global-libs/axios";
 import { APIError, RawResponse, ResponseDefault } from "@entities/response";
 import parseResponseData from "@global-libs/axios/parseResponseData";
+import defaultErrorHandler from "@global-libs/axios/defaultErrorHandler";
 
 import { LoginProps, LoginResponse, RegisterProps } from "./types";
-
-const onError = (error: APIError) => {
-  if (error.response?.data?.message) {
-    return toaster.error(error.response.data.message);
-  }
-
-  return toaster.error(error?.message);
-};
 
 export const useLogin = (
   options?: UseMutationOptions<LoginResponse, APIError, LoginProps>
@@ -25,7 +17,7 @@ export const useLogin = (
         .then(parseResponseData),
     {
       ...options,
-      onError,
+      onError: defaultErrorHandler,
     }
   );
 };
@@ -40,7 +32,7 @@ export const useRegister = (
         .then(parseResponseData),
     {
       ...options,
-      onError,
+      onError: defaultErrorHandler,
     }
   );
 };
