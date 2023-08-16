@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import { IMAGE_URL } from "@configs/environment";
 import { ItemProps } from "@global-components/Feed/types";
 import IconButton from "@global-components/IconButton";
+import Modal from "@global-components/Modal";
 
 const ItemHeader = ({ data }: ItemProps) => {
   const avatarUrl = useMemo(() => {
@@ -14,6 +15,8 @@ const ItemHeader = ({ data }: ItemProps) => {
 
     return `${IMAGE_URL}/${data?.user?.avatar}`;
   }, [data?.user?.avatar]);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="flex items-center justify-between px-4 py-3">
@@ -38,8 +41,10 @@ const ItemHeader = ({ data }: ItemProps) => {
       <IconButton
         src={`/assets/shared/more-options.svg`}
         alt={`More options icon`}
-        onClick={() => false}
+        onClick={() => setIsOpen(true)}
       />
+
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </div>
   );
 };
