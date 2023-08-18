@@ -1,17 +1,8 @@
-import { useEffect } from "react";
 import { Portal } from "react-portal";
 
-const Modal = ({ isOpen, onClose }) => {
-  useEffect(() => {
-    if (isOpen) {
-      document?.querySelector?.("body")?.classList.add("overflow-hidden");
-    }
+import { ModalProps } from "./types";
 
-    return () => {
-      document?.querySelector?.("body")?.classList.remove("overflow-hidden");
-    };
-  }, [isOpen]);
-
+const Modal = ({ isOpen, onClose, children }: ModalProps) => {
   if (!isOpen) {
     return null;
   }
@@ -23,10 +14,24 @@ const Modal = ({ isOpen, onClose }) => {
         onClick={onClose}
       ></div>
       <div
-        className="h-[500px] w-[500px] bg-white fixed top-[50%] left-[50%]"
-        style={{ transform: `translate(-50%, -50%)` }}
+        className="bg-neutral-800 fixed top-[50%] left-[50%] rounded-xl transform translate-x-[-50%]
+translate-y-[-50%]"
       >
-        <p>olaaaa</p>
+        {children}
+        <div className="min-w-[425px] rounded-xl [&>*:last-child]:border-b-0">
+          <button className="w-full p-4 text-sm font-semibold text-center text-red-500 border-b border-neutral-600">
+            Delete
+          </button>
+          <button className="w-full p-4 text-sm font-medium text-center border-b border-neutral-600">
+            Go to post
+          </button>
+          <button className="w-full p-4 text-sm font-medium text-center border-b border-neutral-600">
+            Copy link
+          </button>
+          <button className="w-full p-4 text-sm font-medium text-center border-b border-neutral-600">
+            Cancel
+          </button>
+        </div>
       </div>
     </Portal>
   );
