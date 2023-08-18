@@ -18,20 +18,6 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 translate-y-[-50%]"
       >
         {children}
-        <div className="min-w-[425px] rounded-xl [&>*:last-child]:border-b-0">
-          <button className="w-full p-4 text-sm font-semibold text-center text-red-500 border-b border-neutral-600">
-            Delete
-          </button>
-          <button className="w-full p-4 text-sm font-medium text-center border-b border-neutral-600">
-            Go to post
-          </button>
-          <button className="w-full p-4 text-sm font-medium text-center border-b border-neutral-600">
-            Copy link
-          </button>
-          <button className="w-full p-4 text-sm font-medium text-center border-b border-neutral-600">
-            Cancel
-          </button>
-        </div>
       </div>
     </Portal>
   );

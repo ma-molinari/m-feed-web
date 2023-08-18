@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { memo } from "react";
 
 interface Props {
   href: string;
@@ -33,4 +34,4 @@ const SidebarItem = ({ href, icon }: Props) => {
   );
 };
 
-export default SidebarItem;
+export default memo(SidebarItem);

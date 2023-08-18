@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { IMAGE_URL } from "@configs/environment";
 import { ItemProps } from "@global-components/Feed/types";
 import IconButton from "@global-components/IconButton";
-import Modal from "@global-components/Modal";
+import Menu from "@global-components/Menu";
 
 const ItemHeader = ({ data }: ItemProps) => {
   const avatarUrl = useMemo(() => {
@@ -44,7 +44,9 @@ const ItemHeader = ({ data }: ItemProps) => {
         onClick={() => setIsOpen(true)}
       />
 
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <Menu isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <Menu.Item label="Delete" type="danger" onClick={() => false} />
+      </Menu>
     </div>
   );
 };
