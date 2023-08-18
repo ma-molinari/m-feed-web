@@ -1,13 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { IMAGE_URL } from "@configs/environment";
 import { ItemProps } from "@global-components/Feed/types";
 import IconButton from "@global-components/IconButton";
-import Menu from "@global-components/Menu";
+
+import ItemMenu from "../ItemMenu";
 
 const ItemHeader = ({ data }: ItemProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onOpen = useCallback(() => setIsOpen(true), []);
+  const onClose = useCallback(() => setIsOpen(false), []);
+
   const avatarUrl = useMemo(() => {
     if (!data?.user?.avatar) {
       return `/assets/shared/user.png`;
@@ -15,8 +21,6 @@ const ItemHeader = ({ data }: ItemProps) => {
 
     return `${IMAGE_URL}/${data?.user?.avatar}`;
   }, [data?.user?.avatar]);
-
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="flex items-center justify-between px-4 py-3">
@@ -41,12 +45,10 @@ const ItemHeader = ({ data }: ItemProps) => {
       <IconButton
         src={`/assets/shared/more-options.svg`}
         alt={`More options icon`}
-        onClick={() => setIsOpen(true)}
+        onClick={onOpen}
       />
 
-      <Menu isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <Menu.Item label="Delete" type="danger" onClick={() => false} />
-      </Menu>
+      <ItemMenu isOpen={isOpen} onClose={onClose} data={data} />
     </div>
   );
 };
