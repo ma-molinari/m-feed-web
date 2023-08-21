@@ -81,3 +81,21 @@ export const useUnlike = (
     }
   );
 };
+
+export const useDelete = (
+  options?: UseMutationOptions<ResponseDefault, APIError, number>
+) => {
+  return useMutation<ResponseDefault, APIError, number>(
+    (postId: number) =>
+      api
+        .delete<RawResponse<ResponseDefault>>(`/posts/${postId}`)
+        .then(parseResponseData),
+    {
+      ...options,
+      onSuccess: () => {
+        queryClient.invalidateQueries(keyPostsFeed());
+      },
+      onError: defaultErrorHandler,
+    }
+  );
+};
