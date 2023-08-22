@@ -1,13 +1,9 @@
 import { useEffect } from "react";
-import { InfiniteData } from "@tanstack/react-query";
 
-import { Post } from "@entities/post";
+import { InfinitePosts } from "@entities/post";
 import { useCurrentUserPostLiked } from "@services/users";
-import { RawResponse } from "@entities/response";
 import { queryClient } from "@global-libs/react-query";
 import { keyPostsFeed } from "@services/post/keys";
-
-type InfinitePosts = InfiniteData<RawResponse<Post[]>>;
 
 const useFeedContent = (data?: InfinitePosts) => {
   const { data: postLiked } = useCurrentUserPostLiked({

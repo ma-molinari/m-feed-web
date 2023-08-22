@@ -1,3 +1,6 @@
+import { InfiniteData } from "@tanstack/react-query";
+
+import { RawResponse } from "@entities/response";
 import { User } from "@entities/user";
 
 interface Post {
@@ -12,4 +15,6 @@ interface Post {
   user: Pick<User, "id" | "username" | "fullName" | "avatar">;
 }
 
-export type { Post };
+type InfinitePosts = InfiniteData<RawResponse<Post[]>>;
+
+export type { Post, InfinitePosts };
