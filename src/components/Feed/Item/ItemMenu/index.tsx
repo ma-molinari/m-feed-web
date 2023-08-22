@@ -1,4 +1,3 @@
-import { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import toaster from "cogo-toast";
 
@@ -17,23 +16,27 @@ const ItemMenu = ({ isOpen, onClose, data }: Props) => {
   const { push } = useRouter();
   const { data: me } = useCurrentUser();
   const { mutate } = useDelete();
-  const postLink = useMemo(() => `${WEB_URL}/p/${data.id}`, [data.id]);
+  const postLink = `${WEB_URL}/p/${data.id}`;
 
-  const deletePost = useCallback(() => {
-    mutate(data.id);
+  const onHandleAction = (callback: () => void | Promise<void>) => {
+    callback();
     onClose();
-  }, [data.id]);
+  };
 
-  const goToPost = useCallback(() => {
-    push(postLink);
-    onClose();
-  }, [postLink]);
+  const deletePost = () => {
+    onHandleAction(() => mutate(data.id));
+  };
 
-  const copyLink = useCallback(() => {
-    navigator.clipboard.writeText(postLink);
-    toaster.success(`Link copied to clipboard.`);
-    onClose();
-  }, [postLink]);
+  const goToPost = () => {
+    onHandleAction(() => push("/"));
+  };
+
+  const copyLink = () => {
+    onHandleAction(() => {
+      navigator.clipboard.writeText(postLink);
+      toaster.success(`Link copied to clipboard.`);
+    });
+  };
 
   return (
     <Menu isOpen={isOpen} onClose={onClose}>
