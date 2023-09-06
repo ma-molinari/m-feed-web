@@ -16,20 +16,21 @@ const SidebarItem = ({ href, icon }: Props) => {
 
   const iconType = isActive ? "active" : "outline";
   const activeStyleContainer = isActive
-    ? "bg-neutral-100"
-    : "hover:bg-neutral-950";
+    ? "border-primary"
+    : "hover:border-primary";
 
   return (
     <Link
       href={href}
-      className={`w-full h-[44px] rounded-full flex items-center justify-center ${activeStyleContainer} transition-colors`}
+      className={`w-[44px] h-[44px] flex items-center justify-center ${activeStyleContainer} transition-colors border rounded-lg text-card-foreground`}
     >
-      <Image
+      <p>H</p>
+      {/* <Image
         src={`/assets/sidebar/${icon}-${iconType}.svg`}
         alt={`${icon} icon`}
         width={26}
         height={26}
-      />
+      /> */}
     </Link>
   );
 };

@@ -36,7 +36,7 @@ const ItemHeader = ({ data }: ItemProps) => {
         </Link>
         <Link
           href={`/user/${data?.user?.username}`}
-          className="text-sm font-semibold line-clamp-1"
+          className="text-sm font-semibold line-clamp-1 text-secondary"
         >
           {data?.user?.username}
         </Link>

@@ -3,10 +3,10 @@ import SidebarLogout from "./SidebarLogout";
 
 const Sidebar = () => {
   return (
-    <aside className="w-[60px] fixed flex flex-col justify-between items-center h-screen mx-6 py-8">
+    <aside className="flex flex-col items-center justify-between py-8 mx-6">
       <div />
 
-      <nav className="flex flex-col items-center justify-center w-full px-2 py-4 space-y-6 rounded-full bg-neutral-900">
+      <nav className="flex flex-col items-center justify-center px-3 py-4 space-y-6 rounded-lg">
         <SidebarItem href="/" icon="home" />
         <SidebarItem href="/explore" icon="explore" />
         <SidebarItem href="/search" icon="search" />
