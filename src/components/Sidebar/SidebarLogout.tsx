@@ -16,7 +16,7 @@ const SidebarLogout = () => {
 
   return (
     <button
-      className="w-[44px] h-[44px] transition-colors border rounded-lg hover:border-primary hover:bg-accent"
+      className="w-[44px] h-[44px] transition-colors border-2 rounded-lg hover:border-primary"
       onClick={onLogout}
     >
       <svg

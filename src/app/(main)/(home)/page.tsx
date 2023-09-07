@@ -6,5 +6,9 @@ export const metadata = {
 };
 
 export default function Home() {
-  return <main className="py-6">{/* <FeedContainer /> */}</main>;
+  return (
+    <main className="py-6">
+      <FeedContainer />
+    </main>
+  );
 }

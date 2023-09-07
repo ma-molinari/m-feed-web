@@ -24,13 +24,13 @@ const SidebarItem = ({ href, icon }: Props) => {
   const isActive = Boolean(pathname === href);
 
   const activeStyleContainer = isActive
-    ? "border-primary bg-accent"
-    : "hover:border-primary hover:bg-accent";
+    ? "border-primary"
+    : "hover:border-primary";
 
   return (
     <Link
       href={href}
-      className={`w-[44px] h-[44px] flex items-center justify-center ${activeStyleContainer} transition-colors border rounded-lg [&>svg]:stroke-card-foreground`}
+      className={`w-[44px] h-[44px] flex items-center justify-center ${activeStyleContainer} transition-colors border-2 rounded-lg [&>svg]:stroke-card-foreground`}
     >
       {CURRENT_ICON[icon]}
     </Link>
