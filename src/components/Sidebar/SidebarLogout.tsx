@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-
 import useAuth, { selectClearAuth } from "@global-stores/useAuth";
 import { queryClient } from "@global-libs/react-query";
 import { keyCurrentUser } from "@services/users/keys";
@@ -18,17 +16,23 @@ const SidebarLogout = () => {
 
   return (
     <button
-      className="w-[50px] h-[50px] transition-colors border rounded-lg text-card-foreground hover:border-primary"
+      className="w-[44px] h-[44px] transition-colors border rounded-lg hover:border-primary hover:bg-accent"
       onClick={onLogout}
     >
-      {/* <Image
-        src={"/assets/sidebar/logout-outline.svg"}
-        alt="Sign out Icon"
-        width={26}
-        height={26}
-        className="mx-auto"
-      /> */}
-      <p>H</p>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="w-6 h-6 mx-auto stroke-card-foreground"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+        />
+      </svg>
     </button>
   );
 };

@@ -2,10 +2,12 @@ import { ReactNode } from "react";
 
 const AuthLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <section className="flex h-screen gap-4 bg-white">
+    <section className="flex h-screen gap-4 overflow-hidden bg-white">
       <div className="w-3/5 bg-[url('/assets/auth/background.jpg')] bg-cover bg-center">
         <div className="w-full h-full p-8 backdrop-brightness-75">
-          <p className="text-4xl font-extrabold tracking-wider">M-FEED</p>
+          <p className="text-4xl font-extrabold tracking-wider text-white">
+            M-FEED
+          </p>
           <div className="flex flex-col justify-end w-full h-full">
             <p className="text-3xl font-semibold leading-10 tracking-wide text-white mb-36">
               Join us, share your memories.

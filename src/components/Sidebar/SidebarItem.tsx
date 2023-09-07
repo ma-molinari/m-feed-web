@@ -1,36 +1,38 @@
 "use client";
 
-import Image from "next/image";
+import { memo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { memo } from "react";
+import { CreateIcon, ExploreIcon, HomeIcon, ProfileIcon } from "./icons";
+import { SearchIcon } from "lucide-react";
 
 interface Props {
   href: string;
-  icon: string;
+  icon: "home" | "explore" | "search" | "create" | "profile";
 }
+
+const CURRENT_ICON = {
+  home: <HomeIcon />,
+  explore: <ExploreIcon />,
+  search: <SearchIcon />,
+  create: <CreateIcon />,
+  profile: <ProfileIcon />,
+};
 
 const SidebarItem = ({ href, icon }: Props) => {
   const pathname = usePathname();
   const isActive = Boolean(pathname === href);
 
-  const iconType = isActive ? "active" : "outline";
   const activeStyleContainer = isActive
-    ? "border-primary"
-    : "hover:border-primary";
+    ? "border-primary bg-accent"
+    : "hover:border-primary hover:bg-accent";
 
   return (
     <Link
       href={href}
-      className={`w-[44px] h-[44px] flex items-center justify-center ${activeStyleContainer} transition-colors border rounded-lg text-card-foreground`}
+      className={`w-[44px] h-[44px] flex items-center justify-center ${activeStyleContainer} transition-colors border rounded-lg [&>svg]:stroke-card-foreground`}
     >
-      <p>H</p>
-      {/* <Image
-        src={`/assets/sidebar/${icon}-${iconType}.svg`}
-        alt={`${icon} icon`}
-        width={26}
-        height={26}
-      /> */}
+      {CURRENT_ICON[icon]}
     </Link>
   );
 };
