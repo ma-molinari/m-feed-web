@@ -28,7 +28,8 @@
       "@global-layouts/*": ["./layouts/*"],
       "@configs/*": ["./configs/*"],
       "@entities/*": ["./entities/*"],
-      "@services/*": ["./services/*"]
+      "@services/*": ["./services/*"],
+      "@modules/*": ["./modules/*"]
     }
   },
   "include": [
