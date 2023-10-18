@@ -13,7 +13,7 @@ const RegisterScreen = () => {
           Already have an account?{" "}
           <Link
             href="/login"
-            className="font-semibold text-blue-600 underline hover:text-blue-700"
+            className="font-semibold underline text-primary hover:text-primary/90"
           >
             Log in
           </Link>

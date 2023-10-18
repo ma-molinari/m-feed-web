@@ -5,9 +5,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
-import { useLogin } from "@services/auth";
-import useAuth, { selectSetAuth } from "@global-stores/useAuth";
-
 import { Button } from "@global-components/ui/button";
 import {
   Form,
@@ -18,6 +15,9 @@ import {
   FormMessage,
 } from "@global-components/ui/form";
 import { Input } from "@global-components/ui/input";
+
+import { useLogin } from "@services/auth";
+import useAuth, { selectSetAuth } from "@global-stores/useAuth";
 
 const LoginSchema = z.object({
   email: z.string().min(1, { message: "Email or Username is required" }),
@@ -56,7 +56,7 @@ const LoginForm = () => {
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem className="mt-8">
+            <FormItem className="mt-6">
               <FormLabel>E-mail or Username</FormLabel>
               <FormControl>
                 <Input placeholder="E-mail or Username" {...field} />

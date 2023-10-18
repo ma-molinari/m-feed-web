@@ -5,8 +5,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
-import Button from "@global-components/Button";
-import TextField from "@global-components/TextField";
+import { Button } from "@global-components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@global-components/ui/form";
+import { Input } from "@global-components/ui/input";
+
 import { useLogin, useRegister } from "@services/auth";
 import useAuth, { selectSetAuth } from "@global-stores/useAuth";
 
@@ -31,12 +40,7 @@ const RegisterSchema = z
 type IRegisterSchema = z.infer<typeof RegisterSchema>;
 
 const RegisterForm = () => {
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    formState: { errors },
-  } = useForm<IRegisterSchema>({
+  const form = useForm<IRegisterSchema>({
     resolver: zodResolver(RegisterSchema),
   });
 
@@ -53,8 +57,8 @@ const RegisterForm = () => {
   const { mutate } = useRegister({
     onSuccess: () => {
       mutateLogin({
-        email: getValues("email"),
-        password: getValues("password"),
+        email: form.getValues("email"),
+        password: form.getValues("password"),
       });
     },
   });
@@ -64,44 +68,83 @@ const RegisterForm = () => {
   };
 
   return (
-    <form
-      className="flex flex-col w-full mt-8 space-y-6"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <TextField
-        name="fullName"
-        placeholder="Full Name"
-        register={register}
-        message={errors.fullName?.message}
-      />
-      <TextField
-        name="username"
-        placeholder="Username"
-        register={register}
-        message={errors.username?.message}
-      />
-      <TextField
-        name="email"
-        placeholder="E-mail"
-        register={register}
-        message={errors.email?.message}
-      />
-      <TextField
-        name="password"
-        placeholder="Password"
-        type="password"
-        register={register}
-        message={errors.password?.message}
-      />
-      <TextField
-        name="confirmPassword"
-        placeholder="Confirm Password"
-        type="password"
-        register={register}
-        message={errors.confirmPassword?.message}
-      />
-      <Button label="Sign Up" type="submit" />
-    </form>
+    <Form {...form}>
+      <form
+        className="flex flex-col w-full space-y-4"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
+        <FormField
+          control={form.control}
+          name="fullName"
+          render={({ field }) => (
+            <FormItem className="mt-6">
+              <FormLabel>Full Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Full Name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="Username" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>E-mail</FormLabel>
+              <FormControl>
+                <Input placeholder="E-mail" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input placeholder="Password" type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirm Password</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Confirm Password"
+                  type="password"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
   );
 };
 
