@@ -30,7 +30,7 @@ const SidebarItem = ({ href, icon }: Props) => {
   return (
     <Link
       href={href}
-      className={`w-[44px] h-[44px] flex items-center justify-center ${activeStyleContainer} transition-colors border-2 rounded-lg [&>svg]:stroke-card-foreground`}
+      className={`w-[44px] h-[44px] flex items-center justify-center ${activeStyleContainer} transition-colors dark:border border-2 rounded-lg [&>svg]:stroke-card-foreground`}
     >
       {CURRENT_ICON[icon]}
     </Link>

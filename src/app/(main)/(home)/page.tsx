@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <main className="py-6">
+    <main className="h-full py-6 overflow-auto">
       <FeedContainer />
     </main>
   );

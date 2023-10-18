@@ -8,7 +8,7 @@ import ItemHeader from "./ItemHeader";
 
 const Item = ({ data }: ItemProps) => {
   return (
-    <div className="rounded-md bg-neutral-900 h-[fit-content]">
+    <div className="rounded-md border shadow-sm h-[fit-content]">
       <ItemHeader data={data} />
 
       {/* IMAGE */}
