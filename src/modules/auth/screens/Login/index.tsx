@@ -16,7 +16,7 @@ const LoginScreen = () => {
           Don't have an account?{" "}
           <Link
             href="/register"
-            className="font-semibold text-blue-600 underline hover:text-blue-700"
+            className="font-semibold underline text-primary hover:text-primary/90"
           >
             Sign Up
           </Link>

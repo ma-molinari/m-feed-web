@@ -5,10 +5,19 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
-import Button from "@global-components/Button";
-import TextField from "@global-components/TextField";
 import { useLogin } from "@services/auth";
 import useAuth, { selectSetAuth } from "@global-stores/useAuth";
+
+import { Button } from "@global-components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@global-components/ui/form";
+import { Input } from "@global-components/ui/input";
 
 const LoginSchema = z.object({
   email: z.string().min(1, { message: "Email or Username is required" }),
@@ -19,11 +28,7 @@ const LoginSchema = z.object({
 type ILoginSchema = z.infer<typeof LoginSchema>;
 
 const LoginForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ILoginSchema>({
+  const form = useForm<ILoginSchema>({
     resolver: zodResolver(LoginSchema),
   });
 
@@ -42,25 +47,40 @@ const LoginForm = () => {
   };
 
   return (
-    <form
-      className="flex flex-col w-full mt-8 space-y-6"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <TextField
-        name="email"
-        placeholder="E-mail or Username"
-        register={register}
-        message={errors.email?.message}
-      />
-      <TextField
-        name="password"
-        placeholder="Password"
-        type="password"
-        register={register}
-        message={errors.password?.message}
-      />
-      <Button label="Log in" type="submit" />
-    </form>
+    <Form {...form}>
+      <form
+        className="flex flex-col w-full space-y-4"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem className="mt-8">
+              <FormLabel>E-mail or Username</FormLabel>
+              <FormControl>
+                <Input placeholder="E-mail or Username" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input placeholder="Password" type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
   );
 };
 
