@@ -8,7 +8,6 @@ const Sidebar = () => {
 
       <nav className="flex flex-col items-center justify-center px-3 py-4 space-y-6 rounded-lg">
         <SidebarItem href="/" icon="home" />
-        <SidebarItem href="/explore" icon="explore" />
         <SidebarItem href="/search" icon="search" />
         <SidebarItem href="/create" icon="create" />
         <SidebarItem href="/profile" icon="profile" />

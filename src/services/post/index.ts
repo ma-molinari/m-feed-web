@@ -21,7 +21,7 @@ export const usePostsFeed = (
     RawResponse<Post[]>,
     APIError,
     RawResponse<Post[]>
-  >
+  >,
 ) => {
   return useInfiniteQuery(
     keyPostsFeed(),
@@ -42,12 +42,12 @@ export const usePostsFeed = (
       },
       keepPreviousData: true,
       refetchOnWindowFocus: false,
-    }
+    },
   );
 };
 
 export const useLike = (
-  options?: UseMutationOptions<ResponseDefault, APIError, LikeProps>
+  options?: UseMutationOptions<ResponseDefault, APIError, LikeProps>,
 ) => {
   return useMutation<ResponseDefault, APIError, LikeProps>(
     (data: LikeProps) =>
@@ -60,12 +60,12 @@ export const useLike = (
         queryClient.invalidateQueries(keyCurrentUserPostLiked());
       },
       onError: defaultErrorHandler,
-    }
+    },
   );
 };
 
 export const useUnlike = (
-  options?: UseMutationOptions<ResponseDefault, APIError, LikeProps>
+  options?: UseMutationOptions<ResponseDefault, APIError, LikeProps>,
 ) => {
   return useMutation<ResponseDefault, APIError, LikeProps>(
     (data: LikeProps) =>
@@ -78,12 +78,12 @@ export const useUnlike = (
         queryClient.invalidateQueries(keyCurrentUserPostLiked());
       },
       onError: defaultErrorHandler,
-    }
+    },
   );
 };
 
 export const useDelete = (
-  options?: UseMutationOptions<ResponseDefault, APIError, number>
+  options?: UseMutationOptions<ResponseDefault, APIError, number>,
 ) => {
   return useMutation<ResponseDefault, APIError, number>(
     (postId: number) =>
@@ -94,7 +94,7 @@ export const useDelete = (
       ...options,
       onMutate: (postId) => {
         const previousCache = queryClient.getQueryData<InfinitePosts>(
-          keyPostsFeed()
+          keyPostsFeed(),
         );
 
         const newPagesCache = previousCache?.pages.map((page) => {
@@ -115,6 +115,6 @@ export const useDelete = (
         queryClient.setQueryData(keyPostsFeed(), context);
         defaultErrorHandler(error);
       },
-    }
+    },
   );
 };

@@ -3,17 +3,16 @@
 import { memo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CreateIcon, ExploreIcon, HomeIcon, ProfileIcon } from "./icons";
+import { CreateIcon, HomeIcon, ProfileIcon } from "./icons";
 import { SearchIcon } from "lucide-react";
 
 interface Props {
   href: string;
-  icon: "home" | "explore" | "search" | "create" | "profile";
+  icon: "home" | "search" | "create" | "profile";
 }
 
 const CURRENT_ICON = {
   home: <HomeIcon />,
-  explore: <ExploreIcon />,
   search: <SearchIcon />,
   create: <CreateIcon />,
   profile: <ProfileIcon />,
