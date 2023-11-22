@@ -10,7 +10,7 @@ const Sidebar = () => {
         <SidebarItem href="/" icon="home" />
         <SidebarItem href="/search" icon="search" />
         <SidebarItem href="/create" icon="create" />
-        <SidebarItem href="/profile" icon="profile" />
+        <SidebarItem href="/settings" icon="settings" />
       </nav>
 
       <SidebarLogout />

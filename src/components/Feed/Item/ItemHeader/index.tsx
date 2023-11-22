@@ -1,10 +1,15 @@
-import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
+import { MoreHorizontal } from "lucide-react";
 
 import { IMAGE_URL } from "@configs/environment";
 import { ItemProps } from "@global-components/Feed/types";
-import IconButton from "@global-components/IconButton";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@global-components/ui/avatar";
+import { Button } from "@global-components/ui/button";
 
 import ItemMenu from "../ItemMenu";
 
@@ -14,25 +19,20 @@ const ItemHeader = ({ data }: ItemProps) => {
   const onOpen = useCallback(() => setIsOpen(true), []);
   const onClose = useCallback(() => setIsOpen(false), []);
 
-  const avatarUrl = useMemo(() => {
-    if (!data?.user?.avatar) {
-      return `/assets/shared/user.png`;
-    }
-
-    return `${IMAGE_URL}/${data?.user?.avatar}`;
-  }, [data?.user?.avatar]);
-
   return (
     <div className="flex items-center justify-between px-4 py-3">
       <div className="flex items-center space-x-2">
         <Link href={`/user/${data?.user?.username}`}>
-          <Image
-            src={avatarUrl}
-            alt={`${data?.user?.username} user photo`}
-            height={32}
-            width={32}
-            className="rounded-full h-[32px]"
-          />
+          <Avatar className="w-8 h-8">
+            <AvatarImage
+              src={`${IMAGE_URL}/${data?.user?.avatar}`}
+              alt={data?.user?.username}
+              height={32}
+              width={32}
+            />
+            {/* Refactor soon, return the initials of the full name. */}
+            <AvatarFallback>{data?.user?.fullName[0]}</AvatarFallback>
+          </Avatar>
         </Link>
         <Link
           href={`/user/${data?.user?.username}`}
@@ -42,11 +42,9 @@ const ItemHeader = ({ data }: ItemProps) => {
         </Link>
       </div>
 
-      <IconButton
-        src={`/assets/shared/more-options.svg`}
-        alt={`More options icon`}
-        onClick={onOpen}
-      />
+      <Button className="p-0" variant="link" onClick={onOpen}>
+        <MoreHorizontal />
+      </Button>
 
       <ItemMenu isOpen={isOpen} onClose={onClose} data={data} />
     </div>

@@ -1,8 +1,9 @@
 import { useCallback } from "react";
+import { MessageSquare, Heart } from "lucide-react";
 
 import { ItemProps } from "@global-components/Feed/types";
-import IconButton from "@global-components/IconButton";
 import { useLike, useUnlike } from "@services/post";
+import { Button } from "@global-components/ui/button";
 
 const ItemFooter = ({ data }: ItemProps) => {
   const { mutate: like } = useLike();
@@ -19,20 +20,16 @@ const ItemFooter = ({ data }: ItemProps) => {
 
   return (
     <div className="flex items-center px-4 py-3 space-x-3">
-      <IconButton
-        src={
-          data?.liked
-            ? `/assets/feed/like-active.svg`
-            : `/assets/feed/like-outline.svg`
-        }
-        alt={`Like icon`}
+      <Button
+        className={`p-0 ${data?.liked ? "[&>svg]:stroke-red-500" : ""}`}
+        variant="link"
         onClick={onHandleLike}
-      />
-      <IconButton
-        src={`/assets/feed/comment-outline.svg`}
-        alt={`Comment icon`}
-        onClick={() => false}
-      />
+      >
+        <Heart />
+      </Button>
+      <Button className="p-0" variant="link" onClick={() => false}>
+        <MessageSquare strokeWidth={1.5} />
+      </Button>
     </div>
   );
 };

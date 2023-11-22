@@ -3,19 +3,18 @@
 import { memo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CreateIcon, HomeIcon, ProfileIcon } from "./icons";
-import { SearchIcon } from "lucide-react";
+import { Search, Settings, Home, Plus } from "lucide-react";
 
 interface Props {
   href: string;
-  icon: "home" | "search" | "create" | "profile";
+  icon: "home" | "search" | "create" | "settings";
 }
 
 const CURRENT_ICON = {
-  home: <HomeIcon />,
-  search: <SearchIcon />,
-  create: <CreateIcon />,
-  profile: <ProfileIcon />,
+  home: <Home />,
+  search: <Search />,
+  create: <Plus />,
+  settings: <Settings />,
 };
 
 const SidebarItem = ({ href, icon }: Props) => {
