@@ -21,11 +21,13 @@ const ItemFooter = ({ data }: ItemProps) => {
   return (
     <div className="flex items-center px-4 py-3 space-x-3">
       <Button
-        className={`p-0 ${data?.liked ? "[&>svg]:stroke-red-500" : ""}`}
+        className={`p-0 ${
+          data?.liked ? "[&>svg]:stroke-red-500 [&>svg]:fill-red-500" : ""
+        }`}
         variant="link"
         onClick={onHandleLike}
       >
-        <Heart />
+        <Heart strokeWidth={1.5} />
       </Button>
       <Button className="p-0" variant="link" onClick={() => false}>
         <MessageSquare strokeWidth={1.5} />

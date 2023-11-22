@@ -11,10 +11,10 @@ interface Props {
 }
 
 const CURRENT_ICON = {
-  home: <Home />,
-  search: <Search />,
-  create: <Plus />,
-  settings: <Settings />,
+  home: <Home strokeWidth={1.5} />,
+  search: <Search strokeWidth={1.5} />,
+  create: <Plus strokeWidth={1.5} />,
+  settings: <Settings strokeWidth={1.5} />,
 };
 
 const SidebarItem = ({ href, icon }: Props) => {

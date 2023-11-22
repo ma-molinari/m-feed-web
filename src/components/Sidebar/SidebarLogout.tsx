@@ -20,7 +20,7 @@ const SidebarLogout = () => {
       className="w-[44px] h-[44px] transition-colors dark:border border-2 rounded-lg hover:border-primary [&>svg]:stroke-card-foreground"
       onClick={onLogout}
     >
-      <DoorOpen className="mx-auto" />
+      <DoorOpen className="mx-auto" strokeWidth={1.5} />
     </button>
   );
 };

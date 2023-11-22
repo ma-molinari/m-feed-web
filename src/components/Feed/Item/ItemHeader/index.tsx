@@ -43,7 +43,7 @@ const ItemHeader = ({ data }: ItemProps) => {
       </div>
 
       <Button className="p-0" variant="link" onClick={onOpen}>
-        <MoreHorizontal />
+        <MoreHorizontal strokeWidth={1.5} />
       </Button>
 
       <ItemMenu isOpen={isOpen} onClose={onClose} data={data} />
