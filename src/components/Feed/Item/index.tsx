@@ -8,11 +8,11 @@ import ItemHeader from "./ItemHeader";
 
 const Item = ({ data }: ItemProps) => {
   return (
-    <div className="rounded-md border shadow-sm h-[fit-content]">
+    <div className="rounded-md border shadow-sm h-[fit-content] w-[32rem]">
       <ItemHeader data={data} />
 
       {/* IMAGE */}
-      <div className="relative h-[300px]">
+      <div className="relative h-[500px]">
         <Image
           src={`/assets/feed/mock.jpeg`}
           alt={`Photo by ${data?.user?.username}`}
