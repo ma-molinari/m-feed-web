@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
@@ -11,14 +10,14 @@ interface Props {
 const DEFAULT_STYLE = "text-neutral-100 font-medium";
 const DANGER_STYLE = "text-red-500 font-semibold";
 
-const Item = ({ label, type = "default", className, onClick }: Props) => {
+const Item = ({ label, type = "default", className = ``, onClick }: Props) => {
   const typeStyle = type === "danger" ? DANGER_STYLE : DEFAULT_STYLE;
 
   return (
     <button
       onClick={onClick}
       className={twMerge(
-        `w-full p-4 text-sm font-medium text-center border-b border-neutral-600 ${typeStyle} ${className}`
+        `w-full p-4 text-sm font-medium text-center border-b border-neutral-800 ${typeStyle} ${className}`
       )}
     >
       {label}
@@ -26,4 +25,4 @@ const Item = ({ label, type = "default", className, onClick }: Props) => {
   );
 };
 
-export default memo(Item);
+export default Item;

@@ -3,12 +3,12 @@ import toaster from "cogo-toast";
 
 import { Post } from "@entities/post";
 import Menu from "@global-components/Menu";
-import { ModalProps } from "@global-components/Modal/types";
 import { useCurrentUser } from "@services/users";
 import { WEB_URL } from "@configs/environment";
 import { useDelete } from "@services/post";
+import { MenuProps } from "@global-components/Menu/types";
 
-interface Props extends Omit<ModalProps, "children"> {
+interface Props extends Omit<MenuProps, "children"> {
   data: Post;
 }
 

@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 const AuthLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <section className="flex h-screen overflow-hidden bg-white">
+    <section className="flex h-screen overflow-hidden bg-white light">
       <div className="w-3/5 bg-[url('/assets/auth/background.jpg')] bg-cover bg-center">
         <div className="w-full h-full p-8 backdrop-brightness-75">
           <p className="text-4xl font-extrabold tracking-wider text-white">

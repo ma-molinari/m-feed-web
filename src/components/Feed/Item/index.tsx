@@ -15,7 +15,7 @@ const Item = ({ data }: ItemProps) => {
       <div className="relative h-[300px]">
         <Image
           src={`/assets/feed/mock.jpeg`}
-          alt={`Photo by {{ username }}`}
+          alt={`Photo by ${data?.user?.username}`}
           fill={true}
         />
       </div>

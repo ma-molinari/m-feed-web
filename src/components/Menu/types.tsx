@@ -1,9 +1,9 @@
 import { ReactNode } from "react";
 
-interface ModalProps {
+interface MenuProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
 }
 
-export type { ModalProps };
+export type { MenuProps };

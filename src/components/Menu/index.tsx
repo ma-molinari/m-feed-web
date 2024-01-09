@@ -1,17 +1,16 @@
 import { Children, cloneElement } from "react";
-
-import Modal from "@global-components/Modal";
-import { ModalProps } from "@global-components/Modal/types";
+import { Dialog, DialogContent } from "@global-components/ui/dialog";
 
 import Item from "./Item";
+import { MenuProps } from "./types";
 
-const Menu = ({ isOpen, onClose, children }: ModalProps) => {
+const Menu = ({ isOpen, onClose, children }: MenuProps) => {
   return Children.map(
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="min-w-[425px] rounded-xl [&>*:last-child]:border-b-0">
-        {children}
-      </div>
-    </Modal>,
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent>
+        <div className="[&>*:last-child]:border-b-0">{children}</div>
+      </DialogContent>
+    </Dialog>,
     (child) => cloneElement(child)
   );
 };

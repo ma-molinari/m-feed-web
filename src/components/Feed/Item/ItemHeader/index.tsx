@@ -30,7 +30,7 @@ const ItemHeader = ({ data }: ItemProps) => {
               height={32}
               width={32}
             />
-            {/* Refactor soon, return the initials of the full name. */}
+            {/* Refactor soon, return the initials of the full name */}
             <AvatarFallback>{data?.user?.fullName[0]}</AvatarFallback>
           </Avatar>
         </Link>
