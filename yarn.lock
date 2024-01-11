@@ -19,6 +19,13 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
+"@babel/runtime@^7.16.7":
+  version "7.23.8"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.8.tgz#8ee6fe1ac47add7122902f257b8ddf55c898f650"
+  integrity sha512-Y7KbAP984rn1VGMbGqKmBLio9V7y5Je9GvU4rQPCPinCyNfUcToxIXl06d59URp/F3LwinvODxab5N/G6qggkw==
+  dependencies:
+    regenerator-runtime "^0.14.0"
+
 "@babel/runtime@^7.20.7":
   version "7.22.6"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.22.6.tgz#57d64b9ae3cff1d67eb067ae117dac087f5bd438"
@@ -2611,6 +2618,13 @@ queue-microtask@^1.2.2:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
+
+react-cool-virtual@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/react-cool-virtual/-/react-cool-virtual-0.7.0.tgz#8fa5d8b622b1c73406f4542eba8cd75de3bc3558"
+  integrity sha512-oWRsF0Pf9dRWncpFvsCNWm0W/d/UEbUqxNIuhGEcLzdW16leokcl9gSYG9Ha5raaF/qq029W1cj65zAwgJyR7A==
+  dependencies:
+    "@babel/runtime" "^7.16.7"
 
 react-dom@18.2.0:
   version "18.2.0"

@@ -13,13 +13,13 @@ const FeedContainer = () => {
   }
 
   return (
-    <div className="relative flex justify-center flex-1 gap-8">
+    <div className="relative flex justify-center">
       <Feed
         items={posts}
         hasMore={Boolean(hasNextPage)}
         loadMore={fetchNextPage}
       />
-      <div className="sticky top-0 border shadow-sm w-96 h-[200px] rounded-md"></div>
+      {/* <div className="sticky top-0 border shadow-sm w-96 h-[200px] rounded-md"></div> */}
     </div>
   );
 };
