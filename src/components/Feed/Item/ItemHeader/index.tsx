@@ -25,7 +25,7 @@ const ItemHeader = ({ data }: ItemProps) => {
         <Link href={`/user/${data?.user?.username}`}>
           <Avatar className="w-8 h-8">
             <AvatarImage
-              src={`${IMAGE_URL}/${data?.user?.avatar}`}
+              src={data?.user?.avatar && `${IMAGE_URL}/${data?.user?.avatar}`}
               alt={data?.user?.username}
               height={32}
               width={32}
