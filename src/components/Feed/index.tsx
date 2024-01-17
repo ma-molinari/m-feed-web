@@ -1,38 +1,28 @@
+import { Children, cloneElement, forwardRef } from "react";
+import { twMerge } from "tailwind-merge";
+
+import Content from "./Content";
 import Item from "./Item";
-import { FeedProps } from "./types";
-import useVirtual from "react-cool-virtual";
+import { FeedElement } from "./types";
 
-const ITEM_SIZE = 630;
-
-const Feed = ({ items, hasMore, loadMore }: FeedProps) => {
-  const {
-    outerRef,
-    innerRef,
-    items: virtualItems,
-  } = useVirtual<HTMLDivElement, HTMLDivElement>({
-    overscanCount: 1,
-    itemCount: hasMore ? items.length + 1 : items.length,
-    itemSize: ITEM_SIZE,
-    loadMoreCount: 1,
-    isItemLoaded: (loadIndex) => Boolean(items[loadIndex]),
-    loadMore,
-  });
-
-  return (
-    <div ref={outerRef} className="w-full h-screen overflow-y-auto">
-      <div ref={innerRef} className="flex flex-col gap-y-6">
-        {virtualItems.map(({ index, measureRef }) => {
-          if (!items[index]) return;
-
-          return (
-            <div key={items[index]?.id} ref={measureRef} className="w-max">
-              <Item data={items[index]} />
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
+const Feed = Object.assign(
+  forwardRef<HTMLDivElement, FeedElement>(({ children, className = `` }, ref) =>
+    Children.map(
+      <div
+        ref={ref}
+        className={twMerge(`w-full h-screen overflow-y-auto ${className}`)}
+      >
+        {children}
+      </div>,
+      (child) => cloneElement(child)
+    )
+  )
+) as typeof Content & {
+  Content: typeof Content;
+  Item: typeof Item;
 };
+
+Feed.Content = Content;
+Feed.Item = Item;
 
 export default Feed;

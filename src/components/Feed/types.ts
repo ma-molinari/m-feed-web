@@ -1,13 +1,13 @@
 import { Post } from "@entities/post";
+import { ReactNode } from "react";
 
-interface FeedProps {
-  items: Post[];
-  hasMore: boolean;
-  loadMore: () => void;
+interface FeedElement {
+  children: ReactNode;
+  className?: string;
 }
 
 interface ItemProps {
   data: Post;
 }
 
-export type { FeedProps, ItemProps };
+export type { FeedElement, ItemProps };
