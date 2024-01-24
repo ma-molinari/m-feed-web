@@ -1,9 +1,9 @@
-import FeedContainer from "@modules/home/components/FeedContainer";
+import FeedCompose from "@modules/home/components/FeedCompose";
 
 const HomeScreen = () => {
   return (
     <main>
-      <FeedContainer />
+      <FeedCompose />
     </main>
   );
 };

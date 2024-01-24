@@ -5,8 +5,9 @@ import { usePostsFeed } from "@services/post";
 import Feed from "@global-components/Feed";
 import useFeedContent from "@global-hooks/useFeedContent";
 import { ITEM_SIZE } from "@global-components/Feed/constants";
+import FeedComposeLoading from "./loading";
 
-const FeedContainer = () => {
+const FeedCompose = () => {
   const { data, fetchNextPage, hasNextPage, isLoading } = usePostsFeed();
   const posts = useFeedContent(data);
 
@@ -23,7 +24,7 @@ const FeedContainer = () => {
   });
 
   if (isLoading) {
-    return <>Loading...</>;
+    return <FeedComposeLoading />;
   }
 
   return (
@@ -46,4 +47,4 @@ const FeedContainer = () => {
   );
 };
 
-export default FeedContainer;
+export default FeedCompose;

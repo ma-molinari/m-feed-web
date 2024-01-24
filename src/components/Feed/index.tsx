@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge";
 import Content from "./Content";
 import Item from "./Item";
 import { FeedElement } from "./types";
+import ItemSkeleton from "./ItemSkeleton";
 
 const Feed = Object.assign(
   forwardRef<HTMLDivElement, FeedElement>(({ children, className = `` }, ref) =>
@@ -20,9 +21,11 @@ const Feed = Object.assign(
 ) as typeof Content & {
   Content: typeof Content;
   Item: typeof Item;
+  ItemSkeleton: typeof ItemSkeleton;
 };
 
 Feed.Content = Content;
 Feed.Item = Item;
+Feed.ItemSkeleton = ItemSkeleton;
 
 export default Feed;
