@@ -3,8 +3,8 @@ import { twMerge } from "tailwind-merge";
 
 import Content from "./Content";
 import Item from "./Item";
+import ItemSkeleton from "./Item/loading";
 import { FeedElement } from "./types";
-import ItemSkeleton from "./ItemSkeleton";
 
 const Feed = Object.assign(
   forwardRef<HTMLDivElement, FeedElement>(({ children, className = `` }, ref) =>
