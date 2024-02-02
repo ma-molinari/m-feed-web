@@ -7,10 +7,7 @@ import ItemFooter from "./ItemFooter";
 import ItemHeader from "./ItemHeader";
 
 const Item = forwardRef<HTMLDivElement, ItemProps>(({ data }, ref) => (
-  <div
-    ref={ref}
-    className="rounded-md border shadow-sm h-[fit-content] w-[32rem]"
-  >
+  <div ref={ref} className="border shadow-sm h-[fit-content] w-[32rem]">
     <ItemHeader data={data} />
 
     {/* IMAGE */}

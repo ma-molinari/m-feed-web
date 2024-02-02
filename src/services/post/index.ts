@@ -13,8 +13,9 @@ import { queryClient } from "@global-libs/react-query";
 import { keyCurrentUserPostLiked } from "@services/users/keys";
 import defaultErrorHandler from "@global-libs/axios/defaultErrorHandler";
 
-import { keyPostsFeed } from "./keys";
+import { keyPostsFeed, keyPostsFeedExplore } from "./keys";
 import { LikeProps } from "./types";
+import { getNextPageParam } from "./helpers";
 
 export const usePostsFeed = (
   options?: UseInfiniteQueryOptions<
@@ -29,17 +30,29 @@ export const usePostsFeed = (
       api.get(`/posts/feed?page=${pageParam}&limit=3`).then(parseResponseData),
     {
       ...options,
-      getNextPageParam: (lastPage, allPages) => {
-        const flatPages = allPages.flatMap((context) => context.data);
-        const totalItems = flatPages.length || 0;
-        const totalCount = lastPage.ct || 0;
+      getNextPageParam,
+      keepPreviousData: true,
+      refetchOnWindowFocus: false,
+    }
+  );
+};
 
-        if (totalItems >= totalCount) {
-          return undefined;
-        }
-
-        return allPages.length;
-      },
+export const usePostsFeedExplore = (
+  options?: UseInfiniteQueryOptions<
+    RawResponse<Post[]>,
+    APIError,
+    RawResponse<Post[]>
+  >
+) => {
+  return useInfiniteQuery(
+    keyPostsFeedExplore(),
+    ({ pageParam = 0 }) =>
+      api
+        .get(`/posts/explore?page=${pageParam}&limit=3`)
+        .then(parseResponseData),
+    {
+      ...options,
+      getNextPageParam,
       keepPreviousData: true,
       refetchOnWindowFocus: false,
     }

@@ -1,14 +1,15 @@
 "use client";
 
 import useVirtual from "react-cool-virtual";
-import { usePostsFeed } from "@services/post";
+import { usePostsFeedExplore } from "@services/post";
 import Feed from "@global-components/Feed";
 import useFeedContent from "@global-hooks/useFeedContent";
 import { ITEM_SIZE } from "@global-components/Feed/constants";
+import { PostType } from "@entities/post";
 
-const FeedCompose = () => {
-  const { data, fetchNextPage, hasNextPage } = usePostsFeed();
-  const posts = useFeedContent(data);
+const FeedExploreCompose = () => {
+  const { data, fetchNextPage, hasNextPage } = usePostsFeedExplore();
+  const posts = useFeedContent(data, PostType.Explore);
 
   const { outerRef, innerRef, items } = useVirtual<
     HTMLDivElement,
@@ -46,4 +47,4 @@ const FeedCompose = () => {
   );
 };
 
-export default FeedCompose;
+export default FeedExploreCompose;

@@ -1,25 +1,26 @@
 import { useEffect } from "react";
 
-import { InfinitePosts } from "@entities/post";
+import { InfinitePosts, PostType } from "@entities/post";
 import { useCurrentUserPostLiked } from "@services/users";
 import { queryClient } from "@global-libs/react-query";
-import { keyPostsFeed } from "@services/post/keys";
+import { keyPostsFeed, keyPostsFeedExplore } from "@services/post/keys";
 
-const useFeedContent = (data?: InfinitePosts) => {
+const useFeedContent = (data?: InfinitePosts, type?: PostType) => {
   const { data: postLiked } = useCurrentUserPostLiked({
     enabled: Boolean(data),
   });
+
+  const queryKey =
+    type === PostType.Explore ? keyPostsFeedExplore() : keyPostsFeed();
 
   useEffect(() => {
     if (!data) {
       return;
     }
 
-    const previousCache = queryClient.getQueryData<InfinitePosts>(
-      keyPostsFeed()
-    );
+    const previousCache = queryClient.getQueryData<InfinitePosts>(queryKey);
 
-    const newPagesCache = previousCache?.pages.map((page) => {
+    const newPagesCache = previousCache?.pages?.map((page) => {
       return {
         ct: page?.ct,
         data: page.data.map((post) => ({
@@ -29,7 +30,7 @@ const useFeedContent = (data?: InfinitePosts) => {
       };
     });
 
-    queryClient.setQueryData(keyPostsFeed(), {
+    queryClient.setQueryData(queryKey, {
       pageParams: previousCache?.pageParams,
       pages: newPagesCache,
     });

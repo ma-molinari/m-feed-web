@@ -17,4 +17,11 @@ interface Post {
 
 type InfinitePosts = InfiniteData<RawResponse<Post[]>>;
 
+enum PostType {
+  Feed = "feed",
+  Explore = "explore",
+}
+
 export type { Post, InfinitePosts };
+
+export { PostType };

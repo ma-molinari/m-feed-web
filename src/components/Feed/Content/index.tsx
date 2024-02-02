@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, memo } from "react";
 import { twMerge } from "tailwind-merge";
 import { FeedElement } from "../types";
 
@@ -10,4 +10,4 @@ const Content = forwardRef<HTMLDivElement, FeedElement>(
   )
 );
 
-export default Content;
+export default memo(Content);
