@@ -6,9 +6,10 @@ import Feed from "@global-components/Feed";
 import useFeedContent from "@global-hooks/useFeedContent";
 import { ITEM_SIZE } from "@global-components/Feed/constants";
 import { PostType } from "@entities/post";
+import FeedComposeLoading from "../FeedComposeLoading";
 
 const FeedExploreCompose = () => {
-  const { data, fetchNextPage, hasNextPage } = usePostsFeedExplore();
+  const { data, fetchNextPage, hasNextPage, isLoading } = usePostsFeedExplore();
   const posts = useFeedContent(data, PostType.Explore);
 
   const { outerRef, innerRef, items } = useVirtual<
@@ -22,6 +23,10 @@ const FeedExploreCompose = () => {
     isItemLoaded: (loadIndex) => Boolean(posts[loadIndex]),
     loadMore: fetchNextPage as () => void,
   });
+
+  if (isLoading) {
+    return <FeedComposeLoading />;
+  }
 
   return (
     <Feed ref={outerRef} className="h-[calc(100vh-100px)]">
