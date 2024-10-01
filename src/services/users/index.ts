@@ -5,7 +5,11 @@ import parseResponseData from "@global-libs/axios/parseResponseData";
 import { APIError, RawResponse } from "@entities/response";
 import { User } from "@entities/user";
 
-import { keyCurrentUser, keyCurrentUserPostLiked } from "./keys";
+import {
+  keyCurrentUser,
+  keyCurrentUserPostLiked,
+  keySearchUsers,
+} from "./keys";
 
 export const useCurrentUser = (
   options?: UseQueryOptions<User, APIError, User>
@@ -26,6 +30,18 @@ export const useCurrentUserPostLiked = (
       api
         .get<RawResponse<number[]>>(`/users/me/liked-posts`)
         .then(parseResponseData),
+    options
+  );
+};
+
+export const useSearchUsers = (
+  query: string,
+  options?: UseQueryOptions<RawResponse<User[]>, APIError, RawResponse<User[]>>
+) => {
+  return useQuery(
+    keySearchUsers(query),
+    () =>
+      api.get(`/users/search?query=${query}&limit=5`).then(parseResponseData),
     options
   );
 };

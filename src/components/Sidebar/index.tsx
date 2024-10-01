@@ -1,3 +1,4 @@
+import FindUser from "@global-components/FindUser";
 import SidebarItem from "./SidebarItem";
 import SidebarLogout from "./SidebarLogout";
 
@@ -8,7 +9,9 @@ const Sidebar = () => {
 
       <nav className="flex flex-col items-center justify-center px-3 py-4 space-y-6 rounded-lg">
         <SidebarItem href="/" icon="home" />
-        <SidebarItem href="/search" icon="search" />
+        <FindUser>
+          <SidebarItem type="button" icon="search" />
+        </FindUser>
         <SidebarItem href="/create" icon="create" />
         <SidebarItem href="/settings" icon="settings" />
       </nav>

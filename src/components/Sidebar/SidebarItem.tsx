@@ -6,8 +6,9 @@ import { usePathname } from "next/navigation";
 import { Search, Settings, Home, Plus } from "lucide-react";
 
 interface Props {
-  href: string;
+  href?: string;
   icon: "home" | "search" | "create" | "settings";
+  type?: "link" | "button";
 }
 
 const CURRENT_ICON = {
@@ -17,7 +18,7 @@ const CURRENT_ICON = {
   settings: <Settings strokeWidth={1.5} />,
 };
 
-const SidebarItem = ({ href, icon }: Props) => {
+const SidebarItem = ({ href = "#", icon, type = "link" }: Props) => {
   const pathname = usePathname();
   const isActive = Boolean(pathname === href);
 
@@ -25,13 +26,23 @@ const SidebarItem = ({ href, icon }: Props) => {
     ? "border-primary"
     : "hover:border-primary";
 
+  if (type === "link") {
+    return (
+      <Link
+        href={href}
+        className={`w-[44px] h-[44px] flex items-center justify-center ${activeStyleContainer} transition-colors dark:border border-2 rounded-lg [&>svg]:stroke-card-foreground`}
+      >
+        {CURRENT_ICON[icon]}
+      </Link>
+    );
+  }
+
   return (
-    <Link
-      href={href}
+    <button
       className={`w-[44px] h-[44px] flex items-center justify-center ${activeStyleContainer} transition-colors dark:border border-2 rounded-lg [&>svg]:stroke-card-foreground`}
     >
       {CURRENT_ICON[icon]}
-    </Link>
+    </button>
   );
 };
 
