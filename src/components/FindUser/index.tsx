@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { ReactNode, useMemo, useState } from "react";
 import Image from "next/image";
 import { useDebounce } from "usehooks-ts";
 import { Search } from "lucide-react";
@@ -10,7 +10,7 @@ import { Input } from "@global-components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@global-components/ui/sheet";
 import UserCard from "./UserCard";
 
-const FindUser = ({ children }: any) => {
+const FindUser = ({ children }: { children: ReactNode }) => {
   const [search, setSearch] = useState<string>("");
   const debounced = useDebounce(search, 500);
 
@@ -39,6 +39,7 @@ const FindUser = ({ children }: any) => {
             placeholder="Find user..."
             aria-label="Search for a user"
             onChange={(event) => setSearch(event.target.value)}
+            className="bg-zinc-900"
           />
           <Button type="submit" variant="secondary" aria-label="Search user">
             <Search className="mx-auto" strokeWidth={3} size={20} />

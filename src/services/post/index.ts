@@ -95,6 +95,32 @@ export const useUnlike = (
   );
 };
 
+export const useCreate = (
+  options?: UseMutationOptions<
+    ResponseDefault,
+    APIError,
+    Pick<Post, "content" | "image">
+  >
+) => {
+  return useMutation<
+    ResponseDefault,
+    APIError,
+    Pick<Post, "content" | "image">
+  >(
+    (data: Pick<Post, "content" | "image">) =>
+      api
+        .post<RawResponse<ResponseDefault>>(`/posts`, data)
+        .then(parseResponseData),
+    {
+      ...options,
+      onSettled: () => {
+        queryClient.invalidateQueries(keyPostsFeed());
+      },
+      onError: defaultErrorHandler,
+    }
+  );
+};
+
 export const useDelete = (
   options?: UseMutationOptions<ResponseDefault, APIError, number>
 ) => {
