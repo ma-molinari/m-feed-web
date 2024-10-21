@@ -15,7 +15,7 @@ import {
 import { Input } from "@global-components/ui/input";
 import { Label } from "@global-components/ui/label";
 import UploadFile from "@global-components/ui/upload-file";
-import { useCreate } from "@services/post";
+import { useCreate, useUpload } from "@services/post";
 
 const PostManager = ({ children }: { children: ReactNode }) => {
   const drawerTriggerRef = useRef<HTMLButtonElement>(null);
@@ -41,9 +41,15 @@ const PostManager = ({ children }: { children: ReactNode }) => {
     return ``;
   };
 
-  const { mutate } = useCreate({
-    onSuccess: (_data) => {
+  const { mutate: onCreate } = useCreate({
+    onSuccess: () => {
       drawerTriggerRef.current?.click();
+    },
+  });
+
+  const { mutate: onUpload } = useUpload({
+    onSuccess: (data) => {
+      onCreate({ content: title, image: data.filename });
     },
   });
 
@@ -52,7 +58,11 @@ const PostManager = ({ children }: { children: ReactNode }) => {
     if (!imageFile || !title?.length) {
       return;
     }
-    mutate({ image: imageFile.name, content: title });
+
+    const form = new FormData();
+    form.append("image", imageFile);
+
+    onUpload(form);
   };
 
   return (

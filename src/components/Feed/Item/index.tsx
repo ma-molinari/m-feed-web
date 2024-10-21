@@ -1,5 +1,6 @@
 import { forwardRef, memo } from "react";
 import Image from "next/image";
+import { IMAGE_URL } from "@configs/environment";
 
 import { ItemProps } from "../types";
 
@@ -13,8 +14,9 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({ data }, ref) => (
     {/* IMAGE */}
     <div className="relative h-[32rem]">
       <Image
-        src={`/assets/feed/mock.jpeg`}
+        src={`${IMAGE_URL}/${data?.image}`}
         alt={`Photo by ${data?.user?.username}`}
+        className="!w-auto mx-auto"
         fill
         sizes="32rem"
         priority

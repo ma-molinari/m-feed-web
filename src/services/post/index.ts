@@ -4,6 +4,7 @@ import {
   useInfiniteQuery,
   useMutation,
 } from "@tanstack/react-query";
+import toaster from "cogo-toast";
 
 import { api } from "@global-libs/axios";
 import { APIError, RawResponse, ResponseDefault } from "@entities/response";
@@ -14,7 +15,7 @@ import { keyCurrentUserPostLiked } from "@services/users/keys";
 import defaultErrorHandler from "@global-libs/axios/defaultErrorHandler";
 
 import { keyPostsFeed, keyPostsFeedExplore } from "./keys";
-import { LikeProps } from "./types";
+import { LikeProps, UploadRespose } from "./types";
 import { getNextPageParam } from "./helpers";
 
 export const usePostsFeed = (
@@ -116,7 +117,16 @@ export const useCreate = (
       onSettled: () => {
         queryClient.invalidateQueries(keyPostsFeed());
       },
-      onError: defaultErrorHandler,
+      onError: (error) => {
+        if (error.response?.status === 400) {
+          toaster.warn(error.response?.data?.message);
+          return;
+        }
+
+        toaster.error(
+          "Oops! Something went wrong while creating the post. Please try again later."
+        );
+      },
     }
   );
 };
@@ -153,6 +163,29 @@ export const useDelete = (
       onError: (error, _, context) => {
         queryClient.setQueryData(keyPostsFeed(), context);
         defaultErrorHandler(error);
+      },
+    }
+  );
+};
+
+export const useUpload = (
+  options?: UseMutationOptions<UploadRespose, APIError, FormData>
+) => {
+  return useMutation<UploadRespose, APIError, FormData>(
+    (data: FormData) =>
+      api
+        .post<RawResponse<UploadRespose>>(`/file/upload`, data)
+        .then(parseResponseData),
+    {
+      ...options,
+      onSettled: () => {
+        queryClient.invalidateQueries(keyPostsFeed());
+        queryClient.invalidateQueries(keyPostsFeedExplore());
+      },
+      onError: () => {
+        toaster.error(
+          "The file upload was not completed due to an error. Please try again or check the file specifications."
+        );
       },
     }
   );
