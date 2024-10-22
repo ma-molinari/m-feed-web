@@ -6,7 +6,7 @@ import { User } from "@entities/user";
 interface Post {
   id: number;
   userId: number;
-  content?: string;
+  content: string;
   image: string;
   total_likes: number;
   liked?: boolean;

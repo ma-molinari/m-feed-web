@@ -7,15 +7,25 @@ import { cn } from "libs/utils";
 interface Props {
   file?: File;
   className?: string;
+  type?: "create" | "edit";
+  imageURL?: string;
   onFileChange: (file: File) => void;
 }
 
-const UploadFile = ({ file, className, onFileChange }: Props) => {
+const UploadFile = ({
+  file,
+  className,
+  type = "create",
+  imageURL = "",
+  onFileChange,
+}: Props) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const openFilesList = (
     event: MouseEvent<HTMLDivElement | HTMLButtonElement>
   ) => {
+    if (type === "edit") return;
+
     event.stopPropagation();
     fileInputRef.current?.click();
   };
@@ -28,12 +38,13 @@ const UploadFile = ({ file, className, onFileChange }: Props) => {
       )}
       onClick={openFilesList}
     >
-      {file ? (
+      {file || imageURL ? (
         <Image
-          src={URL.createObjectURL(file)}
+          src={file ? URL.createObjectURL(file) : imageURL}
           alt={`Uploaded`}
           height={250}
           width={250}
+          draggable={false}
           priority
           style={{
             maxWidth: "250px",
@@ -64,7 +75,11 @@ const UploadFile = ({ file, className, onFileChange }: Props) => {
         }}
         className="hidden"
       />
-      <Button className="mt-4 w-[100px]" onClick={openFilesList}>
+      <Button
+        className="mt-4 w-[100px]"
+        disabled={type === "edit"}
+        onClick={openFilesList}
+      >
         Choose
       </Button>
     </div>

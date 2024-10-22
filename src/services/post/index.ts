@@ -131,6 +131,28 @@ export const useCreate = (
   );
 };
 
+export const useUpdate = (
+  options?: UseMutationOptions<
+    ResponseDefault,
+    APIError,
+    Pick<Post, "id" | "content">
+  >
+) => {
+  return useMutation<ResponseDefault, APIError, Pick<Post, "id" | "content">>(
+    (data: Pick<Post, "id" | "content">) =>
+      api
+        .put<RawResponse<ResponseDefault>>(`/posts/${data.id}`, data)
+        .then(parseResponseData),
+    {
+      ...options,
+      onSettled: () => {
+        queryClient.invalidateQueries(keyPostsFeed());
+      },
+      onError: defaultErrorHandler,
+    }
+  );
+};
+
 export const useDelete = (
   options?: UseMutationOptions<ResponseDefault, APIError, number>
 ) => {
@@ -178,10 +200,6 @@ export const useUpload = (
         .then(parseResponseData),
     {
       ...options,
-      onSettled: () => {
-        queryClient.invalidateQueries(keyPostsFeed());
-        queryClient.invalidateQueries(keyPostsFeedExplore());
-      },
       onError: () => {
         toaster.error(
           "The file upload was not completed due to an error. Please try again or check the file specifications."

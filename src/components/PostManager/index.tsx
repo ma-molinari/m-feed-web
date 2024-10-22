@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { Button } from "@global-components/ui/button";
 import {
   Drawer,
@@ -15,14 +15,31 @@ import {
 import { Input } from "@global-components/ui/input";
 import { Label } from "@global-components/ui/label";
 import UploadFile from "@global-components/ui/upload-file";
-import { useCreate, useUpload } from "@services/post";
+import { useCreate, useUpdate, useUpload } from "@services/post";
+import { Post } from "@entities/post";
+import { IMAGE_URL } from "@configs/environment";
 
-const PostManager = ({ children }: { children: ReactNode }) => {
+interface Props {
+  children: ReactNode;
+  post?: Post;
+  onTrigger?: () => void;
+}
+
+const PostManager = ({ children, post, onTrigger }: Props) => {
+  const isEdit = !!post;
   const drawerTriggerRef = useRef<HTMLButtonElement>(null);
 
   const [imageFile, setImageFile] = useState<File>();
-  const [title, setTitle] = useState<string>();
+  const [title, setTitle] = useState<string>("");
+  const [image, setImage] = useState<string>();
   const [isSubmiting, setIsSubmiting] = useState(false);
+
+  useEffect(() => {
+    if (isEdit) {
+      setTitle(post?.content);
+      setImage(post?.image);
+    }
+  }, [isEdit]);
 
   const onOpenChange = (open: boolean) => {
     /**
@@ -31,17 +48,27 @@ const PostManager = ({ children }: { children: ReactNode }) => {
     if (!open) {
       setImageFile(undefined);
       setIsSubmiting(false);
+      /**
+       * TODO: remove setTimeout...
+       */
+      setTimeout(() => onTrigger?.(), 400);
     }
   };
 
   const checkFieldValid = (field: "file" | "title") => {
     if (!isSubmiting) return ``;
-    if (field === "file" && !imageFile) return `!border-destructive`;
+    if (!isEdit && field === "file" && !imageFile) return `!border-destructive`;
     if (field === "title" && !title?.length) return `!border-destructive`;
     return ``;
   };
 
   const { mutate: onCreate } = useCreate({
+    onSuccess: () => {
+      drawerTriggerRef.current?.click();
+    },
+  });
+
+  const { mutate: onUpdate } = useUpdate({
     onSuccess: () => {
       drawerTriggerRef.current?.click();
     },
@@ -55,13 +82,18 @@ const PostManager = ({ children }: { children: ReactNode }) => {
 
   const onSubmit = () => {
     setIsSubmiting(true);
+
+    if (isEdit) {
+      onUpdate({ id: post?.id, content: title });
+      return;
+    }
+
     if (!imageFile || !title?.length) {
       return;
     }
 
     const form = new FormData();
     form.append("image", imageFile);
-
     onUpload(form);
   };
 
@@ -73,7 +105,9 @@ const PostManager = ({ children }: { children: ReactNode }) => {
       <DrawerContent className="max-h-screen">
         <div className="w-full max-w-4xl mx-auto mt-8 overflow-auto">
           <DrawerHeader>
-            <DrawerTitle>Upload your new feed image</DrawerTitle>
+            <DrawerTitle>
+              {isEdit ? "Update your feed post" : "Upload your new feed image"}
+            </DrawerTitle>
             <DrawerDescription>
               Share a moment with the community by uploading your image.
             </DrawerDescription>
@@ -86,12 +120,15 @@ const PostManager = ({ children }: { children: ReactNode }) => {
                 placeholder="Write the title of this image"
                 maxLength={500}
                 className={`bg-zinc-900 ${checkFieldValid("title")}`}
+                value={title}
                 onChange={(event) => setTitle(event.target.value)}
               />
             </div>
             <UploadFile
               file={imageFile}
               className={checkFieldValid("file")}
+              type={isEdit ? "edit" : "create"}
+              imageURL={isEdit ? `${IMAGE_URL}/${image}` : ""}
               onFileChange={(file) => setImageFile(file)}
             />
           </div>
@@ -102,7 +139,7 @@ const PostManager = ({ children }: { children: ReactNode }) => {
             <DrawerClose asChild>
               <Button variant="outline">Cancel</Button>
             </DrawerClose>
-            <Button onClick={onSubmit}>Save</Button>
+            <Button onClick={onSubmit}>{isEdit ? "Update" : "Save"}</Button>
           </div>
         </DrawerFooter>
       </DrawerContent>

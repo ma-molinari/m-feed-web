@@ -7,6 +7,7 @@ import { useCurrentUser } from "@services/users";
 import { WEB_URL } from "@configs/environment";
 import { useDelete } from "@services/post";
 import { MenuProps } from "@global-components/Menu/types";
+import PostManager from "@global-components/PostManager";
 
 interface Props extends Omit<MenuProps, "children"> {
   data: Post;
@@ -41,7 +42,12 @@ const ItemMenu = ({ isOpen, onClose, data }: Props) => {
   return (
     <Menu isOpen={isOpen} onClose={onClose}>
       {data?.userId === me?.id && (
-        <Menu.Item label="Delete" type="danger" onClick={deletePost} />
+        <>
+          <Menu.Item label="Delete" type="danger" onClick={deletePost} />
+          <PostManager post={data} onTrigger={onClose}>
+            <Menu.Item label="Edit" onClick={() => {}} />
+          </PostManager>
+        </>
       )}
       <Menu.Item label="Go to post" onClick={goToPost} />
       <Menu.Item label="Copy link" onClick={copyLink} />

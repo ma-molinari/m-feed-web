@@ -10,9 +10,9 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
           </p>
           <div className="flex flex-col justify-end w-full h-full">
             <p className="text-3xl font-semibold leading-10 tracking-wide text-white mb-36">
-              Join us, share your memories.
+              Join us and share your memories.
               <br /> See, like and comment.
-              <br /> Eternize the little things in life with us.
+              <br /> Eternize the little moments in life with us.
             </p>
           </div>
         </div>
