@@ -7,8 +7,8 @@ interface Props {
   onClick: () => void;
 }
 
-const DEFAULT_STYLE = "text-neutral-100 font-medium";
-const DANGER_STYLE = "text-red-500 font-semibold";
+const DEFAULT_STYLE = "text-neutral-100";
+const DANGER_STYLE = "text-red-400";
 
 const Item = ({ label, type = "default", className = ``, onClick }: Props) => {
   const typeStyle = type === "danger" ? DANGER_STYLE : DEFAULT_STYLE;
@@ -17,10 +17,10 @@ const Item = ({ label, type = "default", className = ``, onClick }: Props) => {
     <button
       onClick={onClick}
       className={twMerge(
-        `w-full p-4 text-sm font-medium text-center border-b border-neutral-800 ${typeStyle} ${className}`
+        `w-full p-4 text-sm border-b font-medium border-input ${typeStyle} ${className}`
       )}
     >
-      {label}
+      <span>{label}</span>
     </button>
   );
 };
