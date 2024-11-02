@@ -1,23 +1,19 @@
-import { useRouter } from "next/navigation";
-import toaster from "cogo-toast";
-
 import { Post } from "@entities/post";
-import Menu from "@global-components/Menu";
 import { useCurrentUser } from "@services/users";
-import { WEB_URL } from "@configs/environment";
 import { useDelete } from "@services/post";
-import { MenuProps } from "@global-components/Menu/types";
+import usePostDetails, { selectSetId } from "@global-stores/usePostDetails";
 import PostManager from "@global-components/PostManager";
+import { MenuProps } from "@global-components/Menu/types";
+import Menu from "@global-components/Menu";
 
 interface Props extends Omit<MenuProps, "children"> {
   data: Post;
 }
 
 const ItemMenu = ({ isOpen, onClose, data }: Props) => {
-  const { push } = useRouter();
   const { data: me } = useCurrentUser();
   const { mutate } = useDelete();
-  const postLink = `${WEB_URL}/p/${data.id}`;
+  const setPostId = usePostDetails(selectSetId);
 
   const onHandleAction = (callback: () => void | Promise<void>) => {
     callback();
@@ -29,15 +25,19 @@ const ItemMenu = ({ isOpen, onClose, data }: Props) => {
   };
 
   const goToPost = () => {
-    onHandleAction(() => push("/"));
+    onClose();
+    /**
+     * TODO: remove setTimeout...
+     */
+    setTimeout(() => setPostId(data.id), 400);
   };
 
-  const copyLink = () => {
-    onHandleAction(() => {
-      navigator.clipboard.writeText(postLink);
-      toaster.success(`Link copied to clipboard.`);
-    });
-  };
+  // const copyLink = () => {
+  //   onHandleAction(() => {
+  //     navigator.clipboard.writeText(`${WEB_URL}/p/${data.id}`);
+  //     toaster.success(`Link copied to clipboard.`);
+  //   });
+  // };
 
   return (
     <Menu isOpen={isOpen} onClose={onClose}>
@@ -50,7 +50,7 @@ const ItemMenu = ({ isOpen, onClose, data }: Props) => {
         </>
       )}
       <Menu.Item label="Go to post" onClick={goToPost} />
-      <Menu.Item label="Copy link" onClick={copyLink} />
+      {/* <Menu.Item label="Copy link" onClick={copyLink} /> */}
       <Menu.Item label="Cancel" onClick={onClose} />
     </Menu>
   );

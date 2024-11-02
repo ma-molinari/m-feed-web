@@ -5,3 +5,4 @@ export const keyPostsFeedExplore = (): QueryKey => [
   `posts-explore`,
   `current-user`,
 ];
+export const keyPost = (id: number): QueryKey => [`posts`, id];

@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 
 import { State } from "./types";
 
-export const useAuth = create(
+const useAuth = create(
   persist<State>(
     (set) => {
       const setAuth = (state: Pick<State, "token" | "user">) => {

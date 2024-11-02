@@ -1,8 +1,10 @@
 import {
   UseInfiniteQueryOptions,
   UseMutationOptions,
+  UseQueryOptions,
   useInfiniteQuery,
   useMutation,
+  useQuery,
 } from "@tanstack/react-query";
 import toaster from "cogo-toast";
 
@@ -14,7 +16,7 @@ import { queryClient } from "@global-libs/react-query";
 import { keyCurrentUserPostLiked } from "@services/users/keys";
 import defaultErrorHandler from "@global-libs/axios/defaultErrorHandler";
 
-import { keyPostsFeed, keyPostsFeedExplore } from "./keys";
+import { keyPost, keyPostsFeed, keyPostsFeedExplore } from "./keys";
 import { LikeProps, UploadRespose } from "./types";
 import { getNextPageParam } from "./helpers";
 
@@ -128,6 +130,17 @@ export const useCreate = (
         );
       },
     }
+  );
+};
+
+export const useGet = (
+  id: number,
+  options?: UseQueryOptions<Post, APIError, Post>
+) => {
+  return useQuery(
+    keyPost(id),
+    () => api.get(`/posts/${id}`).then(parseResponseData),
+    options
   );
 };
 

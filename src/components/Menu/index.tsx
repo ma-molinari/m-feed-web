@@ -1,5 +1,10 @@
 import { Children, cloneElement } from "react";
-import { Dialog, DialogContent } from "@global-components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogPortal,
+  DialogTitle,
+} from "@global-components/ui/dialog";
 
 import Item from "./Item";
 import { MenuProps } from "./types";
@@ -8,6 +13,7 @@ const Menu = ({ isOpen, onClose, children }: MenuProps) => {
   return Children.map(
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
+        <DialogTitle className="hidden" />
         <div className="[&>*:last-child]:border-b-0">{children}</div>
       </DialogContent>
     </Dialog>,

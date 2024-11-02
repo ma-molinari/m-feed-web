@@ -6,6 +6,9 @@ import { ItemProps } from "../types";
 
 import ItemFooter from "./ItemFooter";
 import ItemHeader from "./ItemHeader";
+import usePostDetails from "@global-stores/usePostDetails";
+
+const setPostId = usePostDetails.getState().setId;
 
 const Item = forwardRef<HTMLDivElement, ItemProps>(({ data }, ref) => (
   <div ref={ref} className="border shadow-sm h-[fit-content] w-[32rem]">
@@ -16,10 +19,12 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({ data }, ref) => (
       <Image
         src={`${IMAGE_URL}/${data?.image}`}
         alt={`Photo by ${data?.user?.username}`}
-        className="!w-auto mx-auto"
+        className="!w-auto mx-auto cursor-pointer"
         fill
         sizes="32rem"
         priority
+        draggable={false}
+        onClick={() => setPostId(data?.id)}
       />
     </div>
 

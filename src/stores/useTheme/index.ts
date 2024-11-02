@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 
 import { State, ColorTheme } from "./types";
 
-export const useTheme = create(
+const useTheme = create(
   persist<State>(
     (set) => {
       const setTheme = (theme: ColorTheme) => {
