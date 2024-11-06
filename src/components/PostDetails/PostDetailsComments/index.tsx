@@ -1,0 +1,69 @@
+import { useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { Button } from "@global-components/ui/button";
+import { Textarea } from "@global-components/ui/textarea";
+import usePostDetails, { selectId } from "@global-stores/usePostDetails";
+import { useCreate, usePostComments } from "@services/comments";
+import { useCurrentUser } from "@services/users";
+import Comment from "./Comment";
+
+interface Props {
+  isOpen: boolean;
+}
+
+const PostDetailsComments = ({ isOpen }: Props) => {
+  const postId = usePostDetails(selectId);
+  const me = useCurrentUser();
+
+  const [content, setContent] = useState<string>("");
+
+  const { data, fetchNextPage, hasNextPage } = usePostComments(postId, {
+    enabled: !!postId,
+  });
+  const comments = data?.pages?.flatMap((page) => page.data) ?? [];
+
+  const { mutate: onCreate } = useCreate(postId, {
+    onSuccess: () => {
+      setContent("");
+    },
+  });
+
+  const onSubmit = () => {
+    onCreate({ content, postId, userId: me.data?.id || 0 });
+  };
+
+  return (
+    <div
+      id="infinite-scroll"
+      className={`fixed top-0 overflow-auto right-0 h-full border-l w-96 ease-in-out duration-300 ${
+        isOpen ? "translate-x-0 " : "translate-x-full"
+      }`}
+    >
+      <div className="flex flex-col w-full gap-2 p-2">
+        <Textarea
+          placeholder="Type a comment..."
+          className="h-[120px]"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        />
+        <Button variant="secondary" className="ml-auto" onClick={onSubmit}>
+          Send
+        </Button>
+      </div>
+
+      <InfiniteScroll
+        dataLength={comments.length || 0}
+        next={fetchNextPage}
+        hasMore={hasNextPage || false}
+        loader={<h4>Loading...</h4>}
+        scrollableTarget="infinite-scroll"
+      >
+        {comments?.map((item) => (
+          <Comment data={item} key={item.id} />
+        ))}
+      </InfiniteScroll>
+    </div>
+  );
+};
+
+export default PostDetailsComments;

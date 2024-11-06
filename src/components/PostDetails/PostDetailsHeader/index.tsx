@@ -8,14 +8,29 @@ import {
 } from "@global-components/ui/avatar";
 import { Button } from "@global-components/ui/button";
 import { Heart, MessageSquare } from "lucide-react";
+import { useLike, useUnlike } from "@services/post";
+import { useCallback } from "react";
 
 interface Props {
   data?: Post;
-  onHandleLike: () => void;
   onOpenComments: () => void;
 }
 
-const PostDetailsHeader = ({ data, onHandleLike, onOpenComments }: Props) => {
+const PostDetailsHeader = ({ data, onOpenComments }: Props) => {
+  const { mutate: like } = useLike();
+  const { mutate: unlike } = useUnlike();
+
+  const onHandleLike = useCallback(() => {
+    if (!data) return;
+
+    if (data?.liked) {
+      unlike({ postId: data?.id });
+      return;
+    }
+
+    like({ postId: data?.id });
+  }, [data?.liked]);
+
   return (
     <div className="flex items-center justify-between w-full">
       <div className="flex items-center space-x-4">
@@ -61,7 +76,7 @@ const PostDetailsHeader = ({ data, onHandleLike, onOpenComments }: Props) => {
             <MessageSquare strokeWidth={1.5} size={28} />
           </Button>
           <div className="absolute px-2 min-w-[25px] text-center py-1 text-[11px] rounded-full -top-5 -right-4 bg-muted">
-            {data?.total_likes || 0}
+            {data?.total_comments || 0}
           </div>
         </div>
       </div>

@@ -32,13 +32,6 @@ const ItemMenu = ({ isOpen, onClose, data }: Props) => {
     setTimeout(() => setPostId(data.id), 400);
   };
 
-  // const copyLink = () => {
-  //   onHandleAction(() => {
-  //     navigator.clipboard.writeText(`${WEB_URL}/p/${data.id}`);
-  //     toaster.success(`Link copied to clipboard.`);
-  //   });
-  // };
-
   return (
     <Menu isOpen={isOpen} onClose={onClose}>
       {data?.userId === me?.id && (
@@ -50,7 +43,6 @@ const ItemMenu = ({ isOpen, onClose, data }: Props) => {
         </>
       )}
       <Menu.Item label="Go to post" onClick={goToPost} />
-      {/* <Menu.Item label="Copy link" onClick={copyLink} /> */}
       <Menu.Item label="Cancel" onClick={onClose} />
     </Menu>
   );

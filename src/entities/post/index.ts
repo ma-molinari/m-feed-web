@@ -9,6 +9,7 @@ interface Post {
   content: string;
   image: string;
   total_likes: number;
+  total_comments: number;
   liked?: boolean;
   createdAt: Date;
   updatedAt: Date;

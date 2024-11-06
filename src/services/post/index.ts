@@ -17,8 +17,8 @@ import { keyCurrentUserPostLiked } from "@services/users/keys";
 import defaultErrorHandler from "@global-libs/axios/defaultErrorHandler";
 
 import { keyPost, keyPostsFeed, keyPostsFeedExplore } from "./keys";
-import { LikeProps, UploadRespose } from "./types";
-import { getNextPageParam } from "./helpers";
+import { LikeProps, UploadResponse } from "./types";
+import { getNextPageParam } from "@global-libs/utils";
 
 export const usePostsFeed = (
   options?: UseInfiniteQueryOptions<
@@ -204,12 +204,12 @@ export const useDelete = (
 };
 
 export const useUpload = (
-  options?: UseMutationOptions<UploadRespose, APIError, FormData>
+  options?: UseMutationOptions<UploadResponse, APIError, FormData>
 ) => {
-  return useMutation<UploadRespose, APIError, FormData>(
+  return useMutation<UploadResponse, APIError, FormData>(
     (data: FormData) =>
       api
-        .post<RawResponse<UploadRespose>>(`/file/upload`, data)
+        .post<RawResponse<UploadResponse>>(`/file/upload`, data)
         .then(parseResponseData),
     {
       ...options,

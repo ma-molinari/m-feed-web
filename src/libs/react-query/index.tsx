@@ -12,6 +12,8 @@ export const queryClient = new QueryClient({
       retry: false,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
+      staleTime: 1000 * 60 * 30, // 30 min
+      cacheTime: 1000 * 60 * 60, // 60 min
     },
   },
 });

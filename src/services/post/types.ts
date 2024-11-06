@@ -2,9 +2,9 @@ interface LikeProps {
   postId: number;
 }
 
-interface UploadRespose {
+interface UploadResponse {
   filename: string;
   mimetype: string;
 }
 
-export type { LikeProps, UploadRespose };
+export type { LikeProps, UploadResponse };
