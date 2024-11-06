@@ -7,14 +7,13 @@ import { Search, Settings, Home, Plus } from "lucide-react";
 
 interface Props {
   href?: string;
-  icon: "home" | "search" | "create" | "settings";
+  icon: "home" | "search" | "settings";
   type?: "link" | "button";
 }
 
 const CURRENT_ICON = {
   home: <Home strokeWidth={1.5} />,
   search: <Search strokeWidth={1.5} />,
-  create: <Plus strokeWidth={1.5} />,
   settings: <Settings strokeWidth={1.5} />,
 };
 

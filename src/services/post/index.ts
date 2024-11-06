@@ -158,8 +158,9 @@ export const useUpdate = (
         .then(parseResponseData),
     {
       ...options,
-      onSettled: () => {
+      onSettled: (_, __, data, _context) => {
         queryClient.invalidateQueries(keyPostsFeed());
+        queryClient.invalidateQueries(keyPost(data.id));
       },
       onError: defaultErrorHandler,
     }

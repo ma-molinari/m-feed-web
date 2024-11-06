@@ -22,10 +22,8 @@ const PostDetailsComments = ({ isOpen }: Props) => {
   });
   const comments = data?.pages?.flatMap((page) => page.data) ?? [];
 
-  const { mutate: onCreate } = useCreate(postId, {
-    onSuccess: () => {
-      setContent("");
-    },
+  const { mutate: onCreate } = useCreate({
+    onSuccess: () => setContent(""),
   });
 
   const onSubmit = () => {

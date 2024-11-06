@@ -1,7 +1,7 @@
 import FindUser from "@global-components/FindUser";
-import PostManager from "@global-components/PostManager";
 import SidebarItem from "./SidebarItem";
 import SidebarLogout from "./SidebarLogout";
+import SidebarCreate from "./SidebarCreate";
 
 const Sidebar = () => {
   return (
@@ -13,9 +13,7 @@ const Sidebar = () => {
         <FindUser>
           <SidebarItem type="button" icon="search" />
         </FindUser>
-        <PostManager>
-          <SidebarItem type="button" icon="create" />
-        </PostManager>
+        <SidebarCreate />
         <SidebarItem href="/settings" icon="settings" />
       </nav>
 

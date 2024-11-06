@@ -3,7 +3,7 @@ import { Post } from "@entities/post";
 import { useCurrentUser } from "@services/users";
 import { useDelete } from "@services/post";
 import usePostDetails, { selectSetId } from "@global-stores/usePostDetails";
-import PostManager from "@global-components/PostManager";
+import usePostManager from "@global-stores/usePostManager";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,9 +22,14 @@ const ItemMenu = ({ data, children }: Props) => {
   const { data: me } = useCurrentUser();
   const { mutate } = useDelete();
   const setPostId = usePostDetails(selectSetId);
+  const setEditId = usePostManager(selectSetId);
 
   const deletePost = () => {
     mutate(data.id);
+  };
+
+  const goToEdit = () => {
+    setEditId(data.id);
   };
 
   const goToPost = () => {
@@ -42,9 +47,7 @@ const ItemMenu = ({ data, children }: Props) => {
             <DropdownMenuItem onClick={deletePost} className="text-red-400">
               Delete
             </DropdownMenuItem>
-            <PostManager post={data}>
-              <DropdownMenuItem>Edit</DropdownMenuItem>
-            </PostManager>
+            <DropdownMenuItem onClick={goToEdit}>Edit</DropdownMenuItem>
           </>
         )}
         <DropdownMenuItem onClick={goToPost}>Go to post</DropdownMenuItem>

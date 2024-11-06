@@ -38,7 +38,6 @@ export const usePostComments = (
 };
 
 export const useCreate = (
-  postId: number,
   options?: UseMutationOptions<
     ResponseDefault,
     APIError,
@@ -52,13 +51,16 @@ export const useCreate = (
   >(
     (data: Pick<Comment, "content" | "postId" | "userId">) =>
       api
-        .post<RawResponse<ResponseDefault>>(`/posts/${postId}/comments`, data)
+        .post<RawResponse<ResponseDefault>>(
+          `/posts/${data.postId}/comments`,
+          data
+        )
         .then(parseResponseData),
     {
       ...options,
-      onSettled: () => {
-        queryClient.invalidateQueries(keyPost(postId));
-        queryClient.invalidateQueries(keyPostsComments(postId));
+      onSettled: (_, __, data, _context) => {
+        queryClient.invalidateQueries(keyPost(data.postId));
+        queryClient.invalidateQueries(keyPostsComments(data.postId));
       },
       onError: defaultErrorHandler,
     }

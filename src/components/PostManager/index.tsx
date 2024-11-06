@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@global-components/ui/button";
 import {
   Drawer,
@@ -10,43 +10,41 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@global-components/ui/drawer";
 import { Input } from "@global-components/ui/input";
 import { Label } from "@global-components/ui/label";
 import UploadFile from "@global-components/ui/upload-file";
-import { useCreate, useUpdate, useUpload } from "@services/post";
-import { Post } from "@entities/post";
+import { useCreate, useGet, useUpdate, useUpload } from "@services/post";
 import { IMAGE_URL } from "@configs/environment";
+import usePostManager, {
+  selectIsOpen,
+  selectClear,
+  selectId,
+} from "@global-stores/usePostManager";
 
-interface Props {
-  children: ReactNode;
-  post?: Post;
-}
-
-const PostManager = ({ children, post }: Props) => {
-  const isEdit = !!post;
-  const drawerTriggerRef = useRef<HTMLButtonElement>(null);
-
+const PostManager = () => {
   const [imageFile, setImageFile] = useState<File>();
   const [title, setTitle] = useState<string>("");
   const [image, setImage] = useState<string>();
   const [isSubmiting, setIsSubmiting] = useState(false);
 
+  const isOpen = usePostManager(selectIsOpen);
+  const onClose = usePostManager(selectClear);
+  const postId = usePostManager(selectId);
+
+  const { data: post } = useGet(postId, { enabled: !!postId });
+  const isEdit = !!post;
+
   useEffect(() => {
     if (isEdit) {
-      setTitle(post?.content);
+      setTitle(post?.content || "");
       setImage(post?.image);
     }
-  }, [isEdit]);
+  }, [post]);
 
   const onOpenChange = (open: boolean) => {
-    /**
-     * Is closing...
-     */
     if (!open) {
-      setImageFile(undefined);
-      setIsSubmiting(false);
+      onReset();
     }
   };
 
@@ -58,15 +56,11 @@ const PostManager = ({ children, post }: Props) => {
   };
 
   const { mutate: onCreate } = useCreate({
-    onSuccess: () => {
-      drawerTriggerRef.current?.click();
-    },
+    onSuccess: () => onReset(),
   });
 
   const { mutate: onUpdate } = useUpdate({
-    onSuccess: () => {
-      drawerTriggerRef.current?.click();
-    },
+    onSuccess: () => onReset(),
   });
 
   const { mutate: onUpload } = useUpload({
@@ -79,7 +73,7 @@ const PostManager = ({ children, post }: Props) => {
     setIsSubmiting(true);
 
     if (isEdit) {
-      onUpdate({ id: post?.id, content: title });
+      onUpdate({ id: postId, content: title });
       return;
     }
 
@@ -92,11 +86,16 @@ const PostManager = ({ children, post }: Props) => {
     onUpload(form);
   };
 
+  const onReset = () => {
+    setImageFile(undefined);
+    setIsSubmiting(false);
+    setTitle("");
+    setImage("");
+    onClose();
+  };
+
   return (
-    <Drawer onOpenChange={onOpenChange}>
-      <DrawerTrigger asChild ref={drawerTriggerRef}>
-        <div>{children}</div>
-      </DrawerTrigger>
+    <Drawer open={isOpen} onOpenChange={onOpenChange}>
       <DrawerContent className="max-h-screen">
         <div className="w-full max-w-4xl mx-auto mt-8 overflow-auto">
           <DrawerHeader>
