@@ -1,50 +1,55 @@
+import { ReactNode } from "react";
 import { Post } from "@entities/post";
 import { useCurrentUser } from "@services/users";
 import { useDelete } from "@services/post";
 import usePostDetails, { selectSetId } from "@global-stores/usePostDetails";
 import PostManager from "@global-components/PostManager";
-import { MenuProps } from "@global-components/Menu/types";
-import Menu from "@global-components/Menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@global-components/ui/dropdown-menu";
 
-interface Props extends Omit<MenuProps, "children"> {
+interface Props {
   data: Post;
+  children: ReactNode;
 }
 
-const ItemMenu = ({ isOpen, onClose, data }: Props) => {
+const ItemMenu = ({ data, children }: Props) => {
   const { data: me } = useCurrentUser();
   const { mutate } = useDelete();
   const setPostId = usePostDetails(selectSetId);
 
-  const onHandleAction = (callback: () => void | Promise<void>) => {
-    callback();
-    onClose();
-  };
-
   const deletePost = () => {
-    onHandleAction(() => mutate(data.id));
+    mutate(data.id);
   };
 
   const goToPost = () => {
-    onClose();
-    /**
-     * TODO: remove setTimeout...
-     */
-    setTimeout(() => setPostId(data.id), 400);
+    setPostId(data.id);
   };
 
   return (
-    <Menu isOpen={isOpen} onClose={onClose}>
-      {data?.userId === me?.id && (
-        <>
-          <Menu.Item label="Delete" type="danger" onClick={deletePost} />
-          <PostManager post={data} onTrigger={onClose}>
-            <Menu.Item label="Edit" onClick={() => {}} />
-          </PostManager>
-        </>
-      )}
-      <Menu.Item label="Go to post" onClick={goToPost} />
-      <Menu.Item label="Cancel" onClick={onClose} />
-    </Menu>
+    <DropdownMenu>
+      <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuLabel>Options</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        {data?.userId === me?.id && (
+          <>
+            <DropdownMenuItem onClick={deletePost} className="text-red-400">
+              Delete
+            </DropdownMenuItem>
+            <PostManager post={data}>
+              <DropdownMenuItem>Edit</DropdownMenuItem>
+            </PostManager>
+          </>
+        )}
+        <DropdownMenuItem onClick={goToPost}>Go to post</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

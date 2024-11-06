@@ -9,8 +9,6 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@global-components/ui/avatar";
-import { Button } from "@global-components/ui/button";
-
 import ItemMenu from "../ItemMenu";
 
 const ItemHeader = ({ data }: ItemProps) => {
@@ -42,11 +40,9 @@ const ItemHeader = ({ data }: ItemProps) => {
         </Link>
       </div>
 
-      <Button className="p-0" variant="link" onClick={onOpen}>
+      <ItemMenu data={data}>
         <MoreHorizontal strokeWidth={1.5} />
-      </Button>
-
-      <ItemMenu isOpen={isOpen} onClose={onClose} data={data} />
+      </ItemMenu>
     </div>
   );
 };

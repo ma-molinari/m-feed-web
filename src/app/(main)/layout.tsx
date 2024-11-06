@@ -10,7 +10,6 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
       <div className="w-full">{children}</div>
       {/* PostManager */}
       <PostDetails />
-      {/* PostMenu */}
     </section>
   );
 };

@@ -22,10 +22,9 @@ import { IMAGE_URL } from "@configs/environment";
 interface Props {
   children: ReactNode;
   post?: Post;
-  onTrigger?: () => void;
 }
 
-const PostManager = ({ children, post, onTrigger }: Props) => {
+const PostManager = ({ children, post }: Props) => {
   const isEdit = !!post;
   const drawerTriggerRef = useRef<HTMLButtonElement>(null);
 
@@ -48,10 +47,6 @@ const PostManager = ({ children, post, onTrigger }: Props) => {
     if (!open) {
       setImageFile(undefined);
       setIsSubmiting(false);
-      /**
-       * TODO: remove setTimeout...
-       */
-      setTimeout(() => onTrigger?.(), 400);
     }
   };
 
