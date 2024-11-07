@@ -34,7 +34,7 @@ const PostDetailsHeader = ({ data, onOpenComments }: Props) => {
   return (
     <div className="flex items-center justify-between w-full">
       <div className="flex items-center space-x-4">
-        <Link href={`/user/${data?.user?.username}`}>
+        <Link href={`/profile/${data?.userId}/${data?.user?.username}`}>
           <Avatar className="w-12 h-12">
             <AvatarImage
               src={data?.user?.avatar && `${IMAGE_URL}/${data?.user?.avatar}`}
@@ -47,7 +47,7 @@ const PostDetailsHeader = ({ data, onOpenComments }: Props) => {
         </Link>
         <div className="flex flex-col items-baseline">
           <Link
-            href={`/user/${data?.user?.username}`}
+            href={`/profile/${data?.userId}/${data?.user?.username}`}
             className="text-sm font-semibold line-clamp-1 text-card-foreground"
           >
             {data?.user?.username}

@@ -1,7 +1,6 @@
 import { memo } from "react";
 import { IMAGE_URL } from "@configs/environment";
 import { Comment as IComment } from "@entities/comment";
-import { Button } from "@global-components/ui/button";
 import { formatDistanceStrict } from "date-fns";
 import { MoreHorizontal } from "lucide-react";
 import {
@@ -9,12 +8,15 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@global-components/ui/avatar";
+import CommentMenu from "../CommentMenu";
+import { useCurrentUser } from "@services/users";
 
 interface Props {
   data: IComment;
 }
 
 const Comment = ({ data }: Props) => {
+  const { data: me } = useCurrentUser();
   const avatarSrc = data.user.avatar && `${IMAGE_URL}/${data.user.avatar}`;
   const formattedDate = formatDistanceStrict(
     new Date(data.createdAt),
@@ -39,14 +41,14 @@ const Comment = ({ data }: Props) => {
           <p className="font-semibold">{data.user.username}</p>
           <span className="text-muted-foreground">·</span>
           <span className="text-muted-foreground">{formattedDate}</span>
-          <Button
-            variant="link"
-            aria-label="More options"
-            className="w-5 h-2 p-0 ml-auto text-muted-foreground"
-            onClick={() => {}}
-          >
-            <MoreHorizontal strokeWidth={1} />
-          </Button>
+          {me?.id === data?.userId && (
+            <CommentMenu data={data}>
+              <MoreHorizontal
+                strokeWidth={1}
+                className="p-0 ml-auto text-muted-foreground"
+              />
+            </CommentMenu>
+          )}
         </div>
       </div>
       <p className="mt-2 text-muted-foreground">{data.content}</p>

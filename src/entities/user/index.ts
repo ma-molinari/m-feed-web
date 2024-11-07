@@ -5,6 +5,9 @@ interface User {
   fullName: string;
   bio?: string;
   avatar?: string;
+  followers: number;
+  following: number;
+  posts: number;
   createdAt: Date;
   updatedAt: Date;
 }

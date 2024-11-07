@@ -3,18 +3,18 @@
 import { memo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, Settings, Home, Plus } from "lucide-react";
+import { Search, Home, User } from "lucide-react";
 
 interface Props {
   href?: string;
-  icon: "home" | "search" | "settings";
+  icon: "home" | "search" | "profile";
   type?: "link" | "button";
 }
 
 const CURRENT_ICON = {
   home: <Home strokeWidth={1.5} />,
   search: <Search strokeWidth={1.5} />,
-  settings: <Settings strokeWidth={1.5} />,
+  profile: <User strokeWidth={1.5} />,
 };
 
 const SidebarItem = ({ href = "#", icon, type = "link" }: Props) => {

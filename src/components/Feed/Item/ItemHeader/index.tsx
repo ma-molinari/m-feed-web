@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useCallback, useState } from "react";
 import { MoreHorizontal } from "lucide-react";
 
 import { IMAGE_URL } from "@configs/environment";
@@ -12,15 +11,10 @@ import {
 import ItemMenu from "../ItemMenu";
 
 const ItemHeader = ({ data }: ItemProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const onOpen = useCallback(() => setIsOpen(true), []);
-  const onClose = useCallback(() => setIsOpen(false), []);
-
   return (
     <div className="flex items-center justify-between px-4 py-3">
       <div className="flex items-center space-x-2">
-        <Link href={`/user/${data?.user?.username}`}>
+        <Link href={`/profile/${data?.userId}/${data?.user?.username}`}>
           <Avatar className="w-8 h-8">
             <AvatarImage
               src={data?.user?.avatar && `${IMAGE_URL}/${data?.user?.avatar}`}
@@ -33,7 +27,7 @@ const ItemHeader = ({ data }: ItemProps) => {
           </Avatar>
         </Link>
         <Link
-          href={`/user/${data?.user?.username}`}
+          href={`/profile/${data?.userId}/${data?.user?.username}`}
           className="text-sm font-semibold line-clamp-1 text-card-foreground"
         >
           {data?.user?.username}

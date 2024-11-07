@@ -10,7 +10,7 @@ import toaster from "cogo-toast";
 
 import { api } from "@global-libs/axios";
 import { APIError, RawResponse, ResponseDefault } from "@entities/response";
-import { InfinitePosts, Post } from "@entities/post";
+import { Post } from "@entities/post";
 import parseResponseData from "@global-libs/axios/parseResponseData";
 import { queryClient } from "@global-libs/react-query";
 import { keyCurrentUserPostLiked } from "@services/users/keys";
@@ -177,29 +177,10 @@ export const useDelete = (
         .then(parseResponseData),
     {
       ...options,
-      onMutate: (postId) => {
-        const previousCache = queryClient.getQueryData<InfinitePosts>(
-          keyPostsFeed()
-        );
-
-        const newPagesCache = previousCache?.pages.map((page) => {
-          return {
-            ct: page?.ct,
-            data: page.data.filter((post) => post.id !== postId),
-          };
-        });
-
-        queryClient.setQueryData(keyPostsFeed(), {
-          pageParams: previousCache?.pageParams,
-          pages: newPagesCache,
-        });
-
-        return previousCache;
+      onSettled: () => {
+        queryClient.invalidateQueries(keyPostsFeed());
       },
-      onError: (error, _, context) => {
-        queryClient.setQueryData(keyPostsFeed(), context);
-        defaultErrorHandler(error);
-      },
+      onError: defaultErrorHandler,
     }
   );
 };

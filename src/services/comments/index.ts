@@ -66,3 +66,28 @@ export const useCreate = (
     }
   );
 };
+
+export const useDelete = (
+  options?: UseMutationOptions<
+    ResponseDefault,
+    APIError,
+    Pick<Comment, "id" | "postId">
+  >
+) => {
+  return useMutation<ResponseDefault, APIError, Pick<Comment, "id" | "postId">>(
+    (data: Pick<Comment, "id" | "postId">) =>
+      api
+        .delete<RawResponse<ResponseDefault>>(
+          `/posts/${data.postId}/comments/${data.id}`
+        )
+        .then(parseResponseData),
+    {
+      ...options,
+      onSettled: (_, __, data, _context) => {
+        queryClient.invalidateQueries(keyPost(data.postId));
+        queryClient.invalidateQueries(keyPostsComments(data.postId));
+      },
+      onError: defaultErrorHandler,
+    }
+  );
+};

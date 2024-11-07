@@ -14,7 +14,7 @@ const Sidebar = () => {
           <SidebarItem type="button" icon="search" />
         </FindUser>
         <SidebarCreate />
-        <SidebarItem href="/settings" icon="settings" />
+        <SidebarItem href="/profile" icon="profile" />
       </nav>
 
       <SidebarLogout />
