@@ -1,18 +1,21 @@
 "use client";
 
-import { ReactNode, useMemo, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
-import { useDebounce } from "usehooks-ts";
+import { useDebounceValue } from "usehooks-ts";
 import { Search } from "lucide-react";
 import { useSearchUsers } from "@services/users";
 import { Button } from "@global-components/ui/button";
 import { Input } from "@global-components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@global-components/ui/sheet";
 import UserCard from "./UserCard";
+import { useParams } from "next/navigation";
 
 const FindUser = ({ children }: { children: ReactNode }) => {
+  const params = useParams();
   const [search, setSearch] = useState<string>("");
-  const debounced = useDebounce(search, 500);
+  const [openSheet, setOpenSheet] = useState<boolean>(false);
+  const [debounced] = useDebounceValue(search, 500);
 
   const { data: users, isLoading } = useSearchUsers(debounced, {
     enabled: !!debounced.length,
@@ -24,12 +27,17 @@ const FindUser = ({ children }: { children: ReactNode }) => {
     return condition ? "opacity-1" : "opacity-0";
   };
 
-  const userList = useMemo(() => {
-    return users?.data?.map((item) => <UserCard key={item.id} data={item} />);
-  }, [users]);
+  const onOpenChange = () => {
+    setSearch("");
+    setOpenSheet((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (openSheet) onOpenChange();
+  }, [params?.username]);
 
   return (
-    <Sheet>
+    <Sheet open={openSheet} onOpenChange={onOpenChange}>
       <SheetTrigger asChild>
         <div>{children}</div>
       </SheetTrigger>
@@ -51,7 +59,9 @@ const FindUser = ({ children }: { children: ReactNode }) => {
             renderUserList
           )}`}
         >
-          {userList}
+          {users?.data?.map((item) => (
+            <UserCard key={item.id} data={item} />
+          ))}
           {renderUserList && users?.data?.length === 0 && (
             <p className="text-sm text-center text-primary">User not found!</p>
           )}

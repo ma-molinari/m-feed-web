@@ -9,7 +9,7 @@ import {
 
 const UserCard = ({ data }: { data: User }) => {
   return (
-    <Link href={`/profile/${data?.username}`}>
+    <Link href={`/profile/${data?.id}/${data?.username}`}>
       <div className="flex items-center space-x-3">
         <Avatar className="w-12 h-12">
           <AvatarImage
