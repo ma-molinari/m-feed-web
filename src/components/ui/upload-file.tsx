@@ -41,7 +41,7 @@ const UploadFile = ({
       {file || imageURL ? (
         <Image
           src={file ? URL.createObjectURL(file) : imageURL}
-          alt={`Uploaded`}
+          alt={`Image uploaded`}
           height={250}
           width={250}
           draggable={false}

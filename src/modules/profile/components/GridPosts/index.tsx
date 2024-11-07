@@ -33,7 +33,7 @@ const GridPosts = ({ userId }: Props) => {
         <Image
           key={item.id}
           src={`${IMAGE_URL}/${item.image}`}
-          alt={`${item.image}`}
+          alt={`Image by ${item?.user?.username}`}
           height={350}
           width={350}
           draggable={false}

@@ -18,7 +18,7 @@ const PostDetailsContent = ({ data }: Props) => {
       <p className="text-muted-foreground">{data?.content}</p>
       <Image
         src={imageSrc}
-        alt={`${data?.image}`}
+        alt={`Image by ${data?.user?.username}`}
         height={600}
         width={600}
         draggable={false}

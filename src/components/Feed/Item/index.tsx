@@ -18,7 +18,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({ data }, ref) => (
     <div className="relative h-[32rem]">
       <Image
         src={`${IMAGE_URL}/${data?.image}`}
-        alt={`Photo by ${data?.user?.username}`}
+        alt={`Image by ${data?.user?.username}`}
         className="!w-auto mx-auto cursor-pointer"
         fill
         sizes="32rem"
