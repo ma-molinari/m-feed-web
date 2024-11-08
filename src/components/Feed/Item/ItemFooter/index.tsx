@@ -1,22 +1,28 @@
-import { useCallback } from "react";
 import { MessageSquare, Heart } from "lucide-react";
 
 import { ItemProps } from "@global-components/Feed/types";
 import { useLike, useUnlike } from "@services/post";
 import { Button } from "@global-components/ui/button";
+import usePostDetails from "@global-stores/usePostDetails";
+
+const setPostId = usePostDetails.getState().setId;
 
 const ItemFooter = ({ data }: ItemProps) => {
   const { mutate: like } = useLike();
   const { mutate: unlike } = useUnlike();
 
-  const onHandleLike = useCallback(() => {
+  const onOpenPostDetails = () => {
+    setPostId(data?.id, true);
+  };
+
+  const onHandleLike = () => {
     if (data.liked) {
       unlike({ postId: data.id });
       return;
     }
 
     like({ postId: data.id });
-  }, [data.liked]);
+  };
 
   return (
     <div className="flex items-center px-4 py-3 space-x-3">
@@ -29,7 +35,7 @@ const ItemFooter = ({ data }: ItemProps) => {
       >
         <Heart strokeWidth={1.5} />
       </Button>
-      <Button className="p-0" variant="link" onClick={() => false}>
+      <Button className="p-0" variant="link" onClick={onOpenPostDetails}>
         <MessageSquare strokeWidth={1.5} />
       </Button>
     </div>
