@@ -13,12 +13,18 @@ import { APIError, RawResponse, ResponseDefault } from "@entities/response";
 import { Post } from "@entities/post";
 import parseResponseData from "@global-libs/axios/parseResponseData";
 import { queryClient } from "@global-libs/react-query";
-import { keyCurrentUserPostLiked } from "@services/users/keys";
+import {
+  keyCurrentUser,
+  keyCurrentUserPostLiked,
+  keyUser,
+  keyUserPosts,
+} from "@services/users/keys";
 import defaultErrorHandler from "@global-libs/axios/defaultErrorHandler";
 
 import { keyPost, keyPostsFeed, keyPostsFeedExplore } from "./keys";
 import { LikeProps, UploadResponse } from "./types";
 import { getNextPageParam } from "@global-libs/utils";
+import { User } from "@entities/user";
 
 export const usePostsFeed = (
   options?: UseInfiniteQueryOptions<
@@ -117,7 +123,10 @@ export const useCreate = (
     {
       ...options,
       onSettled: () => {
+        const me = queryClient.getQueryData<User>(keyCurrentUser());
         queryClient.invalidateQueries(keyPostsFeed());
+        queryClient.invalidateQueries(keyUser(me?.id || 0));
+        queryClient.invalidateQueries(keyUserPosts(me?.id || 0));
       },
       onError: (error) => {
         if (error.response?.status === 400) {
@@ -178,7 +187,10 @@ export const useDelete = (
     {
       ...options,
       onSettled: () => {
+        const me = queryClient.getQueryData<User>(keyCurrentUser());
         queryClient.invalidateQueries(keyPostsFeed());
+        queryClient.invalidateQueries(keyUser(me?.id || 0));
+        queryClient.invalidateQueries(keyUserPosts(me?.id || 0));
       },
       onError: defaultErrorHandler,
     }
