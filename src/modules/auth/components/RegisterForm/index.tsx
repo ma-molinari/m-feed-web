@@ -42,6 +42,13 @@ type IRegisterSchema = z.infer<typeof RegisterSchema>;
 const RegisterForm = () => {
   const form = useForm<IRegisterSchema>({
     resolver: zodResolver(RegisterSchema),
+    defaultValues: {
+      fullName: "",
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
   });
 
   const { push } = useRouter();

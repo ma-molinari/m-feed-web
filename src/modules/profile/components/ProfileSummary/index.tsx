@@ -10,6 +10,7 @@ import { Button } from "@global-components/ui/button";
 import { Separator } from "@global-components/ui/separator";
 import StatsCard from "@modules/profile/components/StatsCard";
 import { useCurrentUser, useGet } from "@services/users";
+import ProfileEditDialog from "../ProfileEditDialog";
 
 interface Props {
   userId?: number;
@@ -26,7 +27,7 @@ const ProfileSummary = ({ userId }: Props) => {
       <Avatar className="w-[150px] h-[150px]">
         <AvatarImage
           src={`${IMAGE_URL}/${data?.avatar}`}
-          alt="@shadcn"
+          alt={data?.username}
           height={150}
           width={150}
         />
@@ -47,7 +48,10 @@ const ProfileSummary = ({ userId }: Props) => {
           {currentUser === me?.id && (
             <>
               <Separator className="h-10" orientation="vertical" />
-              <Button variant="outline">Edit Profile</Button>
+              <ProfileEditDialog>
+                <Button variant="outline">Edit Profile</Button>
+              </ProfileEditDialog>
+              <Button variant="outline">Edit Password</Button>
             </>
           )}
         </div>

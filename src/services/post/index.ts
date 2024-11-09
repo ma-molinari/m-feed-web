@@ -41,7 +41,6 @@ export const usePostsFeed = (
       ...options,
       getNextPageParam,
       keepPreviousData: true,
-      refetchOnWindowFocus: false,
     }
   );
 };
@@ -63,7 +62,6 @@ export const usePostsFeedExplore = (
       ...options,
       getNextPageParam,
       keepPreviousData: true,
-      refetchOnWindowFocus: false,
     }
   );
 };
@@ -124,9 +122,9 @@ export const useCreate = (
       ...options,
       onSettled: () => {
         const me = queryClient.getQueryData<User>(keyCurrentUser());
-        queryClient.invalidateQueries(keyPostsFeed());
-        queryClient.invalidateQueries(keyUser(me?.id || 0));
-        queryClient.invalidateQueries(keyUserPosts(me?.id || 0));
+        queryClient.refetchQueries(keyPostsFeed());
+        queryClient.refetchQueries(keyUser(me?.id || 0));
+        queryClient.refetchQueries(keyUserPosts(me?.id || 0));
       },
       onError: (error) => {
         if (error.response?.status === 400) {
@@ -188,9 +186,9 @@ export const useDelete = (
       ...options,
       onSettled: () => {
         const me = queryClient.getQueryData<User>(keyCurrentUser());
-        queryClient.invalidateQueries(keyPostsFeed());
-        queryClient.invalidateQueries(keyUser(me?.id || 0));
-        queryClient.invalidateQueries(keyUserPosts(me?.id || 0));
+        queryClient.refetchQueries(keyPostsFeed());
+        queryClient.refetchQueries(keyUser(me?.id || 0));
+        queryClient.refetchQueries(keyUserPosts(me?.id || 0));
       },
       onError: defaultErrorHandler,
     }

@@ -1,7 +1,9 @@
 import {
   UseInfiniteQueryOptions,
+  UseMutationOptions,
   UseQueryOptions,
   useInfiniteQuery,
+  useMutation,
   useQuery,
 } from "@tanstack/react-query";
 
@@ -19,6 +21,8 @@ import {
 } from "./keys";
 import { Post } from "@entities/post";
 import { getNextPageParam } from "@global-libs/utils";
+import defaultErrorHandler from "@global-libs/axios/defaultErrorHandler";
+import { queryClient } from "@global-libs/react-query";
 
 export const useCurrentUser = (
   options?: UseQueryOptions<User, APIError, User>
@@ -39,6 +43,29 @@ export const useGet = (
     () =>
       api.get<RawResponse<User>>(`/users/${userId}`).then(parseResponseData),
     options
+  );
+};
+
+export const useUpdate = (
+  options?: UseMutationOptions<
+    User,
+    APIError,
+    Pick<User, "fullName" | "bio" | "avatar">
+  >
+) => {
+  return useMutation<User, APIError, Pick<User, "fullName" | "bio" | "avatar">>(
+    (data) =>
+      api
+        .put<RawResponse<User>>(`/users/profile`, data)
+        .then(parseResponseData),
+    {
+      ...options,
+      onSettled: (data) => {
+        queryClient.invalidateQueries(keyCurrentUser());
+        queryClient.invalidateQueries(keyUser(data?.id || 0));
+      },
+      onError: defaultErrorHandler,
+    }
   );
 };
 
@@ -85,7 +112,6 @@ export const useGetUserPosts = (
       ...options,
       getNextPageParam,
       keepPreviousData: true,
-      refetchOnWindowFocus: false,
     }
   );
 };

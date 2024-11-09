@@ -30,6 +30,10 @@ type ILoginSchema = z.infer<typeof LoginSchema>;
 const LoginForm = () => {
   const form = useForm<ILoginSchema>({
     resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const { push } = useRouter();

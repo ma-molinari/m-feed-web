@@ -32,7 +32,6 @@ export const usePostComments = (
       ...options,
       getNextPageParam,
       keepPreviousData: true,
-      refetchOnWindowFocus: false,
     }
   );
 };

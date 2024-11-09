@@ -7,7 +7,7 @@ interface Params {
   };
 }
 
-export async function generateMetadata({ params }: Params) {
+export function generateMetadata({ params }: Params) {
   const { username } = params;
 
   return {
