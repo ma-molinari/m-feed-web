@@ -7,7 +7,13 @@ import { Search } from "lucide-react";
 import { useSearchUsers } from "@services/users";
 import { Button } from "@global-components/ui/button";
 import { Input } from "@global-components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@global-components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@global-components/ui/sheet";
 import UserCard from "./UserCard";
 import { useParams } from "next/navigation";
 
@@ -42,6 +48,9 @@ const FindUser = ({ children }: { children: ReactNode }) => {
         <div>{children}</div>
       </SheetTrigger>
       <SheetContent side="left">
+        <SheetHeader>
+          <SheetTitle className="hidden" />
+        </SheetHeader>
         <div className="flex items-center w-full max-w-sm mt-8 space-x-2">
           <Input
             placeholder="Find user..."

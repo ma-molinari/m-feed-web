@@ -131,7 +131,7 @@ const ProfileEditDialog = ({ children }: Props) => {
                 <FormItem>
                   <FormLabel className="text-muted-foreground">Bio</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Bio" {...field} />
+                    <Textarea placeholder="Bio" rows={5} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -155,9 +155,7 @@ const ProfileEditDialog = ({ children }: Props) => {
                 <Button
                   variant="outline"
                   type="button"
-                  onClick={() => {
-                    inputFileRef?.current?.click();
-                  }}
+                  onClick={() => inputFileRef?.current?.click()}
                 >
                   Click to replace
                 </Button>

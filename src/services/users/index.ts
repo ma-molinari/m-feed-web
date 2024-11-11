@@ -9,7 +9,7 @@ import {
 
 import { api } from "@global-libs/axios";
 import parseResponseData from "@global-libs/axios/parseResponseData";
-import { APIError, RawResponse } from "@entities/response";
+import { APIError, RawResponse, ResponseDefault } from "@entities/response";
 import { User } from "@entities/user";
 
 import {
@@ -23,6 +23,7 @@ import { Post } from "@entities/post";
 import { getNextPageParam } from "@global-libs/utils";
 import defaultErrorHandler from "@global-libs/axios/defaultErrorHandler";
 import { queryClient } from "@global-libs/react-query";
+import { UpdatePasswordProps } from "./types";
 
 export const useCurrentUser = (
   options?: UseQueryOptions<User, APIError, User>
@@ -64,6 +65,21 @@ export const useUpdate = (
         queryClient.invalidateQueries(keyCurrentUser());
         queryClient.invalidateQueries(keyUser(data?.id || 0));
       },
+      onError: defaultErrorHandler,
+    }
+  );
+};
+
+export const useUpdatePassword = (
+  options?: UseMutationOptions<ResponseDefault, APIError, UpdatePasswordProps>
+) => {
+  return useMutation<ResponseDefault, APIError, UpdatePasswordProps>(
+    (data) =>
+      api
+        .patch<ResponseDefault>(`/users/password`, data)
+        .then(parseResponseData),
+    {
+      ...options,
       onError: defaultErrorHandler,
     }
   );

@@ -11,6 +11,7 @@ import { Separator } from "@global-components/ui/separator";
 import StatsCard from "@modules/profile/components/StatsCard";
 import { useCurrentUser, useGet } from "@services/users";
 import ProfileEditDialog from "../ProfileEditDialog";
+import ProfileEditPasswordDialog from "../ProfileEditPasswordDialog";
 
 interface Props {
   userId?: number;
@@ -51,7 +52,9 @@ const ProfileSummary = ({ userId }: Props) => {
               <ProfileEditDialog>
                 <Button variant="outline">Edit Profile</Button>
               </ProfileEditDialog>
-              <Button variant="outline">Edit Password</Button>
+              <ProfileEditPasswordDialog>
+                <Button variant="outline">Edit Password</Button>
+              </ProfileEditPasswordDialog>
             </>
           )}
         </div>
