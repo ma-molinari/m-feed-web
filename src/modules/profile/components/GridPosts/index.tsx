@@ -24,7 +24,7 @@ const GridPosts = ({ userId }: Props) => {
       next={fetchNextPage}
       hasMore={hasNextPage || false}
       loader={<h4>Loading...</h4>}
-      scrollableTarget="infinite-scroll"
+      scrollableTarget="grid-infinite-scroll"
       className="grid grid-cols-3 gap-4 p-4 mt-4 border"
     >
       {posts?.map((item) => (

@@ -32,7 +32,7 @@ const PostDetailsComments = ({ isOpen }: Props) => {
 
   return (
     <div
-      id="infinite-scroll"
+      id="comments-infinite-scroll"
       className={`fixed top-0 overflow-auto right-0 h-full border-l w-96 ease-in-out duration-300 ${
         isOpen ? "translate-x-0 " : "translate-x-full"
       }`}
@@ -54,7 +54,7 @@ const PostDetailsComments = ({ isOpen }: Props) => {
         next={fetchNextPage}
         hasMore={hasNextPage || false}
         loader={<h4>Loading...</h4>}
-        scrollableTarget="infinite-scroll"
+        scrollableTarget="comments-infinite-scroll"
       >
         {comments?.map((item) => (
           <Comment data={item} key={item.id} />

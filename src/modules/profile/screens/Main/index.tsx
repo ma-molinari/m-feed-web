@@ -8,7 +8,7 @@ interface Props {
 const ProfileScreen = ({ userId }: Props) => {
   return (
     <main
-      id="infinite-scroll"
+      id="grid-infinite-scroll"
       className="flex flex-col h-full max-w-6xl p-4 mx-auto overflow-auto"
     >
       <div className="p-4 mt-4">
