@@ -9,28 +9,32 @@ import {
   AvatarImage,
 } from "@global-components/ui/avatar";
 import ItemMenu from "../ItemMenu";
+import { useCurrentUser } from "@services/users";
 
 const ItemHeader = ({ data }: ItemProps) => {
+  const { data: me } = useCurrentUser();
+  const userOwner = me?.id === data?.userId ? me : data?.user;
+
   return (
     <div className="flex items-center justify-between px-4 py-3">
       <div className="flex items-center space-x-2">
-        <Link href={`/profile/${data?.userId}/${data?.user?.username}`}>
-          <Avatar className="w-8 h-8">
+        <Link href={`/profile/${userOwner?.id}/${userOwner?.username}`}>
+          <Avatar className="w-9 h-9">
             <AvatarImage
-              src={data?.user?.avatar && `${IMAGE_URL}/${data?.user?.avatar}`}
-              alt={data?.user?.username}
-              height={32}
-              width={32}
+              src={userOwner?.avatar && `${IMAGE_URL}/${userOwner?.avatar}`}
+              alt={userOwner?.username}
+              height={36}
+              width={36}
             />
             {/* Refactor soon, return the initials of the full name */}
-            <AvatarFallback>{data?.user?.fullName[0]}</AvatarFallback>
+            <AvatarFallback>{userOwner?.fullName?.charAt(0)}</AvatarFallback>
           </Avatar>
         </Link>
         <Link
-          href={`/profile/${data?.userId}/${data?.user?.username}`}
+          href={`/profile/${userOwner?.id}/${userOwner?.username}`}
           className="text-sm font-semibold line-clamp-1 text-card-foreground"
         >
-          {data?.user?.username}
+          {userOwner?.username}
         </Link>
       </div>
 

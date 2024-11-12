@@ -13,7 +13,7 @@ interface Post {
   liked?: boolean;
   createdAt: Date;
   updatedAt: Date;
-  user: Pick<User, "id" | "username" | "fullName" | "avatar">;
+  user: Partial<User>;
 }
 
 type InfinitePosts = InfiniteData<RawResponse<Post[]>>;

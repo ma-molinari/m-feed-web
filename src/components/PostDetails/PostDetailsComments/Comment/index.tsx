@@ -17,7 +17,12 @@ interface Props {
 
 const Comment = ({ data }: Props) => {
   const { data: me } = useCurrentUser();
-  const avatarSrc = data.user.avatar && `${IMAGE_URL}/${data.user.avatar}`;
+  const userOwner = me?.id === data?.userId ? me : data?.user;
+
+  const avatarSrc = userOwner?.avatar
+    ? `${IMAGE_URL}/${userOwner?.avatar}`
+    : "";
+
   const formattedDate = formatDistanceStrict(
     new Date(data.createdAt),
     new Date()
@@ -29,16 +34,16 @@ const Comment = ({ data }: Props) => {
         <Avatar className="w-9 h-9">
           <AvatarImage
             src={avatarSrc}
-            alt={`${data.user.username}-avatar`}
+            alt={`${userOwner?.username}-avatar`}
             height={36}
             width={36}
           />
           <AvatarFallback className="text-xs">
-            {data.user.fullName.charAt(0)}
+            {userOwner?.fullName?.charAt(0)}
           </AvatarFallback>
         </Avatar>
         <div className="flex items-center w-full gap-2">
-          <p className="font-semibold">{data.user.username}</p>
+          <p className="font-semibold">{userOwner?.username}</p>
           <span className="text-muted-foreground">·</span>
           <span className="text-muted-foreground">{formattedDate}</span>
           {me?.id === data?.userId && (
@@ -51,7 +56,7 @@ const Comment = ({ data }: Props) => {
           )}
         </div>
       </div>
-      <p className="mt-2 text-muted-foreground">{data.content}</p>
+      <p className="mt-2 text-muted-foreground">{data?.content}</p>
     </div>
   );
 };
