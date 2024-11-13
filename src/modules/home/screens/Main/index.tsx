@@ -5,6 +5,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@global-components/ui/tabs";
+import UserSuggestions from "@global-components/UserSuggestions";
 import FeedCompose from "@modules/home/components/FeedCompose";
 import FeedExploreCompose from "@modules/home/components/FeedExploreCompose";
 
@@ -29,14 +30,7 @@ const HomeScreen = () => {
         </Tabs>
       </div>
 
-      <div className="sticky p-4 border shadow-sm top-4 w-96 h-fit">
-        <div className="flex flex-col gap-y-4">
-          <Skeleton className="w-full h-6" />
-          <Skeleton className="w-full h-6" />
-          <Skeleton className="w-full h-6" />
-          <Skeleton className="w-full h-6" />
-        </div>
-      </div>
+      <UserSuggestions />
     </main>
   );
 };

@@ -18,6 +18,7 @@ import {
   keySearchUsers,
   keyUser,
   keyUserPosts,
+  keyUserSuggestions,
 } from "./keys";
 import { Post } from "@entities/post";
 import { getNextPageParam } from "@global-libs/utils";
@@ -129,5 +130,15 @@ export const useGetUserPosts = (
       getNextPageParam,
       keepPreviousData: true,
     }
+  );
+};
+
+export const useGetUserSuggestions = (
+  options?: UseQueryOptions<User[], APIError, User[]>
+) => {
+  return useQuery(
+    keyUserSuggestions(),
+    () => api.get(`/users/suggestions`).then(parseResponseData),
+    options
   );
 };

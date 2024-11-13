@@ -9,6 +9,10 @@ export const keySearchUsers = (query: string): QueryKey => [
   `search-users`,
   query,
 ];
+export const keyUserSuggestions = (): QueryKey => [
+  `current-user`,
+  `suggestions`,
+];
 export const keyUser = (userId: number): QueryKey => [`user`, userId];
 export const keyUserPosts = (userId: number): QueryKey => [
   `user`,
