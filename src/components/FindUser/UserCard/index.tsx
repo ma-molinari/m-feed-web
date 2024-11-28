@@ -22,7 +22,7 @@ const UserCard = ({ data }: { data: User }) => {
           <AvatarFallback>{data?.fullName?.[0]}</AvatarFallback>
         </Avatar>
         <div>
-          <p className="text-sm">{data?.fullName}</p>
+          <p className="text-sm hover:underline">{data?.fullName}</p>
           <p className="text-xs text-neutral-400">@{data?.username}</p>
         </div>
       </div>

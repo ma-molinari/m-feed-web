@@ -40,7 +40,7 @@ const UserSuggestions = () => {
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <p className="text-xs font-semibold line-clamp-1">
+                  <p className="text-xs font-semibold line-clamp-1 hover:underline">
                     {item?.fullName}
                   </p>
                   <p className="text-xs text-neutral-400 line-clamp-1">

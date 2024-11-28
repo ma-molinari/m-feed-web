@@ -11,10 +11,16 @@ import {
 import ItemMenu from "../ItemMenu";
 import { useCurrentUser } from "@services/users";
 import HoverUser from "@global-components/HoverUser";
+import { formatDistanceStrict } from "date-fns";
 
 const ItemHeader = ({ data }: ItemProps) => {
   const { data: me } = useCurrentUser();
   const userOwner = me?.id === data?.userId ? me : data?.user;
+
+  const formattedDate = formatDistanceStrict(
+    new Date(data.createdAt),
+    new Date()
+  );
 
   return (
     <div className="flex items-center justify-between px-4 py-3">
@@ -30,9 +36,11 @@ const ItemHeader = ({ data }: ItemProps) => {
             {/* Refactor soon, return the initials of the full name */}
             <AvatarFallback>{userOwner?.fullName?.charAt(0)}</AvatarFallback>
           </Avatar>
-          <p className="text-sm font-semibold line-clamp-1 text-card-foreground">
-            {userOwner?.username}
+          <p className="text-sm font-semibold line-clamp-1 text-card-foreground hover:underline">
+            @{userOwner?.username}
           </p>
+          <span className="text-muted-foreground">·</span>
+          <span className="text-sm text-muted-foreground">{formattedDate}</span>
         </div>
       </HoverUser>
       <ItemMenu data={data}>

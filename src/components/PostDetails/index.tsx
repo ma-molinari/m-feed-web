@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import usePostDetails, {
   selectIsOpen,
   selectId,
@@ -18,6 +20,7 @@ import PostDetailsContent from "./PostDetailsContent";
 import PostDetailsComments from "./PostDetailsComments";
 
 const PostDetails = () => {
+  const path = usePathname();
   const isOpen = usePostDetails(selectIsOpen);
   const onClose = usePostDetails(selectClear);
 
@@ -38,9 +41,13 @@ const PostDetails = () => {
     setShowComments(!showComments);
   };
 
+  useEffect(() => {
+    if (isOpen) onOpenChange(false);
+  }, [path]);
+
   return (
     <Drawer open={isOpen} onOpenChange={onOpenChange}>
-      <DrawerContent className="max-h-[85%] h-full">
+      <DrawerContent className="max-h-[90%] h-full">
         <div className="w-full flex h-full max-w-[632px] p-4 mx-auto mt-8 overflow-auto">
           <DrawerTitle className="hidden" />
           <div className="flex flex-col items-center gap-6 pb-0">
