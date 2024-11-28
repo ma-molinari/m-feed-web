@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { memo } from "react";
 import { MoreHorizontal } from "lucide-react";
 
 import { IMAGE_URL } from "@configs/environment";
@@ -10,6 +10,7 @@ import {
 } from "@global-components/ui/avatar";
 import ItemMenu from "../ItemMenu";
 import { useCurrentUser } from "@services/users";
+import HoverUser from "@global-components/HoverUser";
 
 const ItemHeader = ({ data }: ItemProps) => {
   const { data: me } = useCurrentUser();
@@ -17,8 +18,8 @@ const ItemHeader = ({ data }: ItemProps) => {
 
   return (
     <div className="flex items-center justify-between px-4 py-3">
-      <div className="flex items-center space-x-2">
-        <Link href={`/profile/${userOwner?.id}/${userOwner?.username}`}>
+      <HoverUser data={userOwner}>
+        <div className="flex items-center space-x-2 cursor-pointer">
           <Avatar className="w-9 h-9">
             <AvatarImage
               src={userOwner?.avatar && `${IMAGE_URL}/${userOwner?.avatar}`}
@@ -29,15 +30,11 @@ const ItemHeader = ({ data }: ItemProps) => {
             {/* Refactor soon, return the initials of the full name */}
             <AvatarFallback>{userOwner?.fullName?.charAt(0)}</AvatarFallback>
           </Avatar>
-        </Link>
-        <Link
-          href={`/profile/${userOwner?.id}/${userOwner?.username}`}
-          className="text-sm font-semibold line-clamp-1 text-card-foreground"
-        >
-          {userOwner?.username}
-        </Link>
-      </div>
-
+          <p className="text-sm font-semibold line-clamp-1 text-card-foreground">
+            {userOwner?.username}
+          </p>
+        </div>
+      </HoverUser>
       <ItemMenu data={data}>
         <MoreHorizontal strokeWidth={1.5} />
       </ItemMenu>
@@ -45,4 +42,4 @@ const ItemHeader = ({ data }: ItemProps) => {
   );
 };
 
-export default ItemHeader;
+export default memo(ItemHeader);
