@@ -26,7 +26,7 @@ const UserSuggestions = () => {
         {suggestions?.map((item) => (
           <div key={item.id} className="flex items-center gap-3">
             <HoverUser data={item}>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 cursor-pointer">
                 <Avatar className="w-9 h-9">
                   <AvatarImage
                     src={item?.avatar && `${IMAGE_URL}/${item?.avatar}`}

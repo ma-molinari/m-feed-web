@@ -16,7 +16,7 @@ import Link from "next/link";
 
 interface Props {
   children: ReactNode;
-  data: User | Partial<User>;
+  data?: User | Partial<User>;
 }
 
 const HoverUser = ({ children, data }: Props) => {

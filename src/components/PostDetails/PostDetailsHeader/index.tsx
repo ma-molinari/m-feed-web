@@ -11,6 +11,7 @@ import { Heart, MessageSquare } from "lucide-react";
 import { useLike, useUnlike } from "@services/post";
 import { useCallback } from "react";
 import { useCurrentUser } from "@services/users";
+import HoverUser from "@global-components/HoverUser";
 
 interface Props {
   data?: Post;
@@ -37,33 +38,27 @@ const PostDetailsHeader = ({ data, onOpenComments }: Props) => {
 
   return (
     <div className="flex items-center justify-between w-full">
-      <div className="flex items-center space-x-4">
-        <Link href={`/profile/${userOwner?.id}/${userOwner?.username}`}>
-          <Avatar className="w-12 h-12">
+      <HoverUser data={userOwner}>
+        <div className="flex items-center space-x-4 cursor-pointer">
+          <Avatar className="w-11 h-11">
             <AvatarImage
               src={userOwner?.avatar ? `${IMAGE_URL}/${userOwner?.avatar}` : ""}
               alt={userOwner?.username}
-              height={48}
-              width={48}
+              height={44}
+              width={44}
             />
             <AvatarFallback>{userOwner?.fullName?.charAt(0)}</AvatarFallback>
           </Avatar>
-        </Link>
-        <div className="flex flex-col items-baseline">
-          <Link
-            href={`/profile/${userOwner?.id}/${userOwner?.username}`}
-            className="text-sm font-semibold line-clamp-1 text-card-foreground"
-          >
-            {userOwner?.username}
-          </Link>
-          <Button
-            variant="link"
-            className="p-0 text-left h-max text-muted-foreground"
-          >
-            Follow
-          </Button>
+          <div className="flex flex-col items-baseline">
+            <p className="text-sm font-semibold line-clamp-1 text-card-foreground hover:underline">
+              {userOwner?.fullName}
+            </p>
+            <p className="text-xs line-clamp-1 text-muted-foreground">
+              @{userOwner?.username}
+            </p>
+          </div>
         </div>
-      </div>
+      </HoverUser>
 
       <div className="flex space-x-4">
         <Button
