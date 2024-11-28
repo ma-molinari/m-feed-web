@@ -45,13 +45,13 @@ const HoverUser = ({ children, data }: Props) => {
             <div>
               <Link
                 href={`/profile/${data?.id}/${data?.username}`}
-                className="font-semibold line-clamp-1 hover:underline"
+                className="font-semibold line-clamp-1 hover:underline w-max"
               >
                 @{data?.fullName}
               </Link>
               <Link
                 href={`/profile/${data?.id}/${data?.username}`}
-                className="text-sm text-neutral-400 line-clamp-1"
+                className="text-sm text-neutral-400 line-clamp-1 w-max"
               >
                 @{data?.username}
               </Link>

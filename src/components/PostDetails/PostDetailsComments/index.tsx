@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Button } from "@global-components/ui/button";
 import { Textarea } from "@global-components/ui/textarea";
-import usePostDetails, { selectId } from "@global-stores/usePostDetails";
+import usePostDetails, {
+  selectId,
+  selectSetShowComments,
+} from "@global-stores/usePostDetails";
 import { useCreate, usePostComments } from "@services/comments";
 import { useCurrentUser } from "@services/users";
 import Comment from "./Comment";
+import { useOnClickOutside } from "usehooks-ts";
 
 interface Props {
   isOpen: boolean;
@@ -15,13 +19,17 @@ const PostDetailsComments = ({ isOpen }: Props) => {
   const postId = usePostDetails(selectId);
   const me = useCurrentUser();
 
-  const [content, setContent] = useState<string>("");
-
   const { data, fetchNextPage, hasNextPage } = usePostComments(postId, {
     enabled: !!postId,
   });
   const comments = data?.pages?.flatMap((page) => page.data) ?? [];
 
+  const commentsScrollRef = useRef<HTMLDivElement>(null);
+  const setShowComments = usePostDetails(selectSetShowComments);
+
+  useOnClickOutside(commentsScrollRef, () => setShowComments(false));
+
+  const [content, setContent] = useState<string>("");
   const { mutate: onCreate } = useCreate({
     onSuccess: () => setContent(""),
   });
@@ -32,8 +40,9 @@ const PostDetailsComments = ({ isOpen }: Props) => {
 
   return (
     <div
+      ref={commentsScrollRef}
       id="comments-infinite-scroll"
-      className={`fixed top-0 overflow-auto right-0 h-full border-l w-96 ease-in-out duration-300 ${
+      className={`fixed top-0 overflow-auto right-0 h-full border-l w-96 bg-background ease-in-out duration-300 ${
         isOpen ? "translate-x-0 " : "translate-x-full"
       }`}
     >
