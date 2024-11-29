@@ -14,8 +14,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@global-components/ui/sheet";
-import UserCard from "./UserCard";
 import { useParams } from "next/navigation";
+import UserCard from "@global-components/ui/user-card";
 
 const FindUser = ({ children }: { children: ReactNode }) => {
   const params = useParams();
