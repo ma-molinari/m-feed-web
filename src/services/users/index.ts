@@ -17,6 +17,7 @@ import {
   keyCurrentUserPostLiked,
   keySearchUsers,
   keyUser,
+  keyUserFollowings,
   keyUserPosts,
   keyUserSuggestions,
 } from "./keys";
@@ -24,7 +25,8 @@ import { Post } from "@entities/post";
 import { getNextPageParam } from "@global-libs/utils";
 import defaultErrorHandler from "@global-libs/axios/defaultErrorHandler";
 import { queryClient } from "@global-libs/react-query";
-import { UpdatePasswordProps } from "./types";
+import { FollowProps, UpdatePasswordProps } from "./types";
+import { keyPostsFeed, keyPostsFeedExplore } from "@services/post/keys";
 
 export const useCurrentUser = (
   options?: UseQueryOptions<User, APIError, User>
@@ -99,6 +101,17 @@ export const useCurrentUserPostLiked = (
   );
 };
 
+export const useUserFollowings = (
+  userId: number,
+  options?: UseQueryOptions<RawResponse<User[]>, APIError>
+) => {
+  return useQuery(
+    keyUserFollowings(userId),
+    () => api.get(`/users/${userId}/followings`).then(parseResponseData),
+    options
+  );
+};
+
 export const useSearchUsers = (
   query: string,
   options?: UseQueryOptions<RawResponse<User[]>, APIError, RawResponse<User[]>>
@@ -140,5 +153,53 @@ export const useGetUserSuggestions = (
     keyUserSuggestions(),
     () => api.get(`/users/suggestions`).then(parseResponseData),
     options
+  );
+};
+
+export const useFollow = (
+  options?: UseMutationOptions<ResponseDefault, APIError, FollowProps>
+) => {
+  return useMutation<ResponseDefault, APIError, FollowProps>(
+    (data: FollowProps) =>
+      api
+        .post<RawResponse<ResponseDefault>>(`/users/follow`, data)
+        .then(parseResponseData),
+    {
+      ...options,
+      onSettled: () => {
+        const me = queryClient.getQueryData<User>(keyCurrentUser());
+        queryClient.refetchQueries(keyPostsFeed());
+        queryClient.refetchQueries(keyPostsFeedExplore());
+        queryClient.refetchQueries(keyCurrentUser());
+        queryClient.refetchQueries(keyUser(me?.id || 0));
+        queryClient.refetchQueries(keyUserFollowings(me?.id || 0));
+        queryClient.refetchQueries(keyUserSuggestions());
+      },
+      onError: defaultErrorHandler,
+    }
+  );
+};
+
+export const useUnfollow = (
+  options?: UseMutationOptions<ResponseDefault, APIError, FollowProps>
+) => {
+  return useMutation<ResponseDefault, APIError, FollowProps>(
+    (data: FollowProps) =>
+      api
+        .post<RawResponse<ResponseDefault>>(`/users/unfollow`, data)
+        .then(parseResponseData),
+    {
+      ...options,
+      onSettled: () => {
+        const me = queryClient.getQueryData<User>(keyCurrentUser());
+        queryClient.refetchQueries(keyPostsFeed());
+        queryClient.refetchQueries(keyPostsFeedExplore());
+        queryClient.refetchQueries(keyCurrentUser());
+        queryClient.refetchQueries(keyUser(me?.id || 0));
+        queryClient.refetchQueries(keyUserFollowings(me?.id || 0));
+        queryClient.refetchQueries(keyUserSuggestions());
+      },
+      onError: defaultErrorHandler,
+    }
   );
 };

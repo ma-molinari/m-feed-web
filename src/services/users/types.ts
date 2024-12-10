@@ -3,4 +3,8 @@ interface UpdatePasswordProps {
   newPassword: string;
 }
 
-export type { UpdatePasswordProps };
+interface FollowProps {
+  userId: number;
+}
+
+export type { UpdatePasswordProps, FollowProps };

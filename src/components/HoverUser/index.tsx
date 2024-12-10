@@ -13,6 +13,8 @@ import {
 } from "@global-components/ui/hover-card";
 import { IMAGE_URL } from "@configs/environment";
 import Link from "next/link";
+import { useCurrentUser } from "@services/users";
+import useFollowHandler from "@global-hooks/useFollowHandler";
 
 interface Props {
   children: ReactNode;
@@ -20,6 +22,9 @@ interface Props {
 }
 
 const HoverUser = ({ children, data }: Props) => {
+  const { data: me } = useCurrentUser();
+  const { isFollowed, onHandleFollow } = useFollowHandler(data?.id || 0);
+
   return (
     <HoverCard>
       <HoverCardTrigger asChild>{children}</HoverCardTrigger>
@@ -37,9 +42,16 @@ const HoverUser = ({ children, data }: Props) => {
                 <AvatarFallback>{data?.fullName?.charAt(0)}</AvatarFallback>
               </Avatar>
             </Link>
-            <Button size="sm" variant="outline" className="ml-auto">
-              Follow
-            </Button>
+            {Boolean(me?.id !== data?.id) && (
+              <Button
+                size="sm"
+                variant={isFollowed ? "default" : "outline"}
+                className="ml-auto"
+                onClick={onHandleFollow}
+              >
+                {isFollowed ? "Unfollow" : "Follow"}
+              </Button>
+            )}
           </div>
           <div className="mt-2 space-y-3">
             <div>

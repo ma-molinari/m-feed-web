@@ -5,6 +5,10 @@ export const keyCurrentUserPostLiked = (): QueryKey => [
   `current-user`,
   `liked-posts`,
 ];
+export const keyUserFollowings = (userId: number): QueryKey => [
+  `user-followings`,
+  userId,
+];
 export const keySearchUsers = (query: string): QueryKey => [
   `search-users`,
   query,
