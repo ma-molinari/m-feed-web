@@ -23,3 +23,13 @@ export const keyUserPosts = (userId: number): QueryKey => [
   userId,
   `posts`,
 ];
+export const keyGetUserFollowers = (userId: number): QueryKey => [
+  `user`,
+  userId,
+  `followers`,
+];
+export const keyGetUserFollowings = (userId: number): QueryKey => [
+  `user`,
+  userId,
+  `followings`,
+];

@@ -12,6 +12,7 @@ import StatsCard from "@modules/profile/components/StatsCard";
 import { useCurrentUser, useGet } from "@services/users";
 import ProfileEditDialog from "../ProfileEditDialog";
 import ProfileEditPasswordDialog from "../ProfileEditPasswordDialog";
+import HoverFollowers from "@global-components/HoverFollowers";
 
 interface Props {
   userId?: number;
@@ -41,9 +42,13 @@ const ProfileSummary = ({ userId }: Props) => {
           {data?.bio}
         </span>
         <div className="flex items-center mt-8 space-x-8">
-          <StatsCard label="Followers" value={data?.followers || 0} />
+          <HoverFollowers userId={currentUser} type="followers">
+            <StatsCard label="Followers" value={data?.followers || 0} />
+          </HoverFollowers>
           <Separator className="h-10" orientation="vertical" />
-          <StatsCard label="Following" value={data?.following || 0} />
+          <HoverFollowers userId={currentUser} type="following">
+            <StatsCard label="Following" value={data?.following || 0} />
+          </HoverFollowers>
           <Separator className="h-10" orientation="vertical" />
           <StatsCard label="Posts" value={data?.posts || 0} />
           {currentUser === me?.id && (

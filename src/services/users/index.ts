@@ -15,6 +15,8 @@ import { User } from "@entities/user";
 import {
   keyCurrentUser,
   keyCurrentUserPostLiked,
+  keyGetUserFollowers,
+  keyGetUserFollowings,
   keySearchUsers,
   keyUser,
   keyUserFollowings,
@@ -201,5 +203,29 @@ export const useUnfollow = (
       },
       onError: defaultErrorHandler,
     }
+  );
+};
+
+export const useGetFollowers = (
+  userId: number,
+  options?: UseQueryOptions<RawResponse<User[]>, APIError, RawResponse<User[]>>
+) => {
+  return useQuery(
+    keyGetUserFollowers(userId),
+    () =>
+      api.get(`/users/${userId}/followers?limit=15`).then(parseResponseData),
+    options
+  );
+};
+
+export const useGetFollowings = (
+  userId: number,
+  options?: UseQueryOptions<RawResponse<User[]>, APIError, RawResponse<User[]>>
+) => {
+  return useQuery(
+    keyGetUserFollowings(userId),
+    () =>
+      api.get(`/users/${userId}/followings?limit=15`).then(parseResponseData),
+    options
   );
 };
