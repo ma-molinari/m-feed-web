@@ -13,6 +13,7 @@ import { useCurrentUser, useGet } from "@services/users";
 import ProfileEditDialog from "../ProfileEditDialog";
 import ProfileEditPasswordDialog from "../ProfileEditPasswordDialog";
 import HoverFollowers from "@global-components/HoverFollowers";
+import ProfileSummaryLoading from "../ProfileSummaryLoading";
 
 interface Props {
   userId?: number;
@@ -22,7 +23,11 @@ const ProfileSummary = ({ userId }: Props) => {
   const { data: me } = useCurrentUser();
   const currentUser = userId || me?.id || 0;
 
-  const { data } = useGet(currentUser, { enabled: !!currentUser });
+  const { data, isLoading } = useGet(currentUser, { enabled: !!currentUser });
+
+  if (isLoading) {
+    return <ProfileSummaryLoading />;
+  }
 
   return (
     <div className="flex flex-col items-center gap-6">

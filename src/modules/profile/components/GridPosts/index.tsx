@@ -4,7 +4,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useCurrentUser, useGetUserPosts } from "@services/users";
 import GridImage from "./GridImage";
 import GridImageShadow from "./GridImageShadow";
-import GridLoading from "./GridLoading";
+import GridPostsLoading from "../GridPostsLoading";
 
 interface Props {
   userId?: number;
@@ -23,7 +23,7 @@ const GridPosts = ({ userId }: Props) => {
   const posts = data?.pages?.flatMap((page) => page.data) ?? [];
 
   if (isLoading) {
-    return <GridLoading />;
+    return <GridPostsLoading />;
   }
 
   return (
