@@ -1,7 +1,6 @@
 "use client";
 
 import { ReactNode, useEffect, useState } from "react";
-import Image from "next/image";
 import { useDebounceValue } from "usehooks-ts";
 import { Search } from "lucide-react";
 import { useSearchUsers } from "@services/users";
@@ -27,11 +26,7 @@ const FindUser = ({ children }: { children: ReactNode }) => {
     enabled: !!debounced.length,
   });
 
-  const renderUserList = !isLoading && Boolean(debounced.length);
-
-  const getOpacityClass = (condition: boolean) => {
-    return condition ? "opacity-1" : "opacity-0";
-  };
+  const renderUserList = !isLoading && Boolean(search.length);
 
   const onOpenChange = () => {
     setSearch("");
@@ -51,9 +46,10 @@ const FindUser = ({ children }: { children: ReactNode }) => {
         <SheetHeader>
           <SheetTitle className="hidden" />
         </SheetHeader>
+
         <div className="flex items-center w-full max-w-sm mt-8 space-x-2">
           <Input
-            placeholder="Find user..."
+            placeholder="Search"
             aria-label="Search for a user"
             onChange={(event) => setSearch(event.target.value)}
             className="bg-zinc-900"
@@ -63,31 +59,25 @@ const FindUser = ({ children }: { children: ReactNode }) => {
           </Button>
         </div>
 
-        <div
-          className={`flex flex-col mt-4 space-y-4 transition-opacity duration-300 ${getOpacityClass(
-            renderUserList
-          )}`}
-        >
-          {users?.data?.map((item) => (
-            <UserCard key={item.id} data={item} />
-          ))}
-          {renderUserList && users?.data?.length === 0 && (
-            <p className="text-sm text-center text-primary">User not found!</p>
-          )}
-        </div>
+        {renderUserList && Boolean(users?.data?.length) && (
+          <div className={`flex flex-col mt-4 space-y-4`}>
+            {users?.data?.map((item) => (
+              <UserCard key={item.id} data={item} />
+            ))}
+          </div>
+        )}
 
-        <div
-          className={`relative h-[10rem] mt-8 transition-opacity duration-300 ${getOpacityClass(
-            !renderUserList && !search.length
-          )}`}
-        >
-          <Image
-            src={`/assets/users/people-search.svg`}
-            alt={`Search user`}
-            fill
-            priority
-          />
-        </div>
+        {renderUserList && !Boolean(users?.data?.length) && (
+          <p className="mt-4 text-sm text-center text-neutral-400">
+            User not found!
+          </p>
+        )}
+
+        {!Boolean(search.length) && (
+          <p className="px-2 mt-2 text-xs text-neutral-400">
+            Try searching for people or username.
+          </p>
+        )}
       </SheetContent>
     </Sheet>
   );
