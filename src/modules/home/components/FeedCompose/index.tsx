@@ -6,10 +6,13 @@ import Feed from "@global-components/Feed";
 import useFeedContent from "@global-hooks/useFeedContent";
 import { ITEM_SIZE } from "@global-components/Feed/constants";
 import FeedComposeLoading from "../FeedComposeLoading";
+import { Button } from "@global-components/ui/button";
+import usePostManager, { selectSetOpen } from "@global-stores/usePostManager";
 
 const FeedCompose = () => {
   const { data, fetchNextPage, hasNextPage, isLoading } = usePostsFeed();
   const posts = useFeedContent(data);
+  const setOpen = usePostManager(selectSetOpen);
 
   const { outerRef, innerRef, items } = useVirtual<
     HTMLDivElement,
@@ -42,8 +45,9 @@ const FeedCompose = () => {
         })}
 
         {Boolean(!posts.length) && (
-          <div className="border w-[32rem] py-80 text-center">
-            No posts found!
+          <div className="border w-[32rem] py-80 text-center text-neutral-400 text-md">
+            No posts found.
+            <Button variant="link" className="px-2" onClick={setOpen}>Create.</Button>
           </div>
         )}
       </Feed.Content>

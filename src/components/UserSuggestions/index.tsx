@@ -18,6 +18,11 @@ const UserSuggestions = () => {
         {suggestions?.map((item) => (
           <Suggestion key={item.id} data={item} />
         ))}
+        {
+          Boolean(suggestions?.length) || (
+            <p className="text-neutral-400 text-sm">No suggestions found.</p>
+          )
+        }
       </div>
     </div>
   );

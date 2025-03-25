@@ -1,4 +1,3 @@
-import { Skeleton } from "@global-components/ui/skeleton";
 import {
   Tabs,
   TabsContent,

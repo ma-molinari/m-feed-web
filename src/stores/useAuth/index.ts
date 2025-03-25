@@ -32,7 +32,7 @@ const useAuth = create(
     },
     {
       name: "current-user",
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );

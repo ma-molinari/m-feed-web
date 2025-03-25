@@ -43,8 +43,8 @@ const FeedExploreCompose = () => {
         })}
 
         {Boolean(!posts.length) && (
-          <div className="border w-[32rem] py-80 text-center">
-            No posts found!
+          <div className="border w-[32rem] py-80 text-center text-neutral-400 text-sm">
+            No posts found.
           </div>
         )}
       </Feed.Content>
