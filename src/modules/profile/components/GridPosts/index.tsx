@@ -31,7 +31,7 @@ const GridPosts = ({ userId }: Props) => {
       dataLength={posts.length || 0}
       next={fetchNextPage}
       hasMore={hasNextPage || false}
-      loader={<h4>Loading...</h4>}
+      loader={<h4 className="text-neutral-400 text-md">Loading...</h4>}
       scrollableTarget="grid-infinite-scroll"
       className="grid grid-cols-3 gap-4 p-4 mt-4 border"
     >

@@ -62,7 +62,7 @@ const PostDetailsComments = ({ isOpen }: Props) => {
         dataLength={comments.length || 0}
         next={fetchNextPage}
         hasMore={hasNextPage || false}
-        loader={<h4>Loading...</h4>}
+        loader={<h4 className="text-neutral-400 text-md">Loading...</h4>}
         scrollableTarget="comments-infinite-scroll"
       >
         {comments?.map((item) => (
