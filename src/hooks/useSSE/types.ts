@@ -8,8 +8,6 @@ enum SSE_EVENTS {
   DELETE_POST = "delete-post",
   CREATE_COMMENT = "create-comment",
   DELETE_COMMENT = "delete-comment",
-  LIKE = "like",
-  UNLIKE = "unlike",
 }
 
 export type { SSEMessage }

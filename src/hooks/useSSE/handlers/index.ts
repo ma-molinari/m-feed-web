@@ -1,12 +1,9 @@
 import { PostCreateEvent, PostDeleteEvent } from "./postEvents"
 import { CommentCreateEvent, CommentDeleteEvent } from "./commentEvents"
-import { LikeEvent, UnlikeEvent } from "./likeEvents"
 
-export { 
+export default { 
   PostCreateEvent,
   PostDeleteEvent,
   CommentCreateEvent,
   CommentDeleteEvent,
-  LikeEvent,
-  UnlikeEvent
 }

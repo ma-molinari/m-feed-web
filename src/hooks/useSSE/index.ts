@@ -27,12 +27,6 @@ const useSSE = (url: string) => {
         case SSE_EVENTS.DELETE_COMMENT:
           SSEHandlers.CommentDeleteEvent(data);
           break;
-        case SSE_EVENTS.LIKE:
-          SSEHandlers.LikeEvent(data);
-          break;
-        case SSE_EVENTS.UNLIKE:
-          SSEHandlers.UnlikeEvent(data);
-          break;
       }
     };
 
