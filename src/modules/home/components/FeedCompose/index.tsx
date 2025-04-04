@@ -8,6 +8,7 @@ import { ITEM_SIZE } from "@global-components/Feed/constants";
 import FeedComposeLoading from "../FeedComposeLoading";
 import { Button } from "@global-components/ui/button";
 import usePostManager, { selectSetOpen } from "@global-stores/usePostManager";
+import PendingFeedPosts from "../PendingFeedPosts";
 
 const FeedCompose = () => {
   const { data, fetchNextPage, hasNextPage, isLoading } = usePostsFeed();
@@ -32,6 +33,7 @@ const FeedCompose = () => {
 
   return (
     <Feed ref={outerRef} className="h-[calc(100vh-100px)]">
+      <PendingFeedPosts />
       <Feed.Content ref={innerRef} className="gap-y-8">
         {items.map(({ index, measureRef }) => {
           if (!posts[index]) return;

@@ -2,28 +2,32 @@ import { Post } from "@entities/post";
 import { SSEMessage } from "../types";
 import { queryClient } from "@global-libs/react-query";
 import { keyPostsFeed, keyPostsFeedPending } from "@services/post/keys";
-import { DeleteCacheItem } from "./shared";
+import { User } from "@entities/user";
+import { keyCurrentUser } from "@services/users/keys";
 
 function PostCreateEvent(message: SSEMessage<Post>) {
-  // acumular novos posts recebidos em uma variavel, SE o post owner for != do currentUser.
-  // ao clicar em um componente/button incorporar esses posts ao inicio da lista SE nao existirem.
-  console.log(message.data);
-  const queryKey = keyPostsFeedPending();
+  const currentUserCache = queryClient.getQueryData<User>(keyCurrentUser())
+  if (currentUserCache?.id === message.data.userId) {
+    return;
+  }
 
-  //add ao cache
-  // const previousCache = queryClient.getQueryData<InfinitePosts>(keyPostsFeed());
-  // const newPagesCache = previousCache?.pages?.map((page, index) => {
-  //   if (index != 0) return page;
-  //   return {...page, data: [message.data, ...page.data] };
-  // });
-  // queryClient.setQueryData(keyPostsFeed(), { ...previousCache, pages: newPagesCache,});
+  const queryKey = keyPostsFeedPending();
+  const cache = queryClient.getQueryData<Post[]>(queryKey);
+  if (!cache) {
+    queryClient.setQueryData<Post[]>(queryKey, [message.data]);
+    return;
+  }
+
+  const postExists = cache.some((post) => post.id === message.data.id);
+  if (postExists) {
+    return;
+  }
+
+  queryClient.setQueryData(queryKey, [...cache, message.data]);
 }
 
-function PostDeleteEvent(message: SSEMessage<Post>) {
-  const queryKey = keyPostsFeed();
-  const postID = message.data.id;
-
-  DeleteCacheItem(queryKey, postID);
+function PostDeleteEvent(_message: SSEMessage<Post>) {
+  queryClient.invalidateQueries(keyPostsFeed())
 }
 
 export { PostCreateEvent, PostDeleteEvent }

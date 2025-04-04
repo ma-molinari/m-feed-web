@@ -144,6 +144,9 @@ export const useGetUserPosts = (
       ...options,
       getNextPageParam,
       keepPreviousData: true,
+      refetchOnWindowFocus: true,
+      staleTime: 1000 * 60,
+      cacheTime: 1000 * 60
     }
   );
 };
