@@ -66,7 +66,7 @@ const UploadFile = ({
         type="file"
         id="post-image"
         name="post-image"
-        accept="image/png, image/jpeg"
+        accept="image/png, image/jpeg, image/jpg, image/webp"
         onChange={(event) => {
           if (event.target.files && event.target.files[0]) {
             const file = event.target.files[0];

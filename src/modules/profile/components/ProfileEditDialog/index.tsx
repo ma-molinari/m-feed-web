@@ -34,10 +34,10 @@ import { useUpload } from "@services/post";
 
 const ProfileSchema = z.object({
   fullName: z.string().min(1, { message: "Name is required" }),
-  bio: z.string().optional(),
-  avatar: z.string().optional(),
-  avatarSrc: z.string().optional(),
-  file: z.any().optional(),
+  bio: z.string().optional().nullable(),
+  avatar: z.string().optional().nullable(),
+  avatarSrc: z.string().optional().nullable(),
+  file: z.any().optional().nullable(),
 });
 type IProfileSchema = z.infer<typeof ProfileSchema>;
 
@@ -78,8 +78,8 @@ const ProfileEditDialog = ({ children }: Props) => {
   const onSubmit: SubmitHandler<IProfileSchema> = async (data) => {
     const payload = {
       fullName: data.fullName,
-      bio: data.bio,
-      avatar: data.avatar,
+      bio: data.bio ?? undefined,
+      avatar: data.avatar ?? undefined,
     };
 
     if (data.file) {
@@ -131,7 +131,7 @@ const ProfileEditDialog = ({ children }: Props) => {
                 <FormItem>
                   <FormLabel className="text-muted-foreground">Bio</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Bio" rows={5} {...field} />
+                    <Textarea {...field} placeholder="Bio" rows={5} value={field.value ?? ""} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -145,7 +145,7 @@ const ProfileEditDialog = ({ children }: Props) => {
               <div className="flex items-center gap-4 mt-2">
                 <Avatar className="w-[100px] h-[100px]">
                   <AvatarImage
-                    src={avatarSrc}
+                    src={avatarSrc ?? ""}
                     alt={me?.username}
                     height={100}
                     width={100}
