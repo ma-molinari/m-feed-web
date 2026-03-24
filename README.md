@@ -2,6 +2,11 @@
 
 Front-end do **M-Feed**: feed de imagens com autenticação, perfis, comentários e atualizações em tempo real, construído com **Next.js** (App Router) e TypeScript.
 
+## Screenshots
+
+<img src="public/assets/screenshots/login.png" alt="Login - M-Feed" width="400">
+<img src="public/assets/screenshots/home.png" alt="Home - M-Feed" width="400">
+
 ## Funcionalidades
 
 - Autenticação (login e registro) e sessão no cliente
@@ -14,17 +19,17 @@ Front-end do **M-Feed**: feed de imagens com autenticação, perfis, comentário
 
 ## Stack
 
-| Área | Tecnologias |
-|------|-------------|
-| Framework | [Next.js](https://nextjs.org/) 13 (App Router), [React](https://reactjs.org/) 18 |
-| Linguagem | [TypeScript](https://www.typescriptlang.org/) |
-| Estilo | [Tailwind CSS](https://tailwindcss.com/), `tailwindcss-animate`, `class-variance-authority` |
-| Dados remotos | [TanStack Query](https://tanstack.com/query) (React Query), [Axios](https://axios-http.com/) |
-| Estado global (cliente) | [Zustand](https://github.com/pmndrs/zustand) |
+| Área                    | Tecnologias                                                                                     |
+| ----------------------- | ----------------------------------------------------------------------------------------------- |
+| Framework               | [Next.js](https://nextjs.org/) 13 (App Router), [React](https://reactjs.org/) 18                |
+| Linguagem               | [TypeScript](https://www.typescriptlang.org/)                                                   |
+| Estilo                  | [Tailwind CSS](https://tailwindcss.com/), `tailwindcss-animate`, `class-variance-authority`     |
+| Dados remotos           | [TanStack Query](https://tanstack.com/query) (React Query), [Axios](https://axios-http.com/)    |
+| Estado global (cliente) | [Zustand](https://github.com/pmndrs/zustand)                                                    |
 | Formulários / validação | [React Hook Form](https://react-hook-form.com/), [Zod](https://zod.dev/), `@hookform/resolvers` |
-| UI primitiva | [Radix UI](https://www.radix-ui.com/), [Lucide](https://lucide.dev/) |
-| Lista / feed | Virtualização e scroll infinito (`react-cool-virtual`, `react-infinite-scroll-component`) |
-| Feedback | Toasts (API imperativa em `src/components/ui/use-toast.ts`, Radix + Tailwind) |
+| UI primitiva            | [Radix UI](https://www.radix-ui.com/), [Lucide](https://lucide.dev/)                            |
+| Lista / feed            | Virtualização e scroll infinito (`react-cool-virtual`, `react-infinite-scroll-component`)       |
+| Feedback                | Toasts (API imperativa em `src/components/ui/use-toast.ts`, Radix + Tailwind)                   |
 
 ## Estrutura do código (resumo)
 
@@ -72,16 +77,16 @@ Abra [http://localhost:3000](http://localhost:3000).
 
 ### Scripts npm
 
-| Script | Descrição |
-|--------|-----------|
-| `npm run dev` | Servidor de desenvolvimento |
-| `npm run build` | Build de produção |
-| `npm run start` | Servidor de produção (após `build`) |
-| `npm run lint` | ESLint (`.ts`, `.tsx`) |
-| `npm run lint-and-fix` | ESLint com correção automática |
-| `npm run format` | Prettier (escrita) em `src/` |
-| `npm run format:check` | Prettier em modo verificação |
-| `npm run test` | Vitest (watch) |
-| `npm run test:run` | Vitest uma execução (CI) |
+| Script                 | Descrição                           |
+| ---------------------- | ----------------------------------- |
+| `npm run dev`          | Servidor de desenvolvimento         |
+| `npm run build`        | Build de produção                   |
+| `npm run start`        | Servidor de produção (após `build`) |
+| `npm run lint`         | ESLint (`.ts`, `.tsx`)              |
+| `npm run lint-and-fix` | ESLint com correção automática      |
+| `npm run format`       | Prettier (escrita) em `src/`        |
+| `npm run format:check` | Prettier em modo verificação        |
+| `npm run test`         | Vitest (watch)                      |
+| `npm run test:run`     | Vitest uma execução (CI)            |
 
 O projeto usa **npm** apenas (`package-lock.json`). Para instalar dependências com o mesmo grafo que o CI/local, use `npm install` (há `.npmrc` com `legacy-peer-deps=true` por conflitos de peer entre ESLint e `eslint-config-next`).
