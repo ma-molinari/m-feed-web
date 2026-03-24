@@ -1,18 +1,18 @@
-import { APIError, RawResponse, ResponseDefault } from "@entities/response";
-import { api } from "@global-libs/axios";
-import parseResponseData from "@global-libs/axios/parseResponseData";
 import {
   useInfiniteQuery,
   UseInfiniteQueryOptions,
   useMutation,
   UseMutationOptions,
 } from "@tanstack/react-query";
-import { keyPostsComments } from "./keys";
-import { Comment } from "@entities/comment";
-import { getNextPageParam } from "@global-libs/utils";
-import { queryClient } from "@global-libs/react-query";
+import { api } from "@global-libs/axios";
 import defaultErrorHandler from "@global-libs/axios/defaultErrorHandler";
+import parseResponseData from "@global-libs/axios/parseResponseData";
+import { queryClient } from "@global-libs/react-query";
+import { getNextPageParam } from "@global-libs/utils";
+import { Comment } from "@entities/comment";
+import { APIError, RawResponse, ResponseDefault } from "@entities/response";
 import { keyPost } from "@services/post/keys";
+import { keyPostsComments } from "./keys";
 
 export const usePostComments = (
   postId: number,
@@ -20,7 +20,7 @@ export const usePostComments = (
     RawResponse<Comment[]>,
     APIError,
     RawResponse<Comment[]>
-  >
+  >,
 ) => {
   return useInfiniteQuery(
     keyPostsComments(postId),
@@ -32,7 +32,7 @@ export const usePostComments = (
       ...options,
       getNextPageParam,
       keepPreviousData: true,
-    }
+    },
   );
 };
 
@@ -41,7 +41,7 @@ export const useCreate = (
     ResponseDefault,
     APIError,
     Pick<Comment, "content" | "postId" | "userId">
-  >
+  >,
 ) => {
   return useMutation<
     ResponseDefault,
@@ -50,19 +50,18 @@ export const useCreate = (
   >(
     (data: Pick<Comment, "content" | "postId" | "userId">) =>
       api
-        .post<RawResponse<ResponseDefault>>(
-          `/posts/${data.postId}/comments`,
-          data
-        )
+        .post<
+          RawResponse<ResponseDefault>
+        >(`/posts/${data.postId}/comments`, data)
         .then(parseResponseData),
     {
       ...options,
-      onSettled: (_, __, data, _context) => {
+      onSettled: (_, __, data) => {
         queryClient.invalidateQueries(keyPost(data.postId));
         queryClient.invalidateQueries(keyPostsComments(data.postId));
       },
       onError: defaultErrorHandler,
-    }
+    },
   );
 };
 
@@ -71,22 +70,22 @@ export const useDelete = (
     ResponseDefault,
     APIError,
     Pick<Comment, "id" | "postId">
-  >
+  >,
 ) => {
   return useMutation<ResponseDefault, APIError, Pick<Comment, "id" | "postId">>(
     (data: Pick<Comment, "id" | "postId">) =>
       api
-        .delete<RawResponse<ResponseDefault>>(
-          `/posts/${data.postId}/comments/${data.id}`
-        )
+        .delete<
+          RawResponse<ResponseDefault>
+        >(`/posts/${data.postId}/comments/${data.id}`)
         .then(parseResponseData),
     {
       ...options,
-      onSettled: (_, __, data, _context) => {
+      onSettled: (_, __, data) => {
         queryClient.invalidateQueries(keyPost(data.postId));
         queryClient.invalidateQueries(keyPostsComments(data.postId));
       },
       onError: defaultErrorHandler,
-    }
+    },
   );
 };

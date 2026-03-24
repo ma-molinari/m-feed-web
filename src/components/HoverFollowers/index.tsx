@@ -4,8 +4,8 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@global-components/ui/hover-card";
-import { useGetFollowers, useGetFollowings } from "@services/users";
 import UserCard from "@global-components/ui/user-card";
+import { useGetFollowers, useGetFollowings } from "@services/users";
 
 interface Props {
   children: ReactNode;
@@ -15,15 +15,15 @@ interface Props {
 
 const HoverFollowers = ({ children, userId, type }: Props) => {
   const { data: followers } = useGetFollowers(userId, {
-    enabled: type === "followers",
+    enabled: type === `followers`,
   });
 
   const { data: followings } = useGetFollowings(userId, {
-    enabled: type === "following",
+    enabled: type === `following`,
   });
 
   const users = useMemo(() => {
-    if (type === "followers") return followers;
+    if (type === `followers`) return followers;
     return followings;
   }, [type, followers, followings]);
 
@@ -32,10 +32,10 @@ const HoverFollowers = ({ children, userId, type }: Props) => {
       <HoverCardTrigger asChild>
         <div>{children}</div>
       </HoverCardTrigger>
-      <HoverCardContent className={`${!users?.ct ? "hidden" : ""} w-72`}>
+      <HoverCardContent className={`${!users?.ct ? `hidden` : ``} w-72`}>
         <div className="flex flex-col">
           <h3 className="text-sm font-semibold">
-            {type === "followers" ? `Followers` : `Following`}
+            {type === `followers` ? `Followers` : `Following`}
           </h3>
           <div className="mt-4 space-y-3 overflow-auto max-h-[230px]">
             {users?.data?.map((item) => (

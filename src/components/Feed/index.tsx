@@ -15,9 +15,9 @@ const Feed = Object.assign(
       >
         {children}
       </div>,
-      (child) => cloneElement(child)
-    )
-  )
+      (child) => cloneElement(child),
+    ),
+  ),
 ) as typeof Content & {
   Content: typeof Content;
   Item: typeof Item;

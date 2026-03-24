@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
-import { InfinitePosts, PostType } from "@entities/post";
-import { useCurrentUserPostLiked } from "@services/users";
 import { queryClient } from "@global-libs/react-query";
+import { InfinitePosts, PostType } from "@entities/post";
 import { keyPostsFeed, keyPostsFeedExplore } from "@services/post/keys";
+import { useCurrentUserPostLiked } from "@services/users";
 
 const useFeedContent = (data?: InfinitePosts, type?: PostType) => {
   const { data: postLiked } = useCurrentUserPostLiked({
@@ -34,7 +34,7 @@ const useFeedContent = (data?: InfinitePosts, type?: PostType) => {
       pageParams: previousCache?.pageParams,
       pages: newPagesCache,
     });
-  }, [data, postLiked]);
+  }, [data, postLiked, queryKey]);
 
   return data?.pages?.flatMap((page) => page.data) ?? [];
 };

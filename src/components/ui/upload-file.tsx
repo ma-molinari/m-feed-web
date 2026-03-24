@@ -1,8 +1,8 @@
 import { MouseEvent, useRef } from "react";
-import Image from "next/image";
 import { ArrowUpFromLine } from "lucide-react";
-import { Button } from "@global-components/ui/button";
+import Image from "next/image";
 import { cn } from "libs/utils";
+import { Button } from "@global-components/ui/button";
 
 interface Props {
   file?: File;
@@ -15,16 +15,16 @@ interface Props {
 const UploadFile = ({
   file,
   className,
-  type = "create",
-  imageURL = "",
+  type = `create`,
+  imageURL = ``,
   onFileChange,
 }: Props) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const openFilesList = (
-    event: MouseEvent<HTMLDivElement | HTMLButtonElement>
+    event: MouseEvent<HTMLDivElement | HTMLButtonElement>,
   ) => {
-    if (type === "edit") return;
+    if (type === `edit`) return;
 
     event.stopPropagation();
     fileInputRef.current?.click();
@@ -34,7 +34,7 @@ const UploadFile = ({
     <div
       className={cn(
         `border rounded-md shadow-sm bg-zinc-900 flex flex-col items-center justify-center w-full h-[450px] cursor-pointer`,
-        className
+        className,
       )}
       onClick={openFilesList}
     >
@@ -47,9 +47,9 @@ const UploadFile = ({
           draggable={false}
           priority
           style={{
-            maxWidth: "250px",
-            maxHeight: "250px",
-            objectFit: "contain",
+            maxWidth: `250px`,
+            maxHeight: `250px`,
+            objectFit: `contain`,
           }}
         />
       ) : (
@@ -69,15 +69,15 @@ const UploadFile = ({
         accept="image/png, image/jpeg, image/jpg, image/webp"
         onChange={(event) => {
           if (event.target.files && event.target.files[0]) {
-            const file = event.target.files[0];
-            onFileChange(file);
+            const selected = event.target.files[0];
+            onFileChange(selected);
           }
         }}
         className="hidden"
       />
       <Button
         className="mt-4 w-[100px]"
-        disabled={type === "edit"}
+        disabled={type === `edit`}
         onClick={openFilesList}
       >
         Choose

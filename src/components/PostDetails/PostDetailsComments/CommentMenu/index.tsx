@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { Comment } from "@entities/comment";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,6 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@global-components/ui/dropdown-menu";
+import { Comment } from "@entities/comment";
 import { useDelete } from "@services/comments";
 
 interface Props {

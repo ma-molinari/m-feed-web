@@ -18,7 +18,7 @@ const GridPosts = ({ userId }: Props) => {
     currentUser,
     {
       enabled: !!currentUser,
-    }
+    },
   );
   const posts = data?.pages?.flatMap((page) => page.data) ?? [];
 

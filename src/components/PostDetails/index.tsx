@@ -2,6 +2,12 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerTitle,
+} from "@global-components/ui/drawer";
+import usePostContent from "@global-hooks/usePostContent";
 import usePostDetails, {
   selectIsOpen,
   selectId,
@@ -9,15 +15,9 @@ import usePostDetails, {
   selectShowComments,
   selectSetShowComments,
 } from "@global-stores/usePostDetails";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerTitle,
-} from "@global-components/ui/drawer";
-import usePostContent from "@global-hooks/usePostContent";
-import PostDetailsHeader from "./PostDetailsHeader";
-import PostDetailsContent from "./PostDetailsContent";
 import PostDetailsComments from "./PostDetailsComments";
+import PostDetailsContent from "./PostDetailsContent";
+import PostDetailsHeader from "./PostDetailsHeader";
 
 const PostDetails = () => {
   const path = usePathname();
@@ -42,8 +42,10 @@ const PostDetails = () => {
   };
 
   useEffect(() => {
-    if (isOpen) onOpenChange(false);
-  }, [path]);
+    if (isOpen) {
+      onOpenChange(false);
+    }
+  }, [path]); // eslint-disable-line react-hooks/exhaustive-deps -- close only on navigation, not when drawer toggles
 
   return (
     <Drawer open={isOpen} onOpenChange={onOpenChange}>

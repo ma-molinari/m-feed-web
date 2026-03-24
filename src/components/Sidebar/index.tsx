@@ -1,7 +1,7 @@
 import FindUser from "@global-components/FindUser";
+import SidebarCreate from "./SidebarCreate";
 import SidebarItem from "./SidebarItem";
 import SidebarLogout from "./SidebarLogout";
-import SidebarCreate from "./SidebarCreate";
 
 const Sidebar = () => {
   return (

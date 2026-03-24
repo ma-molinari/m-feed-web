@@ -1,6 +1,6 @@
+import { InfiniteData } from "@tanstack/react-query";
 import { RawResponse } from "@entities/response";
 import { User } from "@entities/user";
-import { InfiniteData } from "@tanstack/react-query";
 
 interface Comment {
   id: number;

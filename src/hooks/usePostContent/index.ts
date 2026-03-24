@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 
-import { Post } from "@entities/post";
-import { useCurrentUserPostLiked } from "@services/users";
 import { queryClient } from "@global-libs/react-query";
-import { keyPost } from "@services/post/keys";
+import { Post } from "@entities/post";
 import { useGet } from "@services/post";
+import { keyPost } from "@services/post/keys";
+import { useCurrentUserPostLiked } from "@services/users";
 
 const usePostContent = (postId: number) => {
   const { data: postLiked } = useCurrentUserPostLiked();
@@ -22,7 +22,7 @@ const usePostContent = (postId: number) => {
     };
 
     queryClient.setQueryData(keyPost(postId), newPagesCache);
-  }, [post, postLiked]);
+  }, [post, postLiked, postId]);
 
   return post;
 };

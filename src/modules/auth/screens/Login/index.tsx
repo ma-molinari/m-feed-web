@@ -13,7 +13,7 @@ const LoginScreen = () => {
         </p>
         <LoginForm />
         <p className="mt-8 text-stone-600">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{` `}
           <Link
             href="/register"
             className="font-semibold underline text-primary hover:text-primary/90"

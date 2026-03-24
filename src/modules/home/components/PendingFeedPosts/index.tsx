@@ -10,9 +10,11 @@ const PendingFeedPosts = () => {
 
   return (
     <div className="bg-neutral-900 py-1 flex justify-center">
-      <Button variant="link" onClick={refreshPosts}>Show {pendingPosts?.length || 0} posts</Button>
+      <Button variant="link" onClick={refreshPosts}>
+        Show {pendingPosts?.length || 0} posts
+      </Button>
     </div>
   );
-}
+};
 
 export default PendingFeedPosts;

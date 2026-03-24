@@ -1,7 +1,7 @@
 import { ReactNode, useRef } from "react";
-import { z } from "zod";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
 import { Button } from "@global-components/ui/button";
 import {
   Dialog,
@@ -11,8 +11,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@global-components/ui/dialog";
-import { Input } from "@global-components/ui/input";
-import { Separator } from "@global-components/ui/separator";
 import {
   Form,
   FormControl,
@@ -21,15 +19,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@global-components/ui/form";
+import { Input } from "@global-components/ui/input";
+import { Separator } from "@global-components/ui/separator";
 import { useUpdatePassword } from "@services/users";
 
 const UpdatePasswordSchema = z.object({
   password: z
     .string()
-    .min(6, { message: "Password must be at least 6 characters" }),
+    .min(6, { message: `Password must be at least 6 characters` }),
   newPassword: z
     .string()
-    .min(6, { message: "New Password must be at least 6 characters" }),
+    .min(6, { message: `New Password must be at least 6 characters` }),
 });
 type IUpdatePasswordSchema = z.infer<typeof UpdatePasswordSchema>;
 
@@ -43,8 +43,8 @@ const ProfileEditPasswordDialog = ({ children }: Props) => {
   const form = useForm<IUpdatePasswordSchema>({
     resolver: zodResolver(UpdatePasswordSchema),
     defaultValues: {
-      password: "",
-      newPassword: "",
+      password: ``,
+      newPassword: ``,
     },
   });
 
@@ -52,8 +52,8 @@ const ProfileEditPasswordDialog = ({ children }: Props) => {
     if (!open) return;
 
     form.reset({
-      password: "",
-      newPassword: "",
+      password: ``,
+      newPassword: ``,
     });
   };
 
@@ -74,7 +74,7 @@ const ProfileEditPasswordDialog = ({ children }: Props) => {
         <DialogHeader>
           <DialogTitle>Edit password</DialogTitle>
           <DialogDescription>
-            Update your password. Click save when you're done.
+            Update your password. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <Separator className="my-4" />

@@ -1,6 +1,6 @@
 enum ColorTheme {
-  DARK = "dark",
-  LIGHT = "light",
+  DARK = `dark`,
+  LIGHT = `light`,
 }
 
 interface State {

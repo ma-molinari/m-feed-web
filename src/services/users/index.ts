@@ -8,10 +8,15 @@ import {
 } from "@tanstack/react-query";
 
 import { api } from "@global-libs/axios";
+import defaultErrorHandler from "@global-libs/axios/defaultErrorHandler";
 import parseResponseData from "@global-libs/axios/parseResponseData";
+import { queryClient } from "@global-libs/react-query";
+import { getNextPageParam } from "@global-libs/utils";
+import { Post } from "@entities/post";
 import { APIError, RawResponse, ResponseDefault } from "@entities/response";
 import { User } from "@entities/user";
 
+import { keyPostsFeed, keyPostsFeedExplore } from "@services/post/keys";
 import {
   keyCurrentUser,
   keyCurrentUserPostLiked,
@@ -23,32 +28,27 @@ import {
   keyUserPosts,
   keyUserSuggestions,
 } from "./keys";
-import { Post } from "@entities/post";
-import { getNextPageParam } from "@global-libs/utils";
-import defaultErrorHandler from "@global-libs/axios/defaultErrorHandler";
-import { queryClient } from "@global-libs/react-query";
 import { FollowProps, UpdatePasswordProps } from "./types";
-import { keyPostsFeed, keyPostsFeedExplore } from "@services/post/keys";
 
 export const useCurrentUser = (
-  options?: UseQueryOptions<User, APIError, User>
+  options?: UseQueryOptions<User, APIError, User>,
 ) => {
   return useQuery(
     keyCurrentUser(),
     () => api.get<RawResponse<User>>(`/users/me`).then(parseResponseData),
-    options
+    options,
   );
 };
 
 export const useGet = (
   userId: number,
-  options?: UseQueryOptions<User, APIError, User>
+  options?: UseQueryOptions<User, APIError, User>,
 ) => {
   return useQuery(
     keyUser(userId),
     () =>
       api.get<RawResponse<User>>(`/users/${userId}`).then(parseResponseData),
-    options
+    options,
   );
 };
 
@@ -57,7 +57,7 @@ export const useUpdate = (
     User,
     APIError,
     Pick<User, "fullName" | "bio" | "avatar">
-  >
+  >,
 ) => {
   return useMutation<User, APIError, Pick<User, "fullName" | "bio" | "avatar">>(
     (data) =>
@@ -71,12 +71,12 @@ export const useUpdate = (
         queryClient.invalidateQueries(keyUser(data?.id || 0));
       },
       onError: defaultErrorHandler,
-    }
+    },
   );
 };
 
 export const useUpdatePassword = (
-  options?: UseMutationOptions<ResponseDefault, APIError, UpdatePasswordProps>
+  options?: UseMutationOptions<ResponseDefault, APIError, UpdatePasswordProps>,
 ) => {
   return useMutation<ResponseDefault, APIError, UpdatePasswordProps>(
     (data) =>
@@ -86,12 +86,12 @@ export const useUpdatePassword = (
     {
       ...options,
       onError: defaultErrorHandler,
-    }
+    },
   );
 };
 
 export const useCurrentUserPostLiked = (
-  options?: UseQueryOptions<number[], APIError, number[]>
+  options?: UseQueryOptions<number[], APIError, number[]>,
 ) => {
   return useQuery(
     keyCurrentUserPostLiked(),
@@ -99,30 +99,30 @@ export const useCurrentUserPostLiked = (
       api
         .get<RawResponse<number[]>>(`/users/me/liked-posts`)
         .then(parseResponseData),
-    options
+    options,
   );
 };
 
 export const useUserFollowings = (
   userId: number,
-  options?: UseQueryOptions<RawResponse<User[]>, APIError>
+  options?: UseQueryOptions<RawResponse<User[]>, APIError>,
 ) => {
   return useQuery(
     keyUserFollowings(userId),
     () => api.get(`/users/${userId}/followings`).then(parseResponseData),
-    options
+    options,
   );
 };
 
 export const useSearchUsers = (
   query: string,
-  options?: UseQueryOptions<RawResponse<User[]>, APIError, RawResponse<User[]>>
+  options?: UseQueryOptions<RawResponse<User[]>, APIError, RawResponse<User[]>>,
 ) => {
   return useQuery(
     keySearchUsers(query),
     () =>
       api.get(`/users/search?query=${query}&limit=5`).then(parseResponseData),
-    options
+    options,
   );
 };
 
@@ -132,7 +132,7 @@ export const useGetUserPosts = (
     RawResponse<Post[]>,
     APIError,
     RawResponse<Post[]>
-  >
+  >,
 ) => {
   return useInfiniteQuery(
     keyUserPosts(userId),
@@ -146,23 +146,23 @@ export const useGetUserPosts = (
       keepPreviousData: true,
       refetchOnWindowFocus: true,
       staleTime: 1000 * 60,
-      cacheTime: 1000 * 60
-    }
+      cacheTime: 1000 * 60,
+    },
   );
 };
 
 export const useGetUserSuggestions = (
-  options?: UseQueryOptions<User[], APIError, User[]>
+  options?: UseQueryOptions<User[], APIError, User[]>,
 ) => {
   return useQuery(
     keyUserSuggestions(),
     () => api.get(`/users/suggestions`).then(parseResponseData),
-    options
+    options,
   );
 };
 
 export const useFollow = (
-  options?: UseMutationOptions<ResponseDefault, APIError, FollowProps>
+  options?: UseMutationOptions<ResponseDefault, APIError, FollowProps>,
 ) => {
   return useMutation<ResponseDefault, APIError, FollowProps>(
     (data: FollowProps) =>
@@ -181,12 +181,12 @@ export const useFollow = (
         queryClient.refetchQueries(keyUserSuggestions());
       },
       onError: defaultErrorHandler,
-    }
+    },
   );
 };
 
 export const useUnfollow = (
-  options?: UseMutationOptions<ResponseDefault, APIError, FollowProps>
+  options?: UseMutationOptions<ResponseDefault, APIError, FollowProps>,
 ) => {
   return useMutation<ResponseDefault, APIError, FollowProps>(
     (data: FollowProps) =>
@@ -205,30 +205,30 @@ export const useUnfollow = (
         queryClient.refetchQueries(keyUserSuggestions());
       },
       onError: defaultErrorHandler,
-    }
+    },
   );
 };
 
 export const useGetFollowers = (
   userId: number,
-  options?: UseQueryOptions<RawResponse<User[]>, APIError, RawResponse<User[]>>
+  options?: UseQueryOptions<RawResponse<User[]>, APIError, RawResponse<User[]>>,
 ) => {
   return useQuery(
     keyGetUserFollowers(userId),
     () =>
       api.get(`/users/${userId}/followers?limit=15`).then(parseResponseData),
-    options
+    options,
   );
 };
 
 export const useGetFollowings = (
   userId: number,
-  options?: UseQueryOptions<RawResponse<User[]>, APIError, RawResponse<User[]>>
+  options?: UseQueryOptions<RawResponse<User[]>, APIError, RawResponse<User[]>>,
 ) => {
   return useQuery(
     keyGetUserFollowings(userId),
     () =>
       api.get(`/users/${userId}/followings?limit=15`).then(parseResponseData),
-    options
+    options,
   );
 };

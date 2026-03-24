@@ -1,10 +1,10 @@
 import { memo } from "react";
 import { MoreHorizontal } from "lucide-react";
+import HoverUser from "@global-components/HoverUser";
+import UserCardInline from "@global-components/ui/user-card-inline";
 import { Comment as IComment } from "@entities/comment";
 import { useCurrentUser } from "@services/users";
-import HoverUser from "@global-components/HoverUser";
 import CommentMenu from "../CommentMenu";
-import UserCardInline from "@global-components/ui/user-card-inline";
 
 interface Props {
   data: IComment;

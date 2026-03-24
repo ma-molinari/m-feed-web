@@ -1,15 +1,22 @@
-import { InfinitePosts, Post } from "@entities/post";
-import { queryClient } from "@global-libs/react-query";
-import { keyPostsFeed, keyPostsFeedPending } from "@services/post/keys";
 import { useQuery } from "@tanstack/react-query";
+import { queryClient } from "@global-libs/react-query";
+import { InfinitePosts, Post } from "@entities/post";
+import { keyPostsFeed, keyPostsFeedPending } from "@services/post/keys";
 
 const usePendingPosts = () => {
-  const { data: pendingPosts = [], remove, refetch } = useQuery<Post[]>({
+  const {
+    data: pendingPosts = [],
+    remove,
+    refetch,
+  } = useQuery<Post[]>({
     queryKey: keyPostsFeedPending(),
     queryFn: async () => [],
     staleTime: Infinity,
     select: (data) =>
-      [...(data ?? [])].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()),
+      [...(data ?? [])].sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+      ),
   });
 
   const refreshPosts = () => {
@@ -19,8 +26,14 @@ const usePendingPosts = () => {
     const pendingPostsIDs = new Set(pendingPosts.map((p) => p.id));
     const updatedPages = cache.pages.map((page, index) =>
       index === 0
-        ? { ...page, data: [...pendingPosts, ...page.data.filter((p) => !pendingPostsIDs.has(p.id))] }
-        : page
+        ? {
+            ...page,
+            data: [
+              ...pendingPosts,
+              ...page.data.filter((p) => !pendingPostsIDs.has(p.id)),
+            ],
+          }
+        : page,
     );
 
     queryClient.setQueryData(keyPostsFeed(), { ...cache, pages: updatedPages });

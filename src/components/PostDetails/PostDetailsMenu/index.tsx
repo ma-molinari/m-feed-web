@@ -1,8 +1,4 @@
 import { ReactNode } from "react";
-import { Post } from "@entities/post";
-import { useCurrentUser } from "@services/users";
-import { useDelete } from "@services/post";
-import usePostManager from "@global-stores/usePostManager";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +8,10 @@ import {
   DropdownMenuTrigger,
 } from "@global-components/ui/dropdown-menu";
 import usePostDetails from "@global-stores/usePostDetails";
+import usePostManager from "@global-stores/usePostManager";
+import { Post } from "@entities/post";
+import { useDelete } from "@services/post";
+import { useCurrentUser } from "@services/users";
 
 const setEditId = usePostManager.getState().setId;
 const closeDetails = usePostDetails.getState().clear;

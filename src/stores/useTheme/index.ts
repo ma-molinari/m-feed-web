@@ -18,10 +18,10 @@ const useTheme = create(
       };
     },
     {
-      name: "current-theme",
+      name: `current-theme`,
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 );
 
 export default useTheme;

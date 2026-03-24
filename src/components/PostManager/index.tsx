@@ -14,17 +14,17 @@ import {
 import { Input } from "@global-components/ui/input";
 import { Label } from "@global-components/ui/label";
 import UploadFile from "@global-components/ui/upload-file";
-import { useCreate, useGet, useUpdate, useUpload } from "@services/post";
-import { IMAGE_URL } from "@configs/environment";
 import usePostManager, {
   selectIsOpen,
   selectClear,
   selectId,
 } from "@global-stores/usePostManager";
+import { IMAGE_URL } from "@configs/environment";
+import { useCreate, useGet, useUpdate, useUpload } from "@services/post";
 
 const PostManager = () => {
   const [imageFile, setImageFile] = useState<File>();
-  const [title, setTitle] = useState<string>("");
+  const [title, setTitle] = useState<string>(``);
   const [image, setImage] = useState<string>();
   const [isSubmiting, setIsSubmiting] = useState(false);
 
@@ -37,10 +37,10 @@ const PostManager = () => {
 
   useEffect(() => {
     if (isEdit) {
-      setTitle(post?.content || "");
+      setTitle(post?.content || ``);
       setImage(post?.image);
     }
-  }, [post]);
+  }, [post, isEdit]);
 
   const onOpenChange = (open: boolean) => {
     if (!open) {
@@ -50,8 +50,8 @@ const PostManager = () => {
 
   const checkFieldValid = (field: "file" | "title") => {
     if (!isSubmiting) return ``;
-    if (!isEdit && field === "file" && !imageFile) return `!border-destructive`;
-    if (field === "title" && !title?.length) return `!border-destructive`;
+    if (!isEdit && field === `file` && !imageFile) return `!border-destructive`;
+    if (field === `title` && !title?.length) return `!border-destructive`;
     return ``;
   };
 
@@ -82,15 +82,15 @@ const PostManager = () => {
     }
 
     const form = new FormData();
-    form.append("image", imageFile);
+    form.append(`image`, imageFile);
     onUpload(form);
   };
 
   const onReset = () => {
     setImageFile(undefined);
     setIsSubmiting(false);
-    setTitle("");
-    setImage("");
+    setTitle(``);
+    setImage(``);
     onClose();
   };
 
@@ -100,7 +100,7 @@ const PostManager = () => {
         <div className="w-full max-w-4xl mx-auto mt-8 overflow-auto">
           <DrawerHeader>
             <DrawerTitle>
-              {isEdit ? "Update your feed post" : "Upload your new feed image"}
+              {isEdit ? `Update your feed post` : `Upload your new feed image`}
             </DrawerTitle>
             <DrawerDescription>
               Share a moment with the community by uploading your image.
@@ -113,16 +113,16 @@ const PostManager = () => {
               <Input
                 placeholder="Write the title of this image"
                 maxLength={500}
-                className={`bg-zinc-900 ${checkFieldValid("title")}`}
+                className={`bg-zinc-900 ${checkFieldValid(`title`)}`}
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
               />
             </div>
             <UploadFile
               file={imageFile}
-              className={checkFieldValid("file")}
-              type={isEdit ? "edit" : "create"}
-              imageURL={isEdit ? `${IMAGE_URL}/${image}` : ""}
+              className={checkFieldValid(`file`)}
+              type={isEdit ? `edit` : `create`}
+              imageURL={isEdit ? `${IMAGE_URL}/${image}` : ``}
               onFileChange={(file) => setImageFile(file)}
             />
           </div>
@@ -133,7 +133,7 @@ const PostManager = () => {
             <DrawerClose asChild>
               <Button variant="outline">Cancel</Button>
             </DrawerClose>
-            <Button onClick={onSubmit}>{isEdit ? "Update" : "Save"}</Button>
+            <Button onClick={onSubmit}>{isEdit ? `Update` : `Save`}</Button>
           </div>
         </DrawerFooter>
       </DrawerContent>

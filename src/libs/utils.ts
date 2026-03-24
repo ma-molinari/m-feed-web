@@ -1,6 +1,6 @@
-import { RawResponse } from "@entities/response";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { RawResponse } from "@entities/response";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function getNextPageParam<T>(
   lastPage: RawResponse<T[]>,
-  allPages: RawResponse<T[]>[]
+  allPages: RawResponse<T[]>[],
 ) {
   const flatPages = allPages.flatMap((context) => context.data);
   const totalItems = flatPages.length || 0;

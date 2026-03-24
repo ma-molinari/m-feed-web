@@ -1,9 +1,9 @@
 "use client";
 
-import { SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { Button } from "@global-components/ui/button";
 import {
@@ -16,14 +16,14 @@ import {
 } from "@global-components/ui/form";
 import { Input } from "@global-components/ui/input";
 
-import { useLogin } from "@services/auth";
 import useAuth, { selectSetAuth } from "@global-stores/useAuth";
+import { useLogin } from "@services/auth";
 
 const LoginSchema = z.object({
-  email: z.string().min(1, { message: "Email or Username is required" }),
+  email: z.string().min(1, { message: `Email or Username is required` }),
   password: z
     .string()
-    .min(6, { message: "Password must be at least 6 characters" }),
+    .min(6, { message: `Password must be at least 6 characters` }),
 });
 type ILoginSchema = z.infer<typeof LoginSchema>;
 
@@ -31,8 +31,8 @@ const LoginForm = () => {
   const form = useForm<ILoginSchema>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: ``,
+      password: ``,
     },
   });
 
@@ -42,7 +42,7 @@ const LoginForm = () => {
   const { mutate } = useLogin({
     onSuccess: (data) => {
       setAuth(data);
-      push("/");
+      push(`/`);
     },
   });
 

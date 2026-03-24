@@ -16,9 +16,9 @@ const GridImage = ({ data }: Props) => {
       draggable={false}
       priority
       style={{
-        maxWidth: "350px",
-        maxHeight: "350px",
-        objectFit: "contain",
+        maxWidth: `350px`,
+        maxHeight: `350px`,
+        objectFit: `contain`,
       }}
       className="bg-muted"
     />

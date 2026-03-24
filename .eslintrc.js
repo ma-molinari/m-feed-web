@@ -54,9 +54,12 @@ module.exports = {
     "@typescript-eslint/explicit-function-return-type": `off`,
     "@typescript-eslint/explicit-module-boundary-types": `off`,
     "@typescript-eslint/no-use-before-define": [`off`],
-    "@typescript-eslint/no-explicit-any": `off`,
+    "@typescript-eslint/no-explicit-any": `error`,
     "@typescript-eslint/no-var-requires": `error`,
-    "@typescript-eslint/no-unused-vars": `error`,
+    "@typescript-eslint/no-unused-vars": [
+      `error`,
+      { argsIgnorePattern: `^_`, varsIgnorePattern: `^_` },
+    ],
     "@typescript-eslint/no-shadow": [`error`],
     "@typescript-eslint/quotes": [
       2,
@@ -73,7 +76,7 @@ module.exports = {
     "react/no-unused-prop-types": `off`,
     "react/react-in-jsx-scope": `off`,
     "react/require-default-props": `off`,
-    "react-hooks/exhaustive-deps": `off`,
+    "react-hooks/exhaustive-deps": `error`,
     "import/prefer-default-export": `off`,
     "import/extensions": [
       `error`,

@@ -1,13 +1,13 @@
 "use client";
 
 import useVirtual from "react-cool-virtual";
-import { usePostsFeed } from "@services/post";
 import Feed from "@global-components/Feed";
-import useFeedContent from "@global-hooks/useFeedContent";
 import { ITEM_SIZE } from "@global-components/Feed/constants";
-import FeedComposeLoading from "../FeedComposeLoading";
 import { Button } from "@global-components/ui/button";
+import useFeedContent from "@global-hooks/useFeedContent";
 import usePostManager, { selectSetOpen } from "@global-stores/usePostManager";
+import { usePostsFeed } from "@services/post";
+import FeedComposeLoading from "../FeedComposeLoading";
 import PendingFeedPosts from "../PendingFeedPosts";
 
 const FeedCompose = () => {
@@ -49,7 +49,9 @@ const FeedCompose = () => {
         {Boolean(!posts.length) && (
           <div className="border w-[32rem] py-80 text-center text-neutral-400 text-md">
             No posts found.
-            <Button variant="link" className="px-2" onClick={setOpen}>Create.</Button>
+            <Button variant="link" className="px-2" onClick={setOpen}>
+              Create.
+            </Button>
           </div>
         )}
       </Feed.Content>

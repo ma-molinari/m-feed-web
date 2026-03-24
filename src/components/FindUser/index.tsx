@@ -1,9 +1,9 @@
 "use client";
 
 import { ReactNode, useEffect, useState } from "react";
-import { useDebounceValue } from "usehooks-ts";
 import { Search } from "lucide-react";
-import { useSearchUsers } from "@services/users";
+import { useParams } from "next/navigation";
+import { useDebounceValue } from "usehooks-ts";
 import { Button } from "@global-components/ui/button";
 import { Input } from "@global-components/ui/input";
 import {
@@ -13,12 +13,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@global-components/ui/sheet";
-import { useParams } from "next/navigation";
 import UserCard from "@global-components/ui/user-card";
+import { useSearchUsers } from "@services/users";
 
 const FindUser = ({ children }: { children: ReactNode }) => {
   const params = useParams();
-  const [search, setSearch] = useState<string>("");
+  const [search, setSearch] = useState<string>(``);
   const [openSheet, setOpenSheet] = useState<boolean>(false);
   const [debounced] = useDebounceValue(search, 500);
 
@@ -29,12 +29,13 @@ const FindUser = ({ children }: { children: ReactNode }) => {
   const renderUserList = !isLoading && Boolean(search.length);
 
   const onOpenChange = () => {
-    setSearch("");
+    setSearch(``);
     setOpenSheet((prev) => !prev);
   };
 
   useEffect(() => {
-    if (openSheet) onOpenChange();
+    setSearch(``);
+    setOpenSheet(false);
   }, [params?.username]);
 
   return (

@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useOnClickOutside } from "usehooks-ts";
 import { Button } from "@global-components/ui/button";
 import { Textarea } from "@global-components/ui/textarea";
 import usePostDetails, {
@@ -9,7 +10,6 @@ import usePostDetails, {
 import { useCreate, usePostComments } from "@services/comments";
 import { useCurrentUser } from "@services/users";
 import Comment from "./Comment";
-import { useOnClickOutside } from "usehooks-ts";
 
 interface Props {
   isOpen: boolean;
@@ -29,9 +29,9 @@ const PostDetailsComments = ({ isOpen }: Props) => {
 
   useOnClickOutside(commentsScrollRef, () => setShowComments(false));
 
-  const [content, setContent] = useState<string>("");
+  const [content, setContent] = useState<string>(``);
   const { mutate: onCreate } = useCreate({
-    onSuccess: () => setContent(""),
+    onSuccess: () => setContent(``),
   });
 
   const onSubmit = () => {
@@ -43,7 +43,7 @@ const PostDetailsComments = ({ isOpen }: Props) => {
       ref={commentsScrollRef}
       id="comments-infinite-scroll"
       className={`fixed top-0 overflow-auto right-0 h-full border-l w-96 bg-background ease-in-out duration-300 ${
-        isOpen ? "translate-x-0 " : "translate-x-full"
+        isOpen ? `translate-x-0 ` : `translate-x-full`
       }`}
     >
       <div className="flex flex-col w-full gap-2 p-2">

@@ -1,8 +1,8 @@
-import { User } from "@entities/user";
 import HoverUser from "@global-components/HoverUser";
 import { Button } from "@global-components/ui/button";
 import UserCard from "@global-components/ui/user-card";
 import useFollowHandler from "@global-hooks/useFollowHandler";
+import { User } from "@entities/user";
 
 interface Props {
   data: User;

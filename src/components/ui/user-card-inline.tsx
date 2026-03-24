@@ -1,8 +1,8 @@
 import { useMemo } from "react";
+import { formatDistanceStrict } from "date-fns";
+import { IMAGE_URL } from "@configs/environment";
 import { User } from "@entities/user";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
-import { IMAGE_URL } from "@configs/environment";
-import { formatDistanceStrict } from "date-fns";
 
 interface Props {
   data?: User | Partial<User>;

@@ -1,9 +1,9 @@
 "use client";
 
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { Button } from "@global-components/ui/button";
 import {
@@ -16,26 +16,26 @@ import {
 } from "@global-components/ui/form";
 import { Input } from "@global-components/ui/input";
 
-import { useLogin, useRegister } from "@services/auth";
 import useAuth, { selectSetAuth } from "@global-stores/useAuth";
+import { useLogin, useRegister } from "@services/auth";
 
 const RegisterSchema = z
   .object({
-    fullName: z.string().min(1, { message: "Full Name is required" }),
-    username: z.string().min(1, { message: "Username is required" }),
-    email: z.string().min(1, { message: "Email is required" }).email({
-      message: "Must be a valid email",
+    fullName: z.string().min(1, { message: `Full Name is required` }),
+    username: z.string().min(1, { message: `Username is required` }),
+    email: z.string().min(1, { message: `Email is required` }).email({
+      message: `Must be a valid email`,
     }),
     password: z
       .string()
-      .min(6, { message: "Password must be atleast 6 characters" }),
+      .min(6, { message: `Password must be atleast 6 characters` }),
     confirmPassword: z
       .string()
-      .min(1, { message: "Confirm Password is required" }),
+      .min(1, { message: `Confirm Password is required` }),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "Password don't match",
+    path: [`confirmPassword`],
+    message: `Password don't match`,
   });
 type IRegisterSchema = z.infer<typeof RegisterSchema>;
 
@@ -43,11 +43,11 @@ const RegisterForm = () => {
   const form = useForm<IRegisterSchema>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
-      fullName: "",
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      fullName: ``,
+      username: ``,
+      email: ``,
+      password: ``,
+      confirmPassword: ``,
     },
   });
 
@@ -57,15 +57,15 @@ const RegisterForm = () => {
   const { mutate: mutateLogin } = useLogin({
     onSuccess: (data) => {
       setAuth(data);
-      push("/");
+      push(`/`);
     },
   });
 
   const { mutate } = useRegister({
     onSuccess: () => {
       mutateLogin({
-        email: form.getValues("email"),
-        password: form.getValues("password"),
+        email: form.getValues(`email`),
+        password: form.getValues(`password`),
       });
     },
   });

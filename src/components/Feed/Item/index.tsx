@@ -1,12 +1,11 @@
 import { forwardRef, memo } from "react";
 import Image from "next/image";
+import usePostDetails from "@global-stores/usePostDetails";
 import { IMAGE_URL } from "@configs/environment";
-
-import { ItemProps } from "../types";
 
 import ItemFooter from "./ItemFooter";
 import ItemHeader from "./ItemHeader";
-import usePostDetails from "@global-stores/usePostDetails";
+import { ItemProps } from "../types";
 
 const setPostId = usePostDetails.getState().setId;
 

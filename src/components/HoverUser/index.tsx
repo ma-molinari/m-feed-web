@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { User } from "@entities/user";
+import Link from "next/link";
 import {
   Avatar,
   AvatarFallback,
@@ -11,10 +11,10 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@global-components/ui/hover-card";
-import { IMAGE_URL } from "@configs/environment";
-import Link from "next/link";
-import { useCurrentUser } from "@services/users";
 import useFollowHandler from "@global-hooks/useFollowHandler";
+import { IMAGE_URL } from "@configs/environment";
+import { User } from "@entities/user";
+import { useCurrentUser } from "@services/users";
 
 interface Props {
   children: ReactNode;
@@ -45,11 +45,11 @@ const HoverUser = ({ children, data }: Props) => {
             {Boolean(me?.id !== data?.id) && (
               <Button
                 size="sm"
-                variant={isFollowed ? "default" : "outline"}
+                variant={isFollowed ? `default` : `outline`}
                 className="ml-auto"
                 onClick={onHandleFollow}
               >
-                {isFollowed ? "Unfollow" : "Follow"}
+                {isFollowed ? `Unfollow` : `Follow`}
               </Button>
             )}
           </div>

@@ -1,7 +1,7 @@
+import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
 import { IMAGE_URL } from "@configs/environment";
 import { Post } from "@entities/post";
-import { MoreHorizontal } from "lucide-react";
 import PostDetailsMenu from "../PostDetailsMenu";
 
 interface Props {
@@ -21,9 +21,9 @@ const PostDetailsContent = ({ data }: Props) => {
           draggable={false}
           priority
           style={{
-            maxWidth: "600px",
-            maxHeight: "600px",
-            objectFit: "contain",
+            maxWidth: `600px`,
+            maxHeight: `600px`,
+            objectFit: `contain`,
           }}
           className="mt-4 rounded-xl bg-muted"
         />

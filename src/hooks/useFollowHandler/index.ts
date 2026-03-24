@@ -1,10 +1,10 @@
+import { useCallback, useMemo } from "react";
 import {
   useCurrentUser,
   useFollow,
   useUnfollow,
   useUserFollowings,
 } from "@services/users";
-import { useCallback, useMemo } from "react";
 
 const useFollowHandler = (userId: number) => {
   const { data: me } = useCurrentUser();
@@ -23,7 +23,7 @@ const useFollowHandler = (userId: number) => {
   const onHandleFollow = useCallback(() => {
     if (isFollowed) return onUnfollow({ userId });
     return onFollow({ userId });
-  }, [isFollowed, userId]);
+  }, [isFollowed, userId, onFollow, onUnfollow]);
 
   return { isFollowed, onHandleFollow };
 };

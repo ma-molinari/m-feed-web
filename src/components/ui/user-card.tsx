@@ -1,18 +1,17 @@
+import Link from "next/link";
+import { IMAGE_URL } from "@configs/environment";
 import { User } from "@entities/user";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
-import { IMAGE_URL } from "@configs/environment";
-import Link from "next/link";
-import { useMemo } from "react";
 
 interface Props {
   data?: User | Partial<User>;
   variant?: "medium" | "small";
 }
 
-const UserCard = ({ data, variant = "medium" }: Props) => {
-  const avatarStyles = variant === "small" ? "w-9 h-9" : "w-12 h-12";
-  const avatarSize = variant === "small" ? 36 : 48;
-  const fontSize = variant === "small" ? "text-xs" : "text-sm";
+const UserCard = ({ data, variant = `medium` }: Props) => {
+  const avatarStyles = variant === `small` ? `w-9 h-9` : `w-12 h-12`;
+  const avatarSize = variant === `small` ? 36 : 48;
+  const fontSize = variant === `small` ? `text-xs` : `text-sm`;
 
   return (
     <Link href={`/profile/${data?.id}/${data?.username}`}>

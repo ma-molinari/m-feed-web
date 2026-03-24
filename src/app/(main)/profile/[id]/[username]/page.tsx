@@ -12,7 +12,7 @@ export function generateMetadata({ params }: Params) {
 
   return {
     title: `Profile - @${username || 0} - M-Feed`,
-    description: "See user profile.",
+    description: `See user profile.`,
   };
 }
 

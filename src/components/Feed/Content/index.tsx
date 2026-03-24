@@ -7,7 +7,7 @@ const Content = forwardRef<HTMLDivElement, FeedElement>(
     <div ref={ref} className={twMerge(`flex flex-col ${className}`)}>
       {children}
     </div>
-  )
+  ),
 );
 
 export default memo(Content);

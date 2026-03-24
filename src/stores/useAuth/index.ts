@@ -31,10 +31,10 @@ const useAuth = create(
       };
     },
     {
-      name: "current-user",
+      name: `current-user`,
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 );
 
 export default useAuth;

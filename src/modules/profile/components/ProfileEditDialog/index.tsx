@@ -1,7 +1,12 @@
 import { ReactNode, useRef } from "react";
-import { z } from "zod";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@global-components/ui/avatar";
 import { Button } from "@global-components/ui/button";
 import {
   Dialog,
@@ -11,15 +16,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@global-components/ui/dialog";
-import { Input } from "@global-components/ui/input";
-import { Label } from "@global-components/ui/label";
-import { Textarea } from "@global-components/ui/textarea";
-import { Separator } from "@global-components/ui/separator";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@global-components/ui/avatar";
 import {
   Form,
   FormControl,
@@ -28,12 +24,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@global-components/ui/form";
-import { useCurrentUser, useUpdate } from "@services/users";
+import { Input } from "@global-components/ui/input";
+import { Label } from "@global-components/ui/label";
+import { Separator } from "@global-components/ui/separator";
+import { Textarea } from "@global-components/ui/textarea";
 import { IMAGE_URL } from "@configs/environment";
 import { useUpload } from "@services/post";
+import { useCurrentUser, useUpdate } from "@services/users";
 
 const ProfileSchema = z.object({
-  fullName: z.string().min(1, { message: "Name is required" }),
+  fullName: z.string().min(1, { message: `Name is required` }),
   bio: z.string().optional().nullable(),
   avatar: z.string().optional().nullable(),
   avatarSrc: z.string().optional().nullable(),
@@ -53,10 +53,10 @@ const ProfileEditDialog = ({ children }: Props) => {
   const form = useForm<IProfileSchema>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
-      fullName: "",
+      fullName: ``,
     },
   });
-  const avatarSrc = form.watch("avatarSrc");
+  const avatarSrc = form.watch(`avatarSrc`);
 
   const onOpenChange = (open?: boolean) => {
     if (!open) return;
@@ -65,7 +65,7 @@ const ProfileEditDialog = ({ children }: Props) => {
       fullName: me?.fullName,
       bio: me?.bio,
       avatar: me?.avatar,
-      avatarSrc: me?.avatar ? `${IMAGE_URL}/${me?.avatar}` : "",
+      avatarSrc: me?.avatar ? `${IMAGE_URL}/${me?.avatar}` : ``,
       file: undefined,
     });
   };
@@ -83,10 +83,10 @@ const ProfileEditDialog = ({ children }: Props) => {
     };
 
     if (data.file) {
-      const form = new FormData();
-      form.append("file", data.file);
-      const file = await onUpload(form);
-      payload.avatar = file.filename;
+      const formData = new FormData();
+      formData.append(`file`, data.file);
+      const uploadResult = await onUpload(formData);
+      payload.avatar = uploadResult.filename;
     }
 
     onUpdate(payload);
@@ -101,7 +101,7 @@ const ProfileEditDialog = ({ children }: Props) => {
         <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Make changes to your profile here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <Separator className="my-4" />
@@ -131,7 +131,12 @@ const ProfileEditDialog = ({ children }: Props) => {
                 <FormItem>
                   <FormLabel className="text-muted-foreground">Bio</FormLabel>
                   <FormControl>
-                    <Textarea {...field} placeholder="Bio" rows={5} value={field.value ?? ""} />
+                    <Textarea
+                      {...field}
+                      placeholder="Bio"
+                      rows={5}
+                      value={field.value ?? ``}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -145,7 +150,7 @@ const ProfileEditDialog = ({ children }: Props) => {
               <div className="flex items-center gap-4 mt-2">
                 <Avatar className="w-[100px] h-[100px]">
                   <AvatarImage
-                    src={avatarSrc ?? ""}
+                    src={avatarSrc ?? ``}
                     alt={me?.username}
                     height={100}
                     width={100}
@@ -166,8 +171,8 @@ const ProfileEditDialog = ({ children }: Props) => {
                   onChange={(event) => {
                     if (event.target.files && event.target.files[0]) {
                       const file = event.target.files[0];
-                      form.setValue("avatarSrc", URL.createObjectURL(file));
-                      form.setValue("file", file);
+                      form.setValue(`avatarSrc`, URL.createObjectURL(file));
+                      form.setValue(`file`, file);
                     }
                   }}
                 />

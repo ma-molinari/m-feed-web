@@ -1,14 +1,14 @@
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 
 import { apiPublic } from "@global-libs/axios";
-import { APIError, RawResponse, ResponseDefault } from "@entities/response";
-import parseResponseData from "@global-libs/axios/parseResponseData";
 import defaultErrorHandler from "@global-libs/axios/defaultErrorHandler";
+import parseResponseData from "@global-libs/axios/parseResponseData";
+import { APIError, RawResponse, ResponseDefault } from "@entities/response";
 
 import { LoginProps, LoginResponse, RegisterProps } from "./types";
 
 export const useLogin = (
-  options?: UseMutationOptions<LoginResponse, APIError, LoginProps>
+  options?: UseMutationOptions<LoginResponse, APIError, LoginProps>,
 ) => {
   return useMutation<LoginResponse, APIError, LoginProps>(
     (data: LoginProps) =>
@@ -18,12 +18,12 @@ export const useLogin = (
     {
       ...options,
       onError: defaultErrorHandler,
-    }
+    },
   );
 };
 
 export const useRegister = (
-  options?: UseMutationOptions<ResponseDefault, APIError, RegisterProps>
+  options?: UseMutationOptions<ResponseDefault, APIError, RegisterProps>,
 ) => {
   return useMutation<ResponseDefault, APIError, RegisterProps>(
     (data: RegisterProps) =>
@@ -33,6 +33,6 @@ export const useRegister = (
     {
       ...options,
       onError: defaultErrorHandler,
-    }
+    },
   );
 };

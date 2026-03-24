@@ -1,9 +1,9 @@
 "use client";
 
 import { memo } from "react";
+import { Search, Home, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, Home, User } from "lucide-react";
 
 interface Props {
   href?: string;
@@ -17,15 +17,15 @@ const CURRENT_ICON = {
   profile: <User strokeWidth={1.5} />,
 };
 
-const SidebarItem = ({ href = "#", icon, type = "link" }: Props) => {
+const SidebarItem = ({ href = `#`, icon, type = `link` }: Props) => {
   const pathname = usePathname();
   const isActive = Boolean(pathname === href);
 
   const activeStyleContainer = isActive
-    ? "border-primary"
-    : "hover:border-primary";
+    ? `border-primary`
+    : `hover:border-primary`;
 
-  if (type === "link") {
+  if (type === `link`) {
     return (
       <Link
         href={href}

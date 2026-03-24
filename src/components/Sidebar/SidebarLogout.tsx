@@ -1,10 +1,10 @@
 "use client";
 
+import { DoorOpen } from "lucide-react";
 import useAuth, { selectClearAuth } from "@global-stores/useAuth";
 import { queryClient } from "@global-libs/react-query";
-import { keyCurrentUser } from "@services/users/keys";
 import { useCurrentUser } from "@services/users";
-import { DoorOpen } from "lucide-react";
+import { keyCurrentUser } from "@services/users/keys";
 
 const SidebarLogout = () => {
   useCurrentUser();

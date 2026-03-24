@@ -1,8 +1,8 @@
 "use client";
 
 import { useGetUserSuggestions } from "@services/users";
-import UserSuggestionsLoading from "./UserSuggestionsLoading";
 import Suggestion from "./Suggestion";
+import UserSuggestionsLoading from "./UserSuggestionsLoading";
 
 const UserSuggestions = () => {
   const { data: suggestions, isLoading } = useGetUserSuggestions();
@@ -18,11 +18,9 @@ const UserSuggestions = () => {
         {suggestions?.map((item) => (
           <Suggestion key={item.id} data={item} />
         ))}
-        {
-          Boolean(suggestions?.length) || (
-            <p className="text-neutral-400 text-sm">No suggestions found.</p>
-          )
-        }
+        {Boolean(suggestions?.length) || (
+          <p className="text-neutral-400 text-sm">No suggestions found.</p>
+        )}
       </div>
     </div>
   );

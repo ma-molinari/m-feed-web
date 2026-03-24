@@ -1,11 +1,4 @@
 import { ReactNode } from "react";
-import { Post } from "@entities/post";
-import { useCurrentUser } from "@services/users";
-import { useDelete } from "@services/post";
-import usePostDetails, { selectSetId } from "@global-stores/usePostDetails";
-import usePostManager, {
-  selectSetId as selectSetEditId,
-} from "@global-stores/usePostManager";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,6 +7,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@global-components/ui/dropdown-menu";
+import usePostDetails, { selectSetId } from "@global-stores/usePostDetails";
+import usePostManager, {
+  selectSetId as selectSetEditId,
+} from "@global-stores/usePostManager";
+import { Post } from "@entities/post";
+import { useDelete } from "@services/post";
+import { useCurrentUser } from "@services/users";
 
 interface Props {
   data: Post;

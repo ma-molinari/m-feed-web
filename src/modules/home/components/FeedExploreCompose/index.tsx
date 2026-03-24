@@ -1,11 +1,11 @@
 "use client";
 
 import useVirtual from "react-cool-virtual";
-import { usePostsFeedExplore } from "@services/post";
 import Feed from "@global-components/Feed";
-import useFeedContent from "@global-hooks/useFeedContent";
 import { ITEM_SIZE } from "@global-components/Feed/constants";
+import useFeedContent from "@global-hooks/useFeedContent";
 import { PostType } from "@entities/post";
+import { usePostsFeedExplore } from "@services/post";
 import FeedComposeLoading from "../FeedComposeLoading";
 
 const FeedExploreCompose = () => {

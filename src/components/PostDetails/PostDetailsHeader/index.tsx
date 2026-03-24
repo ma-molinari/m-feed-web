@@ -1,11 +1,11 @@
-import { Post } from "@entities/post";
-import { Button } from "@global-components/ui/button";
-import { Heart, MessageSquare } from "lucide-react";
-import { useLike, useUnlike } from "@services/post";
 import { useCallback } from "react";
-import { useCurrentUser } from "@services/users";
+import { Heart, MessageSquare } from "lucide-react";
 import HoverUser from "@global-components/HoverUser";
+import { Button } from "@global-components/ui/button";
 import UserCard from "@global-components/ui/user-card";
+import { Post } from "@entities/post";
+import { useLike, useUnlike } from "@services/post";
+import { useCurrentUser } from "@services/users";
 
 interface Props {
   data?: Post;
@@ -28,7 +28,7 @@ const PostDetailsHeader = ({ data, onOpenComments }: Props) => {
     }
 
     like({ postId: data?.id });
-  }, [data?.liked]);
+  }, [data, like, unlike]);
 
   return (
     <div className="flex items-center justify-between w-full">
@@ -41,7 +41,7 @@ const PostDetailsHeader = ({ data, onOpenComments }: Props) => {
       <div className="flex space-x-4">
         <Button
           className={`p-0 ${
-            data?.liked ? "[&>svg]:stroke-red-500 [&>svg]:fill-red-500" : ""
+            data?.liked ? `[&>svg]:stroke-red-500 [&>svg]:fill-red-500` : ``
           }`}
           variant="link"
           onClick={onHandleLike}

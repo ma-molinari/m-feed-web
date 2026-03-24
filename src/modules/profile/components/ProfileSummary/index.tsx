@@ -1,6 +1,6 @@
 "use client";
 
-import { IMAGE_URL } from "@configs/environment";
+import HoverFollowers from "@global-components/HoverFollowers";
 import {
   Avatar,
   AvatarFallback,
@@ -8,11 +8,11 @@ import {
 } from "@global-components/ui/avatar";
 import { Button } from "@global-components/ui/button";
 import { Separator } from "@global-components/ui/separator";
-import StatsCard from "@modules/profile/components/StatsCard";
+import { IMAGE_URL } from "@configs/environment";
 import { useCurrentUser, useGet } from "@services/users";
+import StatsCard from "@modules/profile/components/StatsCard";
 import ProfileEditDialog from "../ProfileEditDialog";
 import ProfileEditPasswordDialog from "../ProfileEditPasswordDialog";
-import HoverFollowers from "@global-components/HoverFollowers";
 import ProfileSummaryLoading from "../ProfileSummaryLoading";
 
 interface Props {
