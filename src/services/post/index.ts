@@ -6,32 +6,32 @@ import {
   useMutation,
   useQuery,
 } from "@tanstack/react-query";
-import toaster from "cogo-toast";
+import { toast } from "@global-components/ui/use-toast";
 
 import { api } from "@global-libs/axios";
-import { APIError, RawResponse, ResponseDefault } from "@entities/response";
-import { Post } from "@entities/post";
+import defaultErrorHandler from "@global-libs/axios/defaultErrorHandler";
 import parseResponseData from "@global-libs/axios/parseResponseData";
 import { queryClient } from "@global-libs/react-query";
+import { getNextPageParam } from "@global-libs/utils";
+import { Post } from "@entities/post";
+import { APIError, RawResponse, ResponseDefault } from "@entities/response";
+import { User } from "@entities/user";
 import {
   keyCurrentUser,
   keyCurrentUserPostLiked,
   keyUser,
   keyUserPosts,
 } from "@services/users/keys";
-import defaultErrorHandler from "@global-libs/axios/defaultErrorHandler";
 
 import { keyPost, keyPostsFeed, keyPostsFeedExplore } from "./keys";
 import { LikeProps, UploadResponse } from "./types";
-import { getNextPageParam } from "@global-libs/utils";
-import { User } from "@entities/user";
 
 export const usePostsFeed = (
   options?: UseInfiniteQueryOptions<
     RawResponse<Post[]>,
     APIError,
     RawResponse<Post[]>
-  >
+  >,
 ) => {
   return useInfiniteQuery(
     keyPostsFeed(),
@@ -41,7 +41,7 @@ export const usePostsFeed = (
       ...options,
       getNextPageParam,
       keepPreviousData: true,
-    }
+    },
   );
 };
 
@@ -50,7 +50,7 @@ export const usePostsFeedExplore = (
     RawResponse<Post[]>,
     APIError,
     RawResponse<Post[]>
-  >
+  >,
 ) => {
   return useInfiniteQuery(
     keyPostsFeedExplore(),
@@ -64,13 +64,13 @@ export const usePostsFeedExplore = (
       keepPreviousData: true,
       refetchOnWindowFocus: true,
       staleTime: 1000 * 60,
-      cacheTime: 1000 * 60
-    }
+      cacheTime: 1000 * 60,
+    },
   );
 };
 
 export const useLike = (
-  options?: UseMutationOptions<ResponseDefault, APIError, LikeProps>
+  options?: UseMutationOptions<ResponseDefault, APIError, LikeProps>,
 ) => {
   return useMutation<ResponseDefault, APIError, LikeProps>(
     (data: LikeProps) =>
@@ -83,12 +83,12 @@ export const useLike = (
         queryClient.invalidateQueries(keyCurrentUserPostLiked());
       },
       onError: defaultErrorHandler,
-    }
+    },
   );
 };
 
 export const useUnlike = (
-  options?: UseMutationOptions<ResponseDefault, APIError, LikeProps>
+  options?: UseMutationOptions<ResponseDefault, APIError, LikeProps>,
 ) => {
   return useMutation<ResponseDefault, APIError, LikeProps>(
     (data: LikeProps) =>
@@ -101,7 +101,7 @@ export const useUnlike = (
         queryClient.invalidateQueries(keyCurrentUserPostLiked());
       },
       onError: defaultErrorHandler,
-    }
+    },
   );
 };
 
@@ -110,7 +110,7 @@ export const useCreate = (
     ResponseDefault,
     APIError,
     Pick<Post, "content" | "image">
-  >
+  >,
 ) => {
   return useMutation<
     ResponseDefault,
@@ -131,26 +131,29 @@ export const useCreate = (
       },
       onError: (error) => {
         if (error.response?.status === 400) {
-          toaster.warn(error.response?.data?.message);
+          toast({
+            title: error.response?.data?.message ?? `Invalid request`,
+          });
           return;
         }
 
-        toaster.error(
-          "Oops! Something went wrong while creating the post. Please try again later."
-        );
+        toast({
+          variant: `destructive`,
+          title: `Oops! Something went wrong while creating the post. Please try again later.`,
+        });
       },
-    }
+    },
   );
 };
 
 export const useGet = (
   id: number,
-  options?: UseQueryOptions<Post, APIError, Post>
+  options?: UseQueryOptions<Post, APIError, Post>,
 ) => {
   return useQuery(
     keyPost(id),
     () => api.get(`/posts/${id}`).then(parseResponseData),
-    options
+    options,
   );
 };
 
@@ -159,7 +162,7 @@ export const useUpdate = (
     ResponseDefault,
     APIError,
     Pick<Post, "id" | "content">
-  >
+  >,
 ) => {
   return useMutation<ResponseDefault, APIError, Pick<Post, "id" | "content">>(
     (data: Pick<Post, "id" | "content">) =>
@@ -168,17 +171,17 @@ export const useUpdate = (
         .then(parseResponseData),
     {
       ...options,
-      onSettled: (_, __, data, _context) => {
+      onSettled: (_, __, data) => {
         queryClient.invalidateQueries(keyPostsFeed());
         queryClient.invalidateQueries(keyPost(data.id));
       },
       onError: defaultErrorHandler,
-    }
+    },
   );
 };
 
 export const useDelete = (
-  options?: UseMutationOptions<ResponseDefault, APIError, number>
+  options?: UseMutationOptions<ResponseDefault, APIError, number>,
 ) => {
   return useMutation<ResponseDefault, APIError, number>(
     (postId: number) =>
@@ -194,12 +197,12 @@ export const useDelete = (
         queryClient.refetchQueries(keyUserPosts(me?.id || 0));
       },
       onError: defaultErrorHandler,
-    }
+    },
   );
 };
 
 export const useUpload = (
-  options?: UseMutationOptions<UploadResponse, APIError, FormData>
+  options?: UseMutationOptions<UploadResponse, APIError, FormData>,
 ) => {
   return useMutation<UploadResponse, APIError, FormData>(
     (data: FormData) =>
@@ -209,10 +212,11 @@ export const useUpload = (
     {
       ...options,
       onError: () => {
-        toaster.error(
-          "The file upload was not completed due to an error. Please try again or check the file specifications."
-        );
+        toast({
+          variant: `destructive`,
+          title: `The file upload was not completed due to an error. Please try again or check the file specifications.`,
+        });
       },
-    }
+    },
   );
 };
