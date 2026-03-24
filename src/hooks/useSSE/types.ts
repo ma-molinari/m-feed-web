@@ -4,12 +4,12 @@ interface SSEMessage<T> {
 }
 
 enum SSE_EVENTS {
-  CREATE_POST = "create-post",
-  DELETE_POST = "delete-post",
-  CREATE_COMMENT = "create-comment",
-  DELETE_COMMENT = "delete-comment",
+  CREATE_POST = `create-post`,
+  DELETE_POST = `delete-post`,
+  CREATE_COMMENT = `create-comment`,
+  DELETE_COMMENT = `delete-comment`,
 }
 
-export type { SSEMessage }
+export type { SSEMessage };
 
-export { SSE_EVENTS }
+export { SSE_EVENTS };

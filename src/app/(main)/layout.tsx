@@ -1,9 +1,9 @@
 import { ReactNode } from "react";
 
-import Sidebar from "@global-components/Sidebar";
+import NotificationSSE from "@global-components/NotificationSSE";
 import PostDetails from "@global-components/PostDetails";
 import PostManager from "@global-components/PostManager";
-import NotificationSSE from "@global-components/NotificationSEE";
+import Sidebar from "@global-components/Sidebar";
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   return (

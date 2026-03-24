@@ -11,8 +11,8 @@ export const queryClient = new QueryClient({
       retry: false,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
-      staleTime: 1000 * 60 * 5, // 30 min
-      cacheTime: 1000 * 60 * 15, // 60 min
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      cacheTime: 1000 * 60 * 15, // 15 minutes (TanStack Query v5: renamed to gcTime)
     },
   },
 });

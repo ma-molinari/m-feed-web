@@ -1,12 +1,12 @@
-import { Post } from "@entities/post";
-import { SSEMessage } from "../types";
 import { queryClient } from "@global-libs/react-query";
-import { keyPostsFeed, keyPostsFeedPending } from "@services/post/keys";
+import { Post } from "@entities/post";
 import { User } from "@entities/user";
+import { keyPostsFeed, keyPostsFeedPending } from "@services/post/keys";
 import { keyCurrentUser } from "@services/users/keys";
+import { SSEMessage } from "../types";
 
 function PostCreateEvent(message: SSEMessage<Post>) {
-  const currentUserCache = queryClient.getQueryData<User>(keyCurrentUser())
+  const currentUserCache = queryClient.getQueryData<User>(keyCurrentUser());
   if (currentUserCache?.id === message.data.userId) {
     return;
   }
@@ -27,7 +27,7 @@ function PostCreateEvent(message: SSEMessage<Post>) {
 }
 
 function PostDeleteEvent(_message: SSEMessage<Post>) {
-  queryClient.invalidateQueries(keyPostsFeed())
+  queryClient.invalidateQueries(keyPostsFeed());
 }
 
-export { PostCreateEvent, PostDeleteEvent }
+export { PostCreateEvent, PostDeleteEvent };

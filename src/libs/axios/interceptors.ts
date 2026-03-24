@@ -8,7 +8,7 @@ import {
 import useAuth from "@global-stores/useAuth";
 
 const onRequest = (
-  value: InternalAxiosRequestConfig
+  value: InternalAxiosRequestConfig,
 ): InternalAxiosRequestConfig => {
   const { headers } = value;
 
@@ -31,7 +31,9 @@ const onResponse = (response: AxiosResponse): AxiosResponse => response;
 const onResponseError = (error: AxiosError): Promise<AxiosError> => {
   if ([401].includes(error.response?.status ?? 0)) {
     useAuth.getState().clearAuth();
-    window.location.href = `/login`;
+    if (typeof window !== `undefined`) {
+      window.location.assign(`/login`);
+    }
   }
 
   return Promise.reject(error);

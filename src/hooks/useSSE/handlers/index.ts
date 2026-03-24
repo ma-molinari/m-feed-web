@@ -1,9 +1,9 @@
-import { PostCreateEvent, PostDeleteEvent } from "./postEvents"
-import { CommentCreateEvent, CommentDeleteEvent } from "./commentEvents"
+import { CommentCreateEvent, CommentDeleteEvent } from "./commentEvents";
+import { PostCreateEvent, PostDeleteEvent } from "./postEvents";
 
-export default { 
+export default {
   PostCreateEvent,
   PostDeleteEvent,
   CommentCreateEvent,
   CommentDeleteEvent,
-}
+};

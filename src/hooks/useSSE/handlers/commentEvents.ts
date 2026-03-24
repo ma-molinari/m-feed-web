@@ -1,9 +1,9 @@
 import { queryClient } from "@global-libs/react-query";
-import { SSEMessage } from "../types";
 import { Comment } from "@entities/comment";
 import { keyPostsComments } from "@services/comments/keys";
-import { DeleteCacheItem, InsertCacheItem } from "./shared";
 import { keyPost } from "@services/post/keys";
+import { DeleteCacheItem, InsertCacheItem } from "./shared";
+import { SSEMessage } from "../types";
 
 function CommentCreateEvent(message: SSEMessage<Comment>) {
   const postID = message.data.postId;
@@ -22,4 +22,4 @@ function CommentDeleteEvent(message: SSEMessage<Comment>) {
   queryClient.invalidateQueries(keyPost(postID));
 }
 
-export { CommentCreateEvent, CommentDeleteEvent }
+export { CommentCreateEvent, CommentDeleteEvent };
