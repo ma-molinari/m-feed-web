@@ -1,0 +1,95 @@
+# M-Feed Web — Contexto Base para Agentes de IA
+
+## Objetivo
+
+Use este arquivo como contexto inicial padrão para qualquer agente de IA neste repositório.
+Priorize operações de baixo consumo de contexto e consulte `docs/` somente quando a tarefa exigir decisão de arquitetura, integração, convenção ou estratégia.
+
+## Princípios Padrão de Trabalho
+
+1. Comece pelo pedido do usuário e leia apenas arquivos diretamente ligados à mudança.
+2. Não carregue documentação ampla por padrão.
+3. Prefira busca/leitura direcionada em `src/` antes de abrir arquivos em `docs/`.
+4. Abra apenas o(s) doc(s) necessários para a decisão atual.
+5. Mantenha respostas e alterações alinhadas aos padrões já existentes no projeto.
+
+## Baseline do Projeto (Sempre Disponível)
+
+- Tipo de app: frontend Next.js (App Router), comportamento majoritariamente client-side.
+- Acesso a dados: hooks do React Query em `src/services/` sobre Axios.
+- Estado global de cliente: Zustand em `src/stores/`.
+- Tipos de domínio: `src/entities/`.
+- Módulos de feature: `src/modules/{auth,home,profile}`.
+- UI compartilhada: `src/components/` (inclui primitives em `src/components/ui`).
+- Tempo real: SSE em `src/hooks/useSSE/`.
+- Fonte de dados: API REST + SSE do backend, via variáveis de ambiente.
+
+## Índice de `docs/` com Gatilhos de Uso
+
+Abra estes arquivos apenas quando algum gatilho abaixo for verdadeiro.
+
+### `docs/ARCHITECTURE.md`
+- Usar quando: alterar fluxo de dados, camadas, limites de módulo, estratégia de SSE, arquitetura de cache.
+- Evitar quando: ajuste pequeno de UI/texto ou bug isolado em arquivo conhecido.
+
+### `docs/STRUCTURE.md`
+- Usar quando: decidir onde novo código deve ficar, criar novo módulo/componente/service/store, reorganizar pastas.
+- Evitar quando: edição em arquivo existente com responsabilidade clara.
+
+### `docs/CONVENTIONS.md`
+- Usar quando: houver dúvida de nomenclatura, import order, tipagem, tratamento de erro, estilo do projeto.
+- Evitar quando: o padrão local já estiver claro e consistente.
+
+### `docs/STACK.md`
+- Usar quando: adicionar/atualizar dependências, validar compatibilidade de versão, escolher solução dependente de tooling.
+- Evitar quando: não há decisão de dependência/ferramenta.
+
+### `docs/INTEGRATIONS.md`
+- Usar quando: mexer em contrato de API, comportamento de Axios, headers de auth, eventos SSE, integração de imagens/estático.
+- Evitar quando: mudança apenas visual sem impacto de integração.
+
+### `docs/TESTING.md`
+- Usar quando: o usuário pedir testes, estratégia de validação, qualidade ou cobertura.
+- Evitar quando: a tarefa não envolve testes nem estratégia de QA.
+
+### `docs/CONCERNS.md`
+- Usar quando: analisar risco, priorizar dívida técnica, planejar mitigação, discutir robustez arquitetural.
+- Evitar quando: entrega direta sem discussão de risco/dívida.
+
+## Política de Economia de Contexto para Docs
+
+Quando docs forem necessários:
+
+1. Abra primeiro apenas 1-2 arquivos mais relevantes.
+2. Extraia somente a seção necessária para a decisão.
+3. Não leia todo `docs/` por padrão.
+4. Se ainda houver dúvida, abra só mais um doc e reavalie.
+
+Quando docs não forem necessários:
+
+- Prefira inspeção direta de código (`src/...`) + padrões locais já existentes.
+- Foque o orçamento de contexto nos arquivos editados e dependências imediatas.
+
+## Fluxo de Decisão (Antes de Ler `docs/`)
+
+1. A tarefa é local e evidente pelo código próximo?
+   - Sim: não abrir `docs/`.
+2. Existe decisão de arquitetura, integração, convenção, estrutura, stack, testes ou risco?
+   - Sim: abrir apenas o doc mapeado neste índice.
+3. O primeiro doc escolhido já resolve a decisão?
+   - Sim: implementar.
+   - Não: abrir apenas mais um doc mapeado.
+
+## Guardrails de Implementação
+
+- Respeitar limites de módulo (`src/modules/*`) e evitar acoplamento cruzado desnecessário.
+- Concentrar acesso à API em hooks de serviço (`src/services/*`), sem espalhar chamadas diretas na UI.
+- Manter estado de servidor no cache do React Query; estado de UI/cliente em hooks/stores.
+- Reusar entidades e tipos compartilhados de `src/entities/*` quando possível.
+- Seguir convenções existentes de nome/importação antes de introduzir novos padrões.
+
+## Fora do Escopo do Contexto Base
+
+Não pré-carregar análises históricas amplas nem todos os docs automaticamente.
+Este contexto base deve permanecer leve, determinístico e acionado por necessidade.
+
